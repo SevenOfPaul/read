@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import type { Category, CategoryWithBooks } from "../../../types/categorySearch";
-import type { Response } from "../../../types/Response";
+import type { Category, CategoryWithBooks } from "../../types/categorySearch";
+import type { Response } from "../../types/Response";
 import PC from "./pc";
 import Mobile from "./mobile";
 
@@ -37,16 +37,20 @@ async function fetchCategories(): Promise<CategoryWithBooks[]> {
                   )
                 ELSE NULL
               END
-              ORDER BY b."createTime" DESC
+              ORDER BY b."createTime" ASC
             ) FILTER (WHERE b.id IS NOT NULL),
             '[]'::json
           ) as books
         FROM public.category c
         LEFT JOIN (
-          SELECT DISTINCT ON ("categoryId") *
-          FROM public.book 
-          ORDER BY "categoryId", "createTime" DESC
-          LIMIT 50
+          SELECT *
+          FROM (
+            SELECT *,
+                   ROW_NUMBER() OVER (PARTITION BY "categoryId" ORDER BY "createTime" ASC) as rn
+            FROM public.book 
+            WHERE "deleteFlag" = false
+          ) ranked_books
+          WHERE rn <= 3
         ) b ON c.id = b."categoryId"
         LEFT JOIN public.author a ON b."authorId" = a.id
         WHERE c."deleteFlag" = false
@@ -88,12 +92,13 @@ export function useCategories() {
   });
 }
 
-export function handleSearch() {
-  console.log("搜索功能开发中...");
-}
 
 export default function Home() {
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
   
-  return isMobile ? <Mobile /> : <PC />;
+  return (
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+      {isMobile ? <Mobile /> : <PC />}
+    </div>
+  );
 }
