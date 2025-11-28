@@ -1,5 +1,5 @@
 import { Button, Card, Badge } from "react-vant";
-import { Clock, User, TrendingUp, Award, Heart, Eye, Star, Crown, BookMarked, Menu, Filter } from "lucide-react";
+import { Clock, User, TrendingUp, Award, Heart, Eye, Star, Crown, BookMarked, Menu, Filter, BookOpen } from "lucide-react";
 import { Link } from "react-router";
 import type { CategoryWithBooks } from "@/types/categorySearch";
 import { useCategories } from "./index";

@@ -4,7 +4,7 @@
 名字叫做夜读小说网
 增加一些广告词 符合c端设计
 你的所有请求都需要使用@tanstack/react-query
-你如果要修改文件则直接重写 不要替换
+你如果要修改文件则直接重写整个文件 不要替换或修改
 非我同意禁止新建组件
 默认ui库为tailwind和vant-react
 默认图标库为lucide-react

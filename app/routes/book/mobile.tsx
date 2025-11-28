@@ -4,6 +4,7 @@ import { Link } from "react-router";
 import { useBookDetail, useChapters, useRelatedBooks, handleChapterClick, handleBookmark, handleShare } from "./index";
 import type { BookDetail as BookDetailType, ChapterInfo, RelatedBook } from "../../types/BookDetail";
 const imgHost = import.meta.env.VITE_imgHost;
+import "./index.css"
 export default function Mobile() {
   const { data: book, isLoading: bookLoading, error: bookError } = useBookDetail();
   const { data: chapters, isLoading: chaptersLoading, error: chaptersError } = useChapters();
@@ -71,7 +72,7 @@ export default function Mobile() {
       handleChapterClick(chapters[0].id, book.id);
     }
   };
-
+console.log(book)
   return (
     <div className="book-detail-container">
       {/* 移动端顶部导航 */}
@@ -243,7 +244,7 @@ export default function Mobile() {
                     <h4 className="text-sm font-medium text-gray-900 dark:text-white line-clamp-2">
                       {relatedBook.name}
                     </h4>
-                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">👤 {relatedBook.author.name}</p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">👤 {relatedBook.authorName}</p>
                     {relatedBook.lastChapter && (
                       <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 truncate">📖 {relatedBook.lastChapter}</p>
                     )}

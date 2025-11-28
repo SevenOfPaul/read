@@ -1,19 +1,19 @@
 import { Button, Card } from "react-vant";
-import { BookOpen, User, Clock, Heart, Share, Star, Eye, Award } from "lucide-react";
+import { BookOpen, User, Clock, Heart, Share, Award } from "lucide-react";
 import { Link } from "react-router";
 import { useBookDetail, useChapters, useRelatedBooks, handleChapterClick, handleBookmark, handleShare } from "./index";
 import type { BookDetail as BookDetailType, ChapterInfo, RelatedBook } from "@/types/BookDetail";
 import Navbar from "@/components/Navbar";
 const imgHost = import.meta.env.VITE_imgHost;
-import "./index.scss"
+import "./index.css"
 export default function PC() {
   const { data: book, isLoading: bookLoading, error: bookError } = useBookDetail();
   const { data: chapters, isLoading: chaptersLoading, error: chaptersError } = useChapters();
   const { data: relatedBooks, isLoading: relatedLoading } = useRelatedBooks(
-    book?.categoryId||"",
+    book?.categoryId || "",
     book?.id || ""
   );
-console.log(book)
+
   // 加载状态
   if (bookLoading) {
     return (
@@ -74,7 +74,7 @@ console.log(book)
   return (
     <div className="book-detail-container">
       {/* 顶部导航 */}
-   <Navbar />
+      <Navbar />
 
       <div className="max-w-7xl mx-auto px-6 py-8">
         <div className="flex gap-8">
@@ -103,7 +103,7 @@ console.log(book)
                 </div>
 
                 {/* 书籍详细信息 */}
-                <div className="flex-1 min-w-0">
+                <div className="flex-1 min-w-0 px-2">
                   <h1 className="book-title">{book.name}</h1>
                   
                   <div className="flex items-center space-x-4 mb-3">
@@ -118,28 +118,14 @@ console.log(book)
                   <p className="book-desc mb-6">{book.desc}</p>
 
                   {/* 操作按钮 */}
-                  <div className="flex items-center space-x-4">
+                  <div className="flex items-center space-x-4 w-[95%]">
                     <Button 
-                      className="btn-primary"
+                      className="btn-primary "
                       size="large"
                       onClick={handleStartReading}
                       disabled={!chapters || chapters.length === 0}
                     >
                       📖 开始阅读
-                    </Button>
-                    <Button 
-                      className="btn-secondary"
-                      onClick={() => handleBookmark(book.id)}
-                    >
-                      <Heart className="h-4 w-4 mr-2" />
-                      收藏
-                    </Button>
-                    <Button 
-                      className="btn-secondary"
-                      onClick={() => handleShare(book.id, book.name)}
-                    >
-                      <Share className="h-4 w-4 mr-2" />
-                      分享
                     </Button>
                   </div>
                 </div>
@@ -172,16 +158,14 @@ console.log(book)
                   <p>章节加载失败: {chaptersError instanceof Error ? chaptersError.message : "未知错误"}</p>
                 </div>
               ) : chapters && chapters.length > 0 ? (
-                <div className="space-y-1">
-                  {chapters.map((chapter: ChapterInfo) => (
-                    <div key={chapter.id} className="chapter-item">
-                      <Link 
-                        to="#" 
-                        className="chapter-link"
-                        onClick={() => handleChapterClick(chapter.id, book.id)}
-                      >
-                        <span className="chapter-name">{chapter.name}</span>
-                      </Link>
+                <div className="chapters-grid">
+                  {chapters.map((chapter: ChapterInfo, index: number) => (
+                    <div 
+                      key={chapter.id} 
+                      className="chapter-grid-item"
+                      onClick={() => handleChapterClick(chapter.id, book.id)}
+                    >
+                      <div className="chapter-grid-name">{chapter.name}</div>
                     </div>
                   ))}
                 </div>
@@ -192,35 +176,6 @@ console.log(book)
                 </div>
               )}
             </Card>
-
-            {/* 相关推荐 */}
-            {relatedBooks && relatedBooks.length > 0 && (
-              <Card className="related-books">
-                <h3 className="related-title">📖 相关推荐</h3>
-                <div className="space-y-3">
-                  {relatedBooks.map((relatedBook: RelatedBook) => (
-                    <Link 
-                      key={relatedBook.id} 
-                      to={`/book/${relatedBook.id}`}
-                      className="related-item"
-                    >
-                      <img 
-                        src={relatedBook.bookImage ? `${import.meta.env.VITE_imgHost}${relatedBook.bookImage}` : "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjE2MCIgdmlld0JveD0iMCAwIDIwMCAxNjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMTYwIiBmaWxsPSIjRjNGNEY2Ii8+CjxwYXRoIGQ9Ik04NiA2NEw5MCA3Nkw5NCA2NEgxMTBMMTMyIDEyOEwxMDggMTQ0SDkwSDEwOEw5NCAxMTZMMTAwIDEwOEw5NiA5Nkg4NlpNMTI0IDExMkwxMjggMTIwUTEyNiAxMzAgMTIyIDEzMFoiIGZpbGw9IiM5Q0EzQUYiLz4KPC9zdmc+"} 
-                        alt={relatedBook.name}
-                        className="related-book-cover"
-                      />
-                      <div className="flex-1">
-                        <h4 className="related-book-title">{relatedBook.name}</h4>
-                        <p className="related-book-author">👤 {relatedBook.authorName}</p>
-                        {relatedBook.lastChapter && (
-                          <p className="text-xs text-gray-500 mt-1">📖 {relatedBook.lastChapter}</p>
-                        )}
-                      </div>
-                    </Link>
-                  ))}
-                </div>
-              </Card>
-            )}
           </main>
 
           {/* 右侧边栏 */}
@@ -256,7 +211,7 @@ console.log(book)
               <div className="space-y-2">
                 <Button 
                   block 
-                  className="bg-blue-500 hover:bg-blue-600 text-white"
+                  className="bg-blue-500 hover:bg-blue-600 text-white my-1"
                   onClick={handleStartReading}
                   disabled={!chapters || chapters.length === 0}
                 >
@@ -264,20 +219,49 @@ console.log(book)
                 </Button>
                 <Button 
                   block 
-                  className="bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-white"
+                  className="my-1 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-white"
                   onClick={() => handleBookmark(book.id)}
                 >
                   🔖 收藏本书
                 </Button>
-                <Button 
-                  block 
-                  className="bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-white"
-                  onClick={() => handleShare(book.id, book.name)}
-                >
-                  📤 分享推荐
-                </Button>
               </div>
             </Card>
+
+            {/* 相关推荐 - 移动到右侧边栏 */}
+            {relatedBooks && relatedBooks.length > 0 && (
+              <Card className="related-books">
+                <h3 className="related-title">📖 相关推荐</h3>
+                <div className="space-y-3">
+                  {relatedBooks.map((relatedBook: RelatedBook) => (
+                    <Link 
+                      key={relatedBook.id} 
+                      to={`/book/${relatedBook.id}`}
+                      className="related-item group"
+                    >
+                      <img 
+                        src={`${import.meta.env.VITE_imgHost}${relatedBook.bookImage}`} 
+                        alt={relatedBook.name}
+                        className="related-book-cover"
+                        loading="lazy"
+                      />
+                      <div className="related-book-info">
+                        <h4 className="related-book-title">{relatedBook.name}</h4>
+                        <div className="related-book-author">
+                          <User className="h-3 w-3 mr-1" />
+                          {relatedBook.authorName}
+                        </div>
+                        <div className="related-book-meta">
+                          <div className="related-book-status">
+                            <Clock className="h-3 w-3 mr-1" />
+                            <span>连载中</span>
+                          </div>
+                        </div>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              </Card>
+            )}
           </aside>
         </div>
       </div>

@@ -3,7 +3,7 @@ import { useParams } from "react-router";
 import type { BookDetail, ChapterInfo, RelatedBook, BookDetailResponse, ChapterListResponse, RelatedBooksResponse } from "../../types/BookDetail";
 import PC from "./pc";
 import Mobile from "./mobile";
-import "./index.scss";
+import "./index.css";
 
 const baseUrl = import.meta.env.VITE_webHost;
 const imgHost = import.meta.env.VITE_imgHost;
@@ -85,7 +85,7 @@ async function fetchChapters(bookId: string): Promise<ChapterInfo[]> {
           "updateTime"
         FROM public.chapter
         WHERE "bookId" = '${bookId}'
-        ORDER BY idx ASC`
+        ORDER BY "idx" ASC`
       }),
     });
 

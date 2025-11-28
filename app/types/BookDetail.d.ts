@@ -12,13 +12,13 @@ export interface BookDetail {
   authorId: string;
   lastChapter?: string;
   createTime: Date;
-  authorName:string
-  categoryName:string
+  authorName: string
+  categoryName: string
   updateTime: Date;
   isShow: boolean;
   deleteFlag: boolean;
   originUrl?: string;
-  
+
   author: Author;
   category?: Category;
 }
@@ -37,9 +37,7 @@ export interface RelatedBook {
   id: string;
   name: string;
   bookImage?: string;
-  author: {
-    name: string;
-  };
+  authorName: string
   lastChapter?: string;
   status: string;
 }

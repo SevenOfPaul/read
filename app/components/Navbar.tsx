@@ -20,18 +20,18 @@ export default function Navbar({
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex items-center justify-between py-4">
           <div className="flex items-center space-x-8">
+               <Link to="/">
             <div className="flex items-center space-x-3">
               <div className="w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center">
                 <BookOpen className="h-6 w-6 text-white" />
               </div>
-              <Link to="/">
               <div>
                 <h1 className="text-xl font-bold text-gray-900 dark:text-white">{title}</h1>
                 <p className="text-xs text-gray-400 dark:text-gray-400">{subtitle}</p>
               </div>
-              </Link>
+        
             </div>
-            
+                  </Link>
             {/* 主导航菜单 */}
             <div className="hidden md:flex items-center space-x-6">
               <a href="#" className="text-gray-600 dark:text-gray-300 hover:text-black transition-colors">全部作品</a>
