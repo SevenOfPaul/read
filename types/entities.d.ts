@@ -24,6 +24,26 @@ export interface Author {
   books?: Book[];
 }
 
+export interface Category {
+  /** 分类ID - UUID */
+  id: string;
+  
+  /** 分类名称 */
+  name: string;
+  
+  /** 创建时间 */
+  createTime: Date;
+  
+  /** 更新时间 */
+  updateTime: Date;
+  
+  /** 删除标记 */
+  deleteFlag: boolean;
+  
+  /** 分类的书籍列表 (一对多) */
+  books?: Book[];
+}
+
 export interface Book {
   /** 书籍ID - UUID */
   id: string;
@@ -43,8 +63,8 @@ export interface Book {
   /** 书籍状态（连载中、已完结等） */
   status: string;
   
-  /** 书籍分类 */
-  category: string;
+  /** 分类ID */
+  categoryId?: string;
   
   /** 更新时间 */
   updateTime: Date;
@@ -63,6 +83,9 @@ export interface Book {
   
   /** 关联的作者 (多对一) */
   author: Author;
+  
+  /** 关联的分类 (多对一) */
+  category?: Category;
   
   /** 创建时间 */
   createTime: Date;

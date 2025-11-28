@@ -3,28 +3,26 @@
 @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif,
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-serif: "Georgia", "Times New Roman", "SimSun", "宋体", serif;
+  --font-mono: "Fira Code", "Monaco", "Consolas", monospace;
 }
 
-/* Vant样式兼容 */
+/* Vant样式兼容 - 简化小说网站主题色 */
 :root {
-  --van-primary-color: #1989fa;
-  --van-success-color: #07c160;
-  --van-warning-color: #ff976a;
-  --van-danger-color: #ee0a24;
-  --van-info-color: #969799;
-  --van-text-color: #323233;
-  --van-background-color: #f8f8f8;
-  --van-background-color-light: #fafafa;
-  --van-border-color: #ebedf0;
+  --van-primary-color: #8B4513;
+  --van-success-color: #8FBC8F;
+  --van-warning-color: #DAA520;
+  --van-danger-color: #DC143C;
+  --van-info-color: #4682B4;
+  --van-text-color: #2F2F2F;
+  --van-background-color: #f8f9fa;
+  --van-background-color-light: #ffffff;
+  --van-border-color: #dee2e6;
 }
 
 html, body {
-  @apply bg-white dark:bg-gray-950;
+  @apply bg-gray-50 dark:bg-gray-900;
   font-family: var(--font-sans);
-  
-  @media (prefers-color-scheme: dark) {
-    color-scheme: dark;
-  }
 }
 
 /* 移动端适配 */
@@ -49,40 +47,239 @@ html, body {
 
 /* Vant组件样式增强 */
 .van-button {
-  border-radius: 8px;
+  border-radius: 6px;
   font-weight: 500;
 }
 
+.van-button--primary {
+  background-color: #8B4513 !important;
+  border: none !important;
+}
+
+.van-button--primary:hover {
+  background-color: #A0522D !important;
+}
+
 .van-nav-bar {
-  background: linear-gradient(135deg, #1989fa 0%, #1e88e5 100%);
+  background: #8B4513 !important;
 }
 
-/* 自定义滚动条 */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+.van-card {
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  background: white;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-::-webkit-scrollbar-track {
-  background: #f1f1f1;
+/* 简化的小说网站样式 */
+.novel-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.novel-header {
+  background: white;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 1rem 0;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.novel-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.novel-logo-icon {
+  width: 2rem;
+  height: 2rem;
+  background: #8B4513;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.novel-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #8B4513;
+}
+
+.novel-nav {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid #f3f4f6;
+}
+
+.novel-nav a {
+  color: #6b7280;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.novel-nav a:hover {
+  color: #8B4513;
+}
+
+.novel-nav a.active {
+  color: #8B4513;
+  border-bottom: 2px solid #8B4513;
+  padding-bottom: 0.25rem;
+}
+
+/* 书籍卡片样式 */
+.book-card {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 1rem;
+  transition: box-shadow 0.2s;
+}
+
+.book-card:hover {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.book-cover {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
   border-radius: 4px;
 }
 
-::-webkit-scrollbar-thumb {
-  background: #c1c1c1;
+.book-title {
+  font-weight: bold;
+  font-size: 1rem;
+  margin: 0.5rem 0;
+  line-height: 1.4;
+}
+
+.book-author {
+  color: #6b7280;
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.book-desc {
+  color: #4b5563;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  margin: 0.5rem 0;
+}
+
+.book-status {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  background: #f3f4f6;
+  color: #374151;
+  font-size: 0.75rem;
   border-radius: 4px;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: #a8a8a8;
+/* 分类头部 */
+.category-header {
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
 }
 
-/* 深色模式适配 */
+.category-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #1f2937;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.category-stats {
+  color: #6b7280;
+  font-size: 0.875rem;
+}
+
+/* 标签 */
+.tag {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+  border-radius: 12px;
+  margin: 0 0.25rem;
+}
+
+.tag-hot {
+  background: #fef2f2;
+  color: #dc2626;
+}
+
+.tag-new {
+  background: #f0fdf4;
+  color: #16a34a;
+}
+
+.tag-recommend {
+  background: #eff6ff;
+  color: #2563eb;
+}
+
+/* 统计数字 */
+.stat-number {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #8B4513;
+}
+
+/* 加载状态 */
+.loading {
+  text-align: center;
+  padding: 3rem;
+  color: #6b7280;
+}
+
+/* 错误状态 */
+.error {
+  text-align: center;
+  padding: 3rem;
+  color: #dc2626;
+}
+
+/* 深色模式 */
 @media (prefers-color-scheme: dark) {
   :root {
-    --van-background-color: #1f1f1f;
-    --van-background-color-light: #2f2f2f;
-    --van-text-color: #ffffff;
-    --van-border-color: #373737;
+    --van-background-color: #1f2937;
+    --van-background-color-light: #374151;
+    --van-text-color: #f9fafb;
+    --van-border-color: #4b5563;
+  }
+  
+  body {
+    background: #111827;
+  }
+  
+  .van-card {
+    background: #1f2937;
+    border-color: #374151;
+  }
+  
+  .novel-header {
+    background: #1f2937;
+    border-color: #374151;
+  }
+  
+  .category-header {
+    background: #1f2937;
+    border-color: #374151;
   }
 }
