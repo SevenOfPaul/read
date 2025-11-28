@@ -1,0 +1,13 @@
+这是一个remix的ssr项目
+运行在cloudflare pages环境
+无法使用nodejs运行时
+作用是书籍阅览和查询
+你的所有请求都需要使用@tanstack/react-query
+你如果要修改文件则直接重写 不要替换
+非我同意禁止新建组件
+默认ui库为tailwind和vant-react
+默认图标库为lucide-react
+需要适配两端 所以请求和处理逻辑需要抽离出来
+ui页面在pc和moible文件夹下
+请求webhost接口的返回值在types文件夹下为response<T>
+entities.d.ts为书籍 作者 章节的数据结构

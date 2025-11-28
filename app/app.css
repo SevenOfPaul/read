@@ -1,0 +1,88 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+/* Vant样式兼容 */
+:root {
+  --van-primary-color: #1989fa;
+  --van-success-color: #07c160;
+  --van-warning-color: #ff976a;
+  --van-danger-color: #ee0a24;
+  --van-info-color: #969799;
+  --van-text-color: #323233;
+  --van-background-color: #f8f8f8;
+  --van-background-color-light: #fafafa;
+  --van-border-color: #ebedf0;
+}
+
+html, body {
+  @apply bg-white dark:bg-gray-950;
+  font-family: var(--font-sans);
+  
+  @media (prefers-color-scheme: dark) {
+    color-scheme: dark;
+  }
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+  html {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  html {
+    font-size: 12px;
+  }
+}
+
+/* PC端优化 */
+@media (min-width: 1024px) {
+  .container {
+    max-width: 1200px;
+  }
+}
+
+/* Vant组件样式增强 */
+.van-button {
+  border-radius: 8px;
+  font-weight: 500;
+}
+
+.van-nav-bar {
+  background: linear-gradient(135deg, #1989fa 0%, #1e88e5 100%);
+}
+
+/* 自定义滚动条 */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* 深色模式适配 */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --van-background-color: #1f1f1f;
+    --van-background-color-light: #2f2f2f;
+    --van-text-color: #ffffff;
+    --van-border-color: #373737;
+  }
+}
