@@ -195,7 +195,8 @@ export default function PC() {
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-gray-600 dark:text-gray-300">分类</span>
-                  <span className="text-blue-600 dark:text-blue-400 font-medium">{book.categoryName}</span>
+                  <Link to={`/category/${book.categoryId}`}>
+                  <span className="text-blue-600 dark:text-blue-400 font-medium">{book.categoryName}</span></Link>
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-gray-600 dark:text-gray-300">热度</span>

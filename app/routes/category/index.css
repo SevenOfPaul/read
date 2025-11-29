@@ -1,0 +1,181 @@
+/* 分类页面专用样式 */
+@reference "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* 分类页面动画效果 */
+.category-page {
+  animation: fadeInUp 0.6s ease-out;
+}
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 分类选择器样式 */
+.category-selector {
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* 书籍卡片悬停效果 */
+.book-card {
+  transition: all 0.3s ease;
+}
+
+.book-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* 深色模式下的卡片悬停 */
+.dark .book-card:hover {
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* 分类按钮激活状态 */
+.category-btn-active {
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+}
+
+/* 分页按钮样式增强 */
+.pagination-btn {
+  transition: all 0.2s ease;
+  border-radius: 8px;
+}
+
+.pagination-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.pagination-btn:disabled {
+  transform: none;
+  box-shadow: none;
+}
+
+/* 加载动画优化 */
+.loading-spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* 书籍封面图片样式 */
+.book-cover {
+  aspect-ratio: 3/4;
+  object-fit: cover;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.book-cover:hover {
+  transform: scale(1.05);
+}
+
+/* 状态标签样式 */
+.status-badge {
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* 热度标签动画 */
+.heat-badge {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+/* 移动端优化 */
+@media (max-width: 768px) {
+  .book-card {
+    margin-bottom: 1rem;
+  }
+  
+  .category-selector {
+    max-height: 70vh;
+  }
+  
+  .pagination-container {
+    position: sticky;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    padding: 1rem;
+    margin: 0 -1rem -1rem -1rem;
+  }
+  
+  .dark .pagination-container {
+    background: rgba(31, 41, 55, 0.95);
+  }
+}
+
+/* 主题色彩变量 */
+:root {
+  --primary-blue: #3b82f6;
+  --primary-blue-dark: #1d4ed8;
+  --success-green: #10b981;
+  --warning-yellow: #f59e0b;
+  --error-red: #ef4444;
+  --purple-accent: #8b5cf6;
+}
+
+/* 深色模式变量 */
+.dark {
+  --primary-blue: #60a5fa;
+  --primary-blue-dark: #3b82f6;
+}
+
+/* 文本截断样式 */
+.text-ellipsis-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.text-ellipsis-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* 渐变背景 */
+.gradient-bg {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.gradient-blue {
+  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+}

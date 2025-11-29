@@ -36,13 +36,13 @@ export default function PC() {
               
               <div className="space-y-1">
                 {categories && categories.map((category: CategoryWithBooks) => (
-                  <a
+                  <Link
                     key={category.id}
-                    href="#"
+                    to={`/category/${category.id}`}
                     className="block px-3 py-2 text-gray-600 dark:text-gray-300 hover:text-white hover:bg-gray-700 dark:hover:bg-gray-700 rounded transition-colors"
                   >
                     {category.name}
-                  </a>
+                  </Link>
                 ))}
               </div>
               
