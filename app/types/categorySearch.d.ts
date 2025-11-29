@@ -23,7 +23,7 @@ export interface BookInfo {
   
   /** 作者姓名 */
   author: string;
-  
+    authorId: string;
   /** 最新章节名称 */
   lastChapter?: string;
   
@@ -62,7 +62,9 @@ export interface HotBook {
   
   /** 作者姓名 */
   author: string;
-  
+    
+  /** 作者id */
+  authorId: string;
   /** 热度值 */
   fired: number;
   

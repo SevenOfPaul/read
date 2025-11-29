@@ -134,7 +134,8 @@ async function fetchRelatedBooks(categoryId: string, currentBookId: string): Pro
           b."bookImage",
           b."lastChapter",
           b status,
-          a."name" as "authorName"
+          a."name" as "authorName",
+          b."authorId" as "authorId"
         FROM public.book b
         LEFT JOIN public.author a ON b."authorId" = a.id
         WHERE b."categoryId" = '${categoryId}' AND b."deleteFlag" = false AND b.id != '${currentBookId}'

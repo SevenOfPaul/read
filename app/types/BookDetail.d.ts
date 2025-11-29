@@ -39,6 +39,7 @@ export interface RelatedBook {
   name: string;
   bookImage?: string;
   authorName: string
+  authorId:string
   lastChapter?: string;
   status: string;
 }

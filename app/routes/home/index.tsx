@@ -34,6 +34,7 @@ async function fetchCategories(): Promise<CategoryWithBooks[]> {
                     'status', b."status",
                     'fired',b."fired",
                     'author', a."name",
+                    'authorId', b."authorId",
                     'lastChapter', b."lastChapter"
                   )
                 ELSE NULL
@@ -100,7 +101,8 @@ async function fetchHotBooks(): Promise<HotBook[]> {
           b."name",
           b."fired",
           b.status,
-          a."name" as "author"
+          a."name" as "author",
+          b."authorId"
         FROM public.book b
         LEFT JOIN public.author a ON b."authorId" = a.id
         WHERE b."deleteFlag" = false AND b."isShow" = true
@@ -118,7 +120,7 @@ async function fetchHotBooks(): Promise<HotBook[]> {
     if (!result.success) {
       throw new Error(result.message || "获取热门书籍数据失败");
     }
-    
+     console.log(result.data)
     return result.data || [];
   } catch (error) {
     console.error("获取热门书籍数据失败:", error);

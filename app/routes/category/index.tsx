@@ -79,7 +79,8 @@ async function fetchCategoryBooks(params: BookListParams): Promise<{ books: Book
             b."status",
             b."fired",
             b."lastChapter",
-            a."name" as "author"
+            a."name" as "author",
+            b."authorId" as "authorId"
           FROM public.book b
           LEFT JOIN public.author a ON b."authorId" = a.id
           ${sqlCondition}
@@ -239,7 +240,7 @@ export default function Category() {
           books={booksData?.books || []}
           pagination={pagination}
           isLoading={isLoading}
-          error={error}
+          error={error!}
           onPageChange={handlePageChange}
         />
       ) : (
@@ -249,7 +250,7 @@ export default function Category() {
           books={booksData?.books || []}
           pagination={pagination}
           isLoading={isLoading}
-          error={error}
+          error={error!}
           onPageChange={handlePageChange}
         />
       )}

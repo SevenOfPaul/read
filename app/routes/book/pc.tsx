@@ -112,11 +112,15 @@ export default function PC() {
                   <h1 className="book-title">{book.name}</h1>
                   
                   <div className="flex items-center space-x-4 mb-3">
+                     <Link to={`/author/${book.authorId}`}>
                     <div className="flex items-center text-gray-600 dark:text-gray-300">
                       <User className="h-4 w-4 mr-1" />
                       <span>{book.authorName}</span>
                     </div>
+                    </Link>
+                      <Link to={`/category/${book.categoryId}`}>
                     <span className="book-category">{book.categoryName}</span>
+                       </Link>
                     <span className="book-status">{book.status}</span>
                   </div>
 
@@ -256,10 +260,12 @@ export default function PC() {
                       />
                       <div className="related-book-info">
                         <h4 className="related-book-title">{relatedBook.name}</h4>
+                        <Link className="wy-1 block"  to={`/author/${relatedBook.authorId}`}>
                         <div className="related-book-author">
                           <User className="h-3 w-3 mr-1" />
                           {relatedBook.authorName}
                         </div>
+                        </Link>
                         <div className="related-book-meta">
                           <div className="related-book-status">
                             <Clock className="h-3 w-3 mr-1" />

@@ -18,7 +18,7 @@ export default function PC() {
   // 统计数据
   const totalBooks = categories?.reduce((sum, cat) => sum + (cat.books?.length || 0), 0) || 0;
   const categoriesWithBooks = categories?.filter(cat => cat.books && cat.books.length > 0) || [];
-console.log(categoriesWithBooks)
+  console.log(categoriesWithBooks)
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
       {/* 使用公共导航栏组件 */}
@@ -117,7 +117,8 @@ console.log(categoriesWithBooks)
                                 <h4 className="text-gray-900 dark:text-white font-bold text-lg mb-1 line-clamp-2">
                                   {featuredBook.name}
                                 </h4>
-                                <p className="text-gray-400 dark:text-gray-400 text-sm mb-2">👤 {featuredBook.author}</p>
+                                <Link to={`/author/${featuredBook.authorId}`}>
+                                  <p className="text-gray-400 dark:text-gray-400 text-sm mb-2">👤 {featuredBook.author}</p></Link>
                                 <p className="text-gray-600 dark:text-gray-300 text-sm mb-3 line-clamp-2">
                                   {truncateDesc(featuredBook.desc)}
                                 </p>
@@ -155,46 +156,29 @@ console.log(categoriesWithBooks)
                 🔥 畅销榜
               </h3>
               <div className="space-y-3">
-                {hotBooks && hotBooks.length > 0 ? (
-                  hotBooks.map((book, index) => {
+                {
+                 hotBooks&&hotBooks.map((book, index) => {
                     const rank = index + 1;
                     return (
                       <Link key={book.id} to={`/book/${book.id}`}>
                         <div className="flex items-center space-x-3 hover:bg-gray-100 dark:hover:bg-gray-700 p-2 rounded cursor-pointer transition-colors">
                           <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${rank === 1 ? 'bg-blue-500 text-white' :
-                              rank === 2 ? 'bg-indigo-500 text-white' :
-                                rank === 3 ? 'bg-purple-500 text-white' :
-                                  'bg-gray-300 dark:bg-gray-600 text-gray-700 dark:text-gray-300'
+                            rank === 2 ? 'bg-indigo-500 text-white' :
+                              rank === 3 ? 'bg-purple-500 text-white' :
+                                'bg-gray-300 dark:bg-gray-600 text-gray-700 dark:text-gray-300'
                             }`}>
                             {rank}
                           </div>
                           <div className="flex-1">
                             <div className="text-gray-900 dark:text-white text-sm font-medium line-clamp-1">{book.name}</div>
-                            <div className="text-gray-400 dark:text-gray-400 text-xs">👤 {book.author}</div>
+                            <Link to={`/author/${book.authorId}`}> <div className="text-gray-400 dark:text-gray-400 text-xs">👤 {book.author}</div></Link>
                           </div>
                           <div className="text-blue-400 text-xs">{formatHeat(book.fired)}</div>
                         </div>
                       </Link>
                     );
                   })
-                ) : (
-                  [1, 2, 3, 4, 5].map((rank) => (
-                    <div key={rank} className="flex items-center space-x-3 hover:bg-gray-100 dark:hover:bg-gray-700 p-2 rounded cursor-pointer transition-colors">
-                      <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${rank === 1 ? 'bg-blue-500 text-white' :
-                          rank === 2 ? 'bg-indigo-500 text-white' :
-                            rank === 3 ? 'bg-purple-500 text-white' :
-                              'bg-gray-300 dark:bg-gray-600 text-gray-700 dark:text-gray-300'
-                        }`}>
-                        {rank}
-                      </div>
-                      <div className="flex-1">
-                        <div className="text-gray-900 dark:text-white text-sm font-medium line-clamp-1">热门小说 #{rank}</div>
-                        <div className="text-gray-400 dark:text-gray-400 text-xs">👤 作者名</div>
-                      </div>
-                      <div className="text-blue-400 text-xs">🔥 加载中...</div>
-                    </div>
-                  ))
-                )}
+                }
               </div>
             </div>
 
@@ -330,12 +314,12 @@ console.log(categoriesWithBooks)
                                     <h4 className="text-gray-900 dark:text-white font-bold text-lg mb-2 line-clamp-2 leading-tight">
                                       {book.name}
                                     </h4>
-
-                                    <div className="flex items-center text-sm text-gray-400 dark:text-gray-400 mb-3">
-                                      <User className="h-4 w-4 mr-1" />
-                                      <span className="truncate">{book.author}</span>
-                                    </div>
-
+                                    <Link to={`/author/${book.authorId}`}>
+                                      <div className="flex items-center text-sm text-gray-400 dark:text-gray-400 mb-3">
+                                        <User className="h-4 w-4 mr-1" />
+                                        <span className="truncate">{book.author}</span>
+                                      </div>
+                                    </Link>
                                     {/* 书籍描述 - 限制100字 */}
                                     <p className="text-gray-600 dark:text-gray-300 text-sm mb-3 line-clamp-2">
                                       {truncateDesc(book.desc)}
