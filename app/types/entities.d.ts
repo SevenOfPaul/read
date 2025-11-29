@@ -74,6 +74,8 @@ export interface Book {
   
   /** 删除标记 */
   deleteFlag: boolean;
+  /*热度*/
+  fired:number
   
   /** 最新章节名称 */
   lastChapter?: string;

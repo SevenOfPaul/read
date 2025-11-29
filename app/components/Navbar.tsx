@@ -48,12 +48,12 @@ export default function Navbar({
           <div className="flex items-center space-x-4">
             {/* 主题切换按钮 */}
             <button 
-              className="p-2 text-gray-600 cursor-pointer dark:text-gray-300 hover:text-black hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors duration-200"
+              className="p-2 cursor-pointer  hover:text-black hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors duration-200"
               onClick={toggleTheme}
               title={isDark ? "切换到白天模式" : "切换到黑夜模式"}
             >
               {isDark ? (
-                <Sun className="h-5 w-5" />
+                <Sun className="h-5 w-5 dark:text-gray-300 text-gray-600 " />
               ) : (
                 <Moon className="h-5 w-5" />
               )}
@@ -61,11 +61,11 @@ export default function Navbar({
             
             {showSearch && (
               <button 
-                className="p-2 text-gray-600 cursor-pointer dark:text-gray-300 hover:text-black hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors duration-200"
+                className="p-2  cursor-pointer  hover:text-black hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors duration-200"
                 onClick={handleSearch}
                 title="搜索"
               >
-                <Search className="h-5 w-5" />
+                <Search className="h-5 w-5 dark:text-gray-300 text-gray-600" />
               </button>
             )}
           </div>

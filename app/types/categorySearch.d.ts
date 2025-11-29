@@ -26,6 +26,9 @@ export interface BookInfo {
   
   /** 最新章节名称 */
   lastChapter?: string;
+  
+  /** 热度值 */
+  fired?: number;
 }
 
 // 包含书籍信息的分类（基础分类信息 + 书籍列表）
@@ -47,4 +50,22 @@ export interface CategoryWithBooks {
   
   /** 分类的书籍列表 (最多5本) */
   books: BookInfo[];
+}
+
+// 热门书籍信息（用于畅销榜）
+export interface HotBook {
+  /** 书籍ID - UUID */
+  id: string;
+  
+  /** 书籍名称 */
+  name: string;
+  
+  /** 作者姓名 */
+  author: string;
+  
+  /** 热度值 */
+  fired: number;
+  
+  /** 书籍状态 */
+  status: string;
 }

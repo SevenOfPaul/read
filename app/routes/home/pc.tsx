@@ -2,11 +2,12 @@ import { Button, Card, Badge } from "react-vant";
 import { Clock, User, TrendingUp, Award, Heart, Eye, Star, Crown, BookMarked, Menu, Filter, BookOpen } from "lucide-react";
 import { Link } from "react-router";
 import type { CategoryWithBooks } from "@/types/categorySearch";
-import { useCategories } from "./index";
+import { useCategories, useHotBooks, formatHeat } from "./index";
 import Navbar from "@/components/Navbar";
 
 export default function PC() {
   const { data: categories, isLoading, error } = useCategories();
+  const { data: hotBooks } = useHotBooks();
 
   // 截取描述为100字
   const truncateDesc = (desc: string) => {
@@ -154,23 +155,48 @@ export default function PC() {
                 🔥 畅销榜
               </h3>
               <div className="space-y-3">
-                {[1, 2, 3, 4, 5].map((rank) => (
-                  <div key={rank} className="flex items-center space-x-3 hover:bg-gray-100 dark:hover:bg-gray-700 p-2 rounded cursor-pointer transition-colors">
-                    <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${
-                      rank === 1 ? 'bg-blue-500 text-white' :
-                      rank === 2 ? 'bg-indigo-500 text-white' :
-                      rank === 3 ? 'bg-purple-500 text-white' :
-                      'bg-gray-300 dark:bg-gray-600 text-gray-700 dark:text-gray-300'
-                    }`}>
-                      {rank}
+                {hotBooks && hotBooks.length > 0 ? (
+                  hotBooks.map((book, index) => {
+                    const rank = index + 1;
+                    return (
+                      <Link key={book.id} to={`/book/${book.id}`}>
+                        <div className="flex items-center space-x-3 hover:bg-gray-100 dark:hover:bg-gray-700 p-2 rounded cursor-pointer transition-colors">
+                          <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${
+                            rank === 1 ? 'bg-blue-500 text-white' :
+                            rank === 2 ? 'bg-indigo-500 text-white' :
+                            rank === 3 ? 'bg-purple-500 text-white' :
+                            'bg-gray-300 dark:bg-gray-600 text-gray-700 dark:text-gray-300'
+                          }`}>
+                            {rank}
+                          </div>
+                          <div className="flex-1">
+                            <div className="text-gray-900 dark:text-white text-sm font-medium line-clamp-1">{book.name}</div>
+                            <div className="text-gray-400 dark:text-gray-400 text-xs">👤 {book.author}</div>
+                          </div>
+                          <div className="text-blue-400 text-xs">{formatHeat(book.fired)}</div>
+                        </div>
+                      </Link>
+                    );
+                  })
+                ) : (
+                  [1, 2, 3, 4, 5].map((rank) => (
+                    <div key={rank} className="flex items-center space-x-3 hover:bg-gray-100 dark:hover:bg-gray-700 p-2 rounded cursor-pointer transition-colors">
+                      <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${
+                        rank === 1 ? 'bg-blue-500 text-white' :
+                        rank === 2 ? 'bg-indigo-500 text-white' :
+                        rank === 3 ? 'bg-purple-500 text-white' :
+                        'bg-gray-300 dark:bg-gray-600 text-gray-700 dark:text-gray-300'
+                      }`}>
+                        {rank}
+                      </div>
+                      <div className="flex-1">
+                        <div className="text-gray-900 dark:text-white text-sm font-medium line-clamp-1">热门小说 #{rank}</div>
+                        <div className="text-gray-400 dark:text-gray-400 text-xs">👤 作者名</div>
+                      </div>
+                      <div className="text-blue-400 text-xs">🔥 加载中...</div>
                     </div>
-                    <div className="flex-1">
-                      <div className="text-gray-900 dark:text-white text-sm font-medium line-clamp-1">热门小说 #{rank}</div>
-                      <div className="text-gray-400 dark:text-gray-400 text-xs">👤 作者名</div>
-                    </div>
-                    <div className="text-blue-400 text-xs">🔥 1.2万</div>
-                  </div>
-                ))}
+                  ))
+                )}
               </div>
             </div>
 
@@ -230,7 +256,7 @@ export default function PC() {
               
               return (
                 <div key={category.id} className="bg-white 
-                 dark:bg-gray-800 w-[32%] rounded-lg overflow-hidden border border-gray-200 
+                 dark:bg-gray-800 w-[650px] rounded-lg overflow-hidden border border-gray-200 
                  dark:border-gray-700 transition-colors duration-300">
                   {/* 分类头部 */}
                   <div className="bg-gray-100 dark:bg-gray-700 p-4 border-l-4 border-blue-500">

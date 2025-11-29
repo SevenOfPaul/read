@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import type { Category, CategoryWithBooks } from "../../types/categorySearch";
+import type { Category, CategoryWithBooks, HotBook } from "../../types/categorySearch";
 import type { Response } from "../../types/Response";
 import PC from "./pc";
 import Mobile from "./mobile";
@@ -85,6 +85,46 @@ async function fetchCategories(): Promise<CategoryWithBooks[]> {
   }
 }
 
+// 获取热度最高的5本书（畅销榜）
+async function fetchHotBooks(): Promise<HotBook[]> {
+  try {
+    const response = await fetch(baseUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ 
+        sql: `SELECT 
+          b.id,
+          b."name",
+          b."fired",
+          b.status,
+          a."name" as "author"
+        FROM public.book b
+        LEFT JOIN public.author a ON b."authorId" = a.id
+        WHERE b."deleteFlag" = false AND b."isShow" = true
+        ORDER BY b."fired" DESC
+        LIMIT 5` 
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const result: Response<HotBook[]> = await response.json();
+    
+    if (!result.success) {
+      throw new Error(result.message || "获取热门书籍数据失败");
+    }
+    
+    return result.data || [];
+  } catch (error) {
+    console.error("获取热门书籍数据失败:", error);
+    throw error;
+  }
+}
+
 export function useCategories() {
   return useQuery({
     queryKey: ['categories'],
@@ -92,6 +132,23 @@ export function useCategories() {
   });
 }
 
+export function useHotBooks() {
+  return useQuery({
+    queryKey: ['hotBooks'],
+    queryFn: fetchHotBooks,
+  });
+}
+
+// 格式化热度显示
+export function formatHeat(fired: number): string {
+  if (fired >= 10000) {
+    return `🔥 ${(fired / 10000).toFixed(1)}万`;
+  } else if (fired >= 1000) {
+    return `🔥 ${(fired / 1000).toFixed(1)}千`;
+  } else {
+    return `🔥 ${fired}`;
+  }
+}
 
 export default function Home() {
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
