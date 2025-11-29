@@ -9,6 +9,7 @@ import {
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { useThemeStore, getInitialTheme, syncThemeToDocument, setupSystemThemeListener } from "./lib/useThemeStore";
+import BackToTop from "./components/BackToTop";
 
 import "./app.css";
 
@@ -70,6 +71,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <QueryClientProvider client={queryClient}>
           <ThemeProvider>
             {children}
+            <BackToTop />
           </ThemeProvider>
           <ScrollRestoration />
           <Scripts />

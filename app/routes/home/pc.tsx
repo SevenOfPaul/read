@@ -18,7 +18,6 @@ export default function PC() {
   // 统计数据
   const totalBooks = categories?.reduce((sum, cat) => sum + (cat.books?.length || 0), 0) || 0;
   const categoriesWithBooks = categories?.filter(cat => cat.books && cat.books.length > 0) || [];
-  console.log(categoriesWithBooks)
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
       {/* 使用公共导航栏组件 */}
