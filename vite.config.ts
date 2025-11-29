@@ -11,12 +11,5 @@ export default defineConfig({
     reactRouter(),
      tailwindcss(),
     tsconfigPaths(),
-  ],
-  build: {
-    rollupOptions: {
-      external: [
-        "virtual:react-router/server-build"
-      ]
-    }
-  }
+  ]
 });
