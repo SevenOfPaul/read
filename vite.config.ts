@@ -4,7 +4,7 @@ import tsconfigPaths from "vite-tsconfig-paths";
 import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
-   optimizeDeps: {
+  optimizeDeps: {
     exclude: ["virtual:react-router/server-build"],
   },
   plugins: [
@@ -12,4 +12,11 @@ export default defineConfig({
      tailwindcss(),
     tsconfigPaths(),
   ],
+  build: {
+    rollupOptions: {
+      external: [
+        "virtual:react-router/server-build"
+      ]
+    }
+  }
 });
