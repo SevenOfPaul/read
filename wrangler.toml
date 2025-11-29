@@ -13,7 +13,7 @@ dir = "./build/client"
 from = "/*"
 to = "/index.html"
 status = 200
-compatibility_date  = "2025-12-01"
+compatibility_date  = "2024-09-23"
 compatibility_flags = ["nodejs_compat"]
 
 # 静态文件缓存优化
