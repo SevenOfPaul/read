@@ -32,6 +32,7 @@ async function fetchCategories(): Promise<CategoryWithBooks[]> {
                     'desc', b."desc",
                     'bookImage', b."bookImage",
                     'status', b."status",
+                    'fired',b."fired",
                     'author', a."name",
                     'lastChapter', b."lastChapter"
                   )
