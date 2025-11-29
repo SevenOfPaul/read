@@ -1,18 +1,10 @@
-# Cloudflare Pages配置 - Remix/React Router项目
-# 这个配置专门为Cloudflare Pages部署优化
+# Cloudflare Pages配置 - Remix项目
+# 这个配置专门为Cloudflare Pages SSR部署优化
 
 [build]
 command = "pnpm run build"
 
-[build.upload]
-format = "static"
-dir = "./build/client"
-
-# SPA路由支持 - 所有请求都重定向到index.html
-[[redirects]]
-from = "/*"
-to = "/index.html"
-status = 200
+# Node.js 兼容性配置
 compatibility_date  = "2024-09-23"
 compatibility_flags = ["nodejs_compat"]
 
