@@ -116,6 +116,94 @@ html, body {
   border-color: #2563eb !important;
 }
 
+/* Vant分页组件暗黑模式样式修复 */
+.dark .rv-pagination,
+.dark .van-pagination {
+  background-color: #374151 !important;
+  color: #f9fafb !important;
+}
+
+.dark .rv-pagination__item,
+.dark .van-pagination__item,
+.dark .van-pagination .rv-pagination__item {
+  background-color: #4b5563 !important;
+  color: #d1d5db !important;
+  border-color: #6b7280 !important;
+}
+
+.dark .rv-pagination__item:hover,
+.dark .van-pagination__item:hover,
+.dark .van-pagination .rv-pagination__item:hover {
+  background-color: #6b7280 !important;
+  color: #ffffff !important;
+}
+
+.dark .rv-pagination__item--active,
+.dark .van-pagination__item--active,
+.dark .van-pagination .rv-pagination__item--active {
+  background-color: #3b82f6 !important;
+  color: #ffffff !important;
+  border-color: #3b82f6 !important;
+}
+
+.dark .rv-pagination__item:disabled,
+.dark .van-pagination__item:disabled,
+.dark .van-pagination .rv-pagination__item:disabled {
+  background-color: #6b7280 !important;
+  color: #9ca3af !important;
+  opacity: 0.6;
+}
+
+.dark .rv-pagination__next,
+.dark .van-pagination__next,
+.dark .rv-pagination__prev,
+.dark .van-pagination__prev,
+.dark .van-pagination .rv-pagination__next,
+.dark .van-pagination .rv-pagination__prev {
+  background-color: #4b5563 !important;
+  color: #d1d5db !important;
+  border-color: #6b7280 !important;
+}
+
+.dark .rv-pagination__next:hover,
+.dark .van-pagination__next:hover,
+.dark .rv-pagination__prev:hover,
+.dark .van-pagination__prev:hover,
+.dark .van-pagination .rv-pagination__next:hover,
+.dark .van-pagination .rv-pagination__prev:hover {
+  background-color: #6b7280 !important;
+  color: #ffffff !important;
+}
+
+.dark .rv-pagination__next:disabled,
+.dark .van-pagination__next:disabled,
+.dark .rv-pagination__prev:disabled,
+.dark .van-pagination__prev:disabled,
+.dark .van-pagination .rv-pagination__next:disabled,
+.dark .van-pagination .rv-pagination__prev:disabled {
+  background-color: #6b7280 !important;
+  color: #9ca3af !important;
+  opacity: 0.6;
+}
+
+.dark .rv-pagination__ellipsis,
+.dark .van-pagination__ellipsis,
+.dark .van-pagination .rv-pagination__ellipsis {
+  color: #d1d5db !important;
+}
+
+.dark .rv-pagination__page,
+.dark .van-pagination__page,
+.dark .van-pagination .rv-pagination__page {
+  background-color: transparent !important;
+}
+
+/* 确保分页组件容器在暗黑模式下正常显示 */
+.dark .rv-pagination-wrapper,
+.dark .van-pagination-wrapper {
+  background-color: transparent !important;
+}
+
 /* 简化的小说网站样式 */
 .novel-container {
   max-width: 1200px;
