@@ -5,4 +5,36 @@ import { createPagesFunctionHandler } from "@remix-run/cloudflare-pages";
 // eslint-disable-next-line import/no-unresolved
 import * as build from "../build/server";
 
-export const onRequest = createPagesFunctionHandler({ build });
+// 处理自定义数据和响应头
+function handleDataRequest(
+  response: Response,
+  {
+    request,
+    params,
+    context,
+  }: {
+    request: Request;
+    params: Record<string, string>;
+    context: any;
+  }
+) {
+  // 添加自定义头部
+  response.headers.set("X-Custom-Header", "night-reading-novel");
+  response.headers.set("X-Site-Title", "夜读小说网");
+  response.headers.set("X-Framework", "Remix + Cloudflare Pages");
+  response.headers.set("X-Version", "1.0.0");
+  
+  return response;
+}
+
+// 创建 Cloudflare Pages 处理函数
+export const onRequest = createPagesFunctionHandler({
+  build,
+  getLoadContext: (context) => {
+    // 传递 Cloudflare 上下文到 Remix loader/action
+    return {
+      env: context.env,
+      ctx: context,
+    };
+  },
+});
