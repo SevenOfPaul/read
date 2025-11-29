@@ -1,0 +1,9 @@
+name = "read"
+main = "worker.ts"
+compatibility_date = "2025-11-29"
+
+[build]
+command = "pnpm run build"
+
+[site]
+bucket = "./build/client"

@@ -15,6 +15,7 @@ declare module "react-router" {
 const build = () => import("virtual:react-router/server-build");
 
 export default {
+      //@ts-ignore
   async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
     //@ts-ignore
     return createRequestHandler(build, import.meta.env.MODE)(request, {
