@@ -6,7 +6,7 @@
   --font-serif: "Georgia", "Times New Roman", "SimSun", "宋体", serif;
   --font-mono: "Fira Code", "Monaco", "Consolas", monospace;
 }
-
+@custom-variant dark (&:where(.dark, .dark *));
 /* Vant样式兼容 - 简化小说网站主题色 */
 :root {
   --van-primary-color: #8B4513;
@@ -69,6 +69,51 @@ html, body {
   border: 1px solid #e5e7eb;
   background: white;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* React-Vant组件暗色模式支持 */
+.dark .rv-card,
+.dark .van-card {
+  background-color: #1f2937 !important;
+  border-color: #374151 !important;
+  color: #f9fafb !important;
+}
+
+.dark .rv-card-body,
+.dark .van-card__body,
+.dark .van-card .rv-card-body {
+  background-color: #1f2937 !important;
+  color: #f9fafb !important;
+}
+
+.dark .rv-button,
+.dark .van-button,
+.dark .rv-button--default,
+.dark .van-button--default {
+  background-color: #374151 !important;
+  color: #f9fafb !important;
+  border-color: #4b5563 !important;
+}
+
+.dark .rv-button:hover,
+.dark .van-button:hover,
+.dark .rv-button--default:hover,
+.dark .van-button--default:hover {
+  background-color: #4b5563 !important;
+  color: #ffffff !important;
+}
+
+.dark .rv-button--primary,
+.dark .van-button--primary {
+  background-color: #3b82f6 !important;
+  color: #ffffff !important;
+  border-color: #3b82f6 !important;
+}
+
+.dark .rv-button--primary:hover,
+.dark .van-button--primary:hover {
+  background-color: #2563eb !important;
+  border-color: #2563eb !important;
 }
 
 /* 简化的小说网站样式 */
@@ -256,30 +301,51 @@ html, body {
 }
 
 /* 深色模式 */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --van-background-color: #1f2937;
-    --van-background-color-light: #374151;
-    --van-text-color: #f9fafb;
-    --van-border-color: #4b5563;
-  }
-  
-  body {
-    background: #111827;
-  }
-  
-  .van-card {
-    background: #1f2937;
-    border-color: #374151;
-  }
-  
-  .novel-header {
-    background: #1f2937;
-    border-color: #374151;
-  }
-  
-  .category-header {
-    background: #1f2937;
-    border-color: #374151;
-  }
+.dark {
+  --van-background-color: #1f2937;
+  --van-background-color-light: #374151;
+  --van-text-color: #f9fafb;
+  --van-border-color: #4b5563;
+}
+
+.dark body {
+  background: #111827;
+}
+
+.dark .van-card {
+  background: #1f2937;
+  border-color: #374151;
+}
+
+.dark .novel-header {
+  background: #1f2937;
+  border-color: #374151;
+}
+
+.dark .category-header {
+  background: #1f2937;
+  border-color: #374151;
+}
+
+.dark .book-card {
+  background: #1f2937;
+  border-color: #374151;
+}
+
+.dark .book-status {
+  background: #374151;
+  color: #d1d5db;
+}
+
+.dark .novel-nav a {
+  color: #d1d5db;
+}
+
+.dark .novel-nav a:hover {
+  color: #ffffff;
+}
+
+.dark .novel-nav a.active {
+  color: #3b82f6;
+  border-bottom-color: #3b82f6;
 }

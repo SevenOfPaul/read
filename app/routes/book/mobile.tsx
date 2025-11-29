@@ -72,7 +72,6 @@ export default function Mobile() {
       handleChapterClick(chapters[0].id, book.id);
     }
   };
-console.log(book)
   return (
     <div className="book-detail-container">
       {/* 移动端顶部导航 */}

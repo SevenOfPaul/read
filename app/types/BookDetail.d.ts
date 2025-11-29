@@ -7,6 +7,7 @@ export interface BookDetail {
   name: string;
   desc: string;
   bookImage?: string;
+  fired:number
   status: string;
   categoryId?: string;
   authorId: string;

@@ -19,5 +19,9 @@ entities.d.ts文件内容禁止修改
 数据库字段不是下划线而是驼峰
 数据库字段查询必须使用双引号包裹
 序列化参数需要使用单引号包裹
+注意ui需要使用tailwind的dark兼容黑白模式
+每个模块的index.css都要单独增加
+@reference "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
 已安装ahooks
 状态管理使用zustand

@@ -40,6 +40,11 @@ export default function PC() {
             <Button onClick={() => window.location.reload()} className="bg-blue-500 hover:bg-blue-600">
               🔄 重新加载
             </Button>
+             <Link to="/">
+               <Button className="bg-blue-500 hover:bg-blue-600">
+              🔄 回到首页
+            </Button>
+            </Link>
           </Card>
         </div>
       </div>
@@ -76,7 +81,7 @@ export default function PC() {
       {/* 顶部导航 */}
       <Navbar />
 
-      <div className="max-w-7xl mx-auto px-6 py-8">
+      <div className="max-w-7xl mx-auto px-6 py-8 dark:bg-gray-600">
         <div className="flex gap-8">
           {/* 左侧内容区域 */}
           <main className="flex-1 space-y-8">
@@ -191,6 +196,10 @@ export default function PC() {
                 <div className="flex items-center justify-between">
                   <span className="text-gray-600 dark:text-gray-300">分类</span>
                   <span className="text-blue-600 dark:text-blue-400 font-medium">{book.categoryName}</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-gray-600 dark:text-gray-300">热度</span>
+                  <span className="text-orange-600 dark:text-orange-400 font-medium">{book.fired}</span>
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-gray-600 dark:text-gray-300">章节数</span>

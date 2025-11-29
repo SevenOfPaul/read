@@ -7,6 +7,8 @@ import {
   ScrollRestoration,
 } from "react-router";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { useEffect } from "react";
+import { useThemeStore, getInitialTheme, syncThemeToDocument, setupSystemThemeListener } from "./lib/useThemeStore";
 
 import "./app.css";
 
@@ -39,6 +41,22 @@ export const links= () => [
   },
 ];
 
+function ThemeProvider({ children }: { children: React.ReactNode }) {
+  const { isDark } = useThemeStore();
+
+  useEffect(() => {
+    // 同步主题到 document
+    syncThemeToDocument(isDark);
+    
+    // 设置系统主题监听器
+    const cleanup = setupSystemThemeListener();
+    
+    return cleanup;
+  }, [isDark]);
+
+  return <>{children}</>;
+}
+
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="zh-CN">
@@ -50,7 +68,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
       </head>
       <body>
         <QueryClientProvider client={queryClient}>
-          {children}
+          <ThemeProvider>
+            {children}
+          </ThemeProvider>
           <ScrollRestoration />
           <Scripts />
         </QueryClientProvider>
@@ -60,6 +80,14 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
+  const { setTheme } = useThemeStore();
+
+  useEffect(() => {
+    // 初始化主题
+    const initialTheme = getInitialTheme();
+    setTheme(initialTheme);
+  }, [setTheme]);
+
   return <Outlet />;
 }
 

@@ -1,5 +1,6 @@
-import { BookOpen, Search } from "lucide-react";
+import { BookOpen, Search, Moon, Sun } from "lucide-react";
 import { Link } from "react-router";
+import { useThemeStore } from "../lib/useThemeStore";
 
 
 interface NavbarProps {
@@ -15,6 +16,8 @@ export default function Navbar({
   subtitle = "精品小说 · 夜夜精彩",
   showSearch = true
 }: NavbarProps) {
+  const { isDark, toggleTheme } = useThemeStore();
+
   return (
     <nav className="bg-white dark:bg-gray-800 border-b dark:border-gray-700 border-gray-200 sticky top-0 z-50 transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-6">
@@ -42,16 +45,30 @@ export default function Navbar({
             </div>
           </div>
           
-          {showSearch && (
-            <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-4">
+            {/* 主题切换按钮 */}
+            <button 
+              className="p-2 text-gray-600 cursor-pointer dark:text-gray-300 hover:text-black hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors duration-200"
+              onClick={toggleTheme}
+              title={isDark ? "切换到白天模式" : "切换到黑夜模式"}
+            >
+              {isDark ? (
+                <Sun className="h-5 w-5" />
+              ) : (
+                <Moon className="h-5 w-5" />
+              )}
+            </button>
+            
+            {showSearch && (
               <button 
-                className="p-2 text-gray-600 dark:text-gray-400 hover:text-black hover:bg-gray-700 dark:hover:bg-gray-700 rounded-lg transition-colors"
+                className="p-2 text-gray-600 cursor-pointer dark:text-gray-300 hover:text-black hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors duration-200"
                 onClick={handleSearch}
+                title="搜索"
               >
                 <Search className="h-5 w-5" />
               </button>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       </div>
     </nav>

@@ -17,11 +17,13 @@ async function fetchBookDetail(bookId: string): Promise<BookDetail|undefined> {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        sql: `SELECT 
+        sql: `
+        SELECT 
           b.id,
           b."name",
           b.desc,
           b."bookImage",
+          b."fired",
           b.status,
           b."categoryId",
           b."authorId",
@@ -38,10 +40,21 @@ async function fetchBookDetail(bookId: string): Promise<BookDetail|undefined> {
         FROM public.book b
         LEFT JOIN public.author a ON b."authorId" = a.id
         LEFT JOIN public.category c ON b."categoryId" = c.id
-        WHERE b.id ='${bookId}' AND b."deleteFlag" = false`
+        WHERE b.id ='${bookId}' AND b."deleteFlag" = false
+       `
       }),
     });
 
+    await fetch(baseUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        sql: `
+        UPDATE public.book SET "fired"="fired"+1 WHERE id = '${bookId}'`
+      }),
+    });
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
