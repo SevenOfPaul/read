@@ -1,21 +1,30 @@
-import { createRequestHandler } from "@react-router/cloudflare";
-import * as build from "./build/server/index.js";
+import {
+  createRequestHandler,
+  RouterContextProvider,
+} from "react-router";
+
+declare module "react-router" {
+  export interface AppLoadContext {
+    cloudflare: {
+      env: Env;
+      ctx: ExecutionContext;
+    };
+  }
+}
+
+const requestHandler = createRequestHandler(
+  () => import("virtual:react-router/server-build"),
+  import.meta.env.MODE,
+);
 
 export default {
   async fetch(request, env, ctx) {
-    const handler = createRequestHandler({
-      build,
-      mode: process.env.NODE_ENV,
-      getLoadContext() {
-        // 确保传递完整的 Cloudflare 上下文
-        return {
-          env,
-          cf: request.cf,
-          ctx,
-        };
+    const contextValue = {
+      cloudflare: {
+        env,
+        ctx,
       },
-    });
-
-    return handler(request);
+    };
+    return requestHandler(request);
   },
-};
+} satisfies ExportedHandler<Env>;
