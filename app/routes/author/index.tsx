@@ -77,6 +77,7 @@ async function fetchAuthorDetail(authorId: string): Promise<AuthorDetail> {
         lastChapter?: string;
         updateTime: string;
         category?: string;
+        categoryId: string;
       }>;
     }>> = await response.json();
     

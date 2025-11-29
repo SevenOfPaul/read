@@ -5,14 +5,14 @@ import {
   Crown, BookMarked, Menu, Filter, X, ChevronLeft, ChevronRight, MoreHorizontal 
 } from "lucide-react";
 import { Link, useParams } from "react-router";
-import type { Category } from "@/types/entities";
-import type { BookInfo, PaginationInfo } from "@/types/categoryPage";
+import type { BookInfo } from "@/types/categorySearch";
+import type { PaginationInfo } from "@/types/categoryPage";
+import type { SpecialConfig } from "@/types/specialPage";
 import { formatHeat } from "./index";
 import BookCard from "@/components/BookCard";
 
-interface CategoryPageProps {
-  categories: Category[];
-  currentCategory?: Category;
+interface SpecialPageProps {
+  specialConfig: SpecialConfig;
   books: BookInfo[];
   pagination: PaginationInfo;
   isLoading: boolean;
@@ -21,39 +21,37 @@ interface CategoryPageProps {
 }
 
 export default function Mobile({
-  categories,
-  currentCategory,
+  specialConfig,
   books,
   pagination,
   isLoading,
   error,
   onPageChange
-}: CategoryPageProps) {
-  const [showCategorySelector, setShowCategorySelector] = useState(false);
-  const { categoryId } = useParams();
+}: SpecialPageProps) {
+  const { type } = useParams();
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
       {/* 顶部导航栏 */}
-      <nav className="bg-white dark:bg-gray-800 border-b dark:border-gray-700 border-gray-200 sticky top-0 z-50 transition-colors duration-300">
+      <nav className={`${specialConfig.bgColor} border-b-0 border-gray-700 sticky top-0 z-50 transition-colors duration-300`}>
         <div className="px-4">
           <div className="flex items-center justify-between py-3">
             <div className="flex items-center space-x-4">
               <div className="flex items-center space-x-2">
-                <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center">
+                <div className="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center">
                   <BookOpen className="h-5 w-5 text-white" />
                 </div>
                 <div>
-                  <h1 className="text-lg font-bold text-gray-900 dark:text-white">分类浏览</h1>
-                  <p className="text-xs text-gray-400 dark:text-gray-400">发现更多精彩 · 精品小说</p>
+                  <h1 className="text-lg font-bold text-white">{specialConfig.title}</h1>
+                  <p className="text-xs text-white/80">发现更多精彩 · {specialConfig.description}</p>
                 </div>
               </div>
             </div>
             
             <div className="flex items-center space-x-2">
               <button 
-                className="p-2 text-gray-600 dark:text-gray-400 hover:text-white hover:bg-gray-700 dark:hover:bg-gray-700 rounded-lg transition-colors"
-                onClick={() => setShowCategorySelector(!showCategorySelector)}
+                className="p-2 text-white/80 hover:text-white hover:bg-white/20 rounded-lg transition-colors"
+                onClick={() => {/* 可以添加更多功能 */}}
               >
                 <MoreHorizontal className="h-5 w-5" />
               </button>
@@ -62,60 +60,56 @@ export default function Mobile({
         </div>
       </nav>
 
-      {/* 分类选择器弹窗 */}
-      {showCategorySelector && (
-        <div className="fixed inset-0 z-50">
-          <div className="fixed inset-0 bg-black/50" onClick={() => setShowCategorySelector(false)}></div>
-          <div className="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 rounded-t-lg max-h-[60vh] overflow-y-auto">
-            <div className="p-4">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-gray-900 dark:text-white font-bold text-lg">选择分类</h3>
-                <button onClick={() => setShowCategorySelector(false)}>
-                  <X className="h-5 w-5 text-gray-400" />
-                </button>
-              </div>
-              
-              <div className="grid grid-cols-2 gap-3">
-                {categories && categories.map((category) => (
-                  <Link
-                    key={category.id}
-                    to={category.id === '' ? '/category' : `/category/${category.id}`}
-                    className={`p-3 rounded-lg text-center transition-colors block ${
-                      (categoryId || '') === category.id
-                        ? 'bg-blue-500 text-white'
-                        : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600'
-                    }`}
-                  >
-                    {category.name}
-                  </Link>
-                ))}
-              </div>
+      {/* 专题类型选择器 */}
+      <div className="bg-white dark:bg-gray-800 border-b dark:border-gray-700 border-gray-200 px-4 py-3 transition-colors duration-300">
+        <div className="flex space-x-2">
+          <Link
+            to="/special/completed"
+            className={`flex-1 py-2 px-4 rounded-lg text-center transition-colors ${
+              type === 'completed'
+                ? specialConfig.bgColor.replace('bg-gradient-to-r from-', 'bg-').replace(' to-', '-').replace('-600', '-500') + ' text-white'
+                : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600'
+            }`}
+          >
+            <div className="flex items-center justify-center space-x-1">
+              <span className="text-lg">🏆</span>
+              <span className="font-medium">完结精品</span>
             </div>
-          </div>
+          </Link>
+          <Link
+            to="/special/new"
+            className={`flex-1 py-2 px-4 rounded-lg text-center transition-colors ${
+              type === 'new'
+                ? specialConfig.bgColor.replace('bg-gradient-to-r from-', 'bg-').replace(' to-', '-').replace('-600', '-500') + ' text-white'
+                : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600'
+            }`}
+          >
+            <div className="flex items-center justify-center space-x-1">
+              <span className="text-lg">✨</span>
+              <span className="font-medium">最新上架</span>
+            </div>
+          </Link>
         </div>
-      )}
+      </div>
 
       <div className="px-4 py-4">
-        {/* 当前分类信息横幅 */}
-        <div className="bg-white dark:bg-gray-800 rounded-lg p-6 mb-6 border border-gray-200 dark:border-gray-700 transition-colors duration-300">
+        {/* 专题信息横幅 */}
+        <div className={`${specialConfig.bgColor} rounded-lg p-6 mb-6 text-white transition-colors duration-300`}>
           <div className="flex items-center justify-between mb-4">
             <div className="flex-1">
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-                📚 {currentCategory?.name || '分类浏览'}
+              <h2 className="text-2xl font-bold mb-2">
+                {specialConfig.icon} {specialConfig.title}
               </h2>
-              <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">
-                发现精彩小说 · 沉浸式阅读体验
-              </p>
-              <div className="flex items-center space-x-4 text-xs text-gray-400 dark:text-gray-400">
-                <span>📚 当前: <span className="text-gray-900 dark:text-white font-bold">{currentCategory?.name || '全部'}</span></span>
-                <span>📊 总数: <span className="text-gray-900 dark:text-white font-bold">{pagination.total}</span></span>
-                <span>📄 页码: <span className="text-gray-900 dark:text-white font-bold">{pagination.currentPage}</span></span>
+              <p className="text-sm mb-4 opacity-90">{specialConfig.description}</p>
+              <div className="flex items-center space-x-4 text-xs">
+                <span>📚 当前: <span className="font-bold">{specialConfig.title}</span></span>
+                <span>📊 总数: <span className="font-bold">{pagination.total}</span></span>
+                <span>📄 页码: <span className="font-bold">{pagination.currentPage}</span></span>
               </div>
             </div>
             <div className="text-right">
-              <div className="bg-blue-500 text-white px-4 py-2 rounded-lg font-bold text-sm hover:bg-blue-600 cursor-pointer transition-colors">
-                🔥 精选
-              </div>
+              <div className="text-3xl font-bold">{pagination.total}</div>
+              <div className="text-sm opacity-90">{type=='new'?"连载":"完结"}</div>
             </div>
           </div>
           
@@ -124,16 +118,18 @@ export default function Mobile({
             <Button 
               block 
               type="primary"
-              className="bg-blue-500 hover:bg-blue-600 border-0 h-10 text-white text-sm"
+              className="bg-white/20 hover:bg-white/30 border-0 h-10 text-white text-sm backdrop-blur-sm"
             >
               🔍 搜索小说
             </Button>
-            <Button 
-              block 
-              className="bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 border-0 text-gray-700 dark:text-white h-10 text-sm"
-            >
-              📚 查看书架
-            </Button>
+            <Link to="/">
+              <Button 
+                block 
+                className="bg-white/20 hover:bg-white/30 border-0 text-white h-10 text-sm backdrop-blur-sm"
+              >
+                🏠 返回首页
+              </Button>
+            </Link>
           </div>
         </div>
 
@@ -141,7 +137,7 @@ export default function Mobile({
         <div className="bg-white dark:bg-gray-800 rounded-lg p-4 mb-6 border border-gray-200 dark:border-gray-700 transition-colors duration-300">
           <div className="flex items-center justify-between mb-3">
             <h3 className="text-gray-900 dark:text-white font-bold text-lg">
-              ✨ {currentCategory?.name || '分类'} 书籍
+              ✨ {specialConfig.title} 书籍
             </h3>
             <span className="text-sm text-gray-400 dark:text-gray-400">
               {pagination.total} 本
@@ -182,11 +178,11 @@ export default function Mobile({
             <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 transition-colors duration-300">
               <div className="p-8 text-center">
                 <div className="w-16 h-16 bg-gray-200 dark:bg-gray-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <BookOpen className="h-8 w-8 text-gray-400 dark:text-gray-400" />
+                  <span className="text-3xl">{specialConfig.icon}</span>
                 </div>
                 <h4 className="text-gray-400 dark:text-gray-400 font-medium mb-2">暂无书籍</h4>
                 <p className="text-gray-500 dark:text-gray-500 text-sm">
-                  该分类下暂时没有书籍，敬请期待更多精彩内容！
+                  该专题下暂时没有书籍，敬请期待更多精彩内容！
                 </p>
               </div>
             </Card>
@@ -267,13 +263,17 @@ export default function Mobile({
         <Card className="mb-6 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 transition-colors duration-300">
           <div className="p-4">
             <h4 className="text-gray-900 dark:text-white font-bold text-lg mb-4">⚡ 快捷功能</h4>
-            <div className="grid grid-cols-2 gap-3">
-              <div className="text-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer transition-colors">
-                <BookOpen className="h-6 w-6 mx-auto mb-2 text-blue-500" />
-                <span className="text-xs text-gray-600 dark:text-gray-300">我的书架</span>
-              </div>
-              <Link to="/" className="text-center p-3 bg-blue-50 dark:bg-blue-900 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-800 cursor-pointer transition-colors">
-                <Crown className="h-6 w-6 mx-auto mb-2 text-blue-500" />
+            <div className="grid grid-cols-3 gap-3">
+              <Link to="/special/completed" className="text-center p-3 bg-purple-50 dark:bg-purple-900 rounded-lg hover:bg-purple-100 dark:hover:bg-purple-800 cursor-pointer transition-colors">
+                <BookOpen className="h-6 w-6 mx-auto mb-2 text-purple-500" />
+                <span className="text-xs text-gray-600 dark:text-gray-300">完结精品</span>
+              </Link>
+              <Link to="/special/new" className="text-center p-3 bg-blue-50 dark:bg-blue-900 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-800 cursor-pointer transition-colors">
+                <Award className="h-6 w-6 mx-auto mb-2 text-blue-500" />
+                <span className="text-xs text-gray-600 dark:text-gray-300">最新上架</span>
+              </Link>
+              <Link to="/" className="text-center p-3 bg-green-50 dark:bg-green-900 rounded-lg hover:bg-green-100 dark:hover:bg-green-800 cursor-pointer transition-colors">
+                <Crown className="h-6 w-6 mx-auto mb-2 text-green-500" />
                 <span className="text-xs text-gray-600 dark:text-gray-300">返回首页</span>
               </Link>
             </div>
@@ -287,7 +287,7 @@ export default function Mobile({
               <div className="flex items-center justify-center">
                 <div className="animate-spin rounded-full h-8 w-8 border-2 border-blue-500 border-t-transparent rounded-full mr-3"></div>
                 <div>
-                  <div className="font-medium text-gray-900 dark:text-white">正在加载书籍数据...</div>
+                  <div className="font-medium text-gray-900 dark:text-white">正在加载{specialConfig.title}数据...</div>
                   <div className="text-sm text-gray-400 dark:text-gray-400">请稍候</div>
                 </div>
               </div>
@@ -321,19 +321,19 @@ export default function Mobile({
       {/* 移动端底部信息 */}
       <footer className="bg-gray-800 dark:bg-gray-800 border-t border-gray-700 dark:border-gray-700 py-6 mt-8 transition-colors duration-300">
         <div className="px-4 text-center">
-          <h4 className="font-bold text-white mb-3 text-lg">📚 分类浏览</h4>
-          <p className="text-sm text-gray-400 dark:text-gray-400 mb-4">探索更多精彩分类 · 发现优质小说</p>
+          <h4 className="font-bold text-white mb-3 text-lg">{specialConfig.icon} {specialConfig.title}</h4>
+          <p className="text-sm text-gray-400 dark:text-gray-400 mb-4">{specialConfig.description}</p>
           <div className="flex justify-center space-x-4 text-sm text-gray-500 dark:text-gray-500 mb-4">
             <span className="flex items-center">
-              <Award className="h-4 w-4 mr-1 text-blue-500" />
+              <Award className="h-4 w-4 mr-1 text-purple-500" />
               品质
             </span>
             <span className="flex items-center">
-              <TrendingUp className="h-4 w-4 mr-1 text-green-500" />
+              <TrendingUp className="h-4 w-4 mr-1 text-blue-500" />
               更新
             </span>
             <span className="flex items-center">
-              <Heart className="h-4 w-4 mr-1 text-purple-500" />
+              <Heart className="h-4 w-4 mr-1 text-red-500" />
               推荐
             </span>
           </div>

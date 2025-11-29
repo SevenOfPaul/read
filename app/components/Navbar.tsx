@@ -18,8 +18,8 @@ const getActiveMenuItem = (pathname: string) => {
   if (pathname.startsWith('/book')) return 'books';
   if (pathname.startsWith('/category')) return 'category';
   if (pathname.includes('rank') || pathname.includes('ranking')) return 'rank';
-  if (pathname.includes('complete') || pathname.includes('finished')) return 'complete';
-  if (pathname.includes('new') || pathname.includes('latest')) return 'new';
+  if (pathname.includes('complete') || pathname.includes('finished') || pathname.includes('/special/completed')) return 'complete';
+  if (pathname.includes('new') || pathname.includes('latest') || pathname.includes('/special/new')) return 'new';
   return 'home'; // 默认返回首页
 };
 
@@ -27,8 +27,8 @@ const getActiveMenuItem = (pathname: string) => {
 const menuItems = [
   { key: '/all', label: '全部作品', href: '/all', isLink: false },
   { key: 'rank', label: '排行榜', href: '/rank', isLink: false },
-  { key: 'complete', label: '完本', href: '/complete', isLink: false },
-  { key: 'new', label: '新书', href: '/new', isLink: false },
+  { key: 'complete', label: '完结', href: '/special/completed', isLink: true },
+  { key: 'new', label: '新书', href: '/special/new', isLink: true },
   { key: 'category', label: '分类', href: "/category/''", isLink: true }
 ];
 
