@@ -1,4 +1,10 @@
-// 路由配置由文件系统自动发现
-// React Router v7 会自动从 app/routes 目录发现路由组件
+import { type RouteConfig, index, route } from "@react-router/dev/routes";
 
-export default [];
+export default [
+  index("routes/home/index.tsx"),
+  route("book/:bookId", "routes/book/index.tsx"),
+  route("category/:categoryId", "routes/category/index.tsx"),
+  route("author/:authorId", "routes/author/index.tsx"),
+  route("special/:type", "routes/special/index.tsx"),
+  route("*", "routes/not-found.tsx"),
+] satisfies RouteConfig;

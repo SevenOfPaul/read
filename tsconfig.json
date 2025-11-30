@@ -22,7 +22,7 @@
     /* Path mapping */
     "baseUrl": ".",
     "paths": {
-      "~/*": ["./app/*"]
+      "@/*": ["./app/*"]
     }
   },
   "include": [

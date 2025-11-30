@@ -1,0 +1,439 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-serif: "Georgia", "Times New Roman", "SimSun", "宋体", serif;
+  --font-mono: "Fira Code", "Monaco", "Consolas", monospace;
+}
+@custom-variant dark (&:where(.dark, .dark *));
+/* Vant样式兼容 - 简化小说网站主题色 */
+:root {
+  --van-primary-color: #8B4513;
+  --van-success-color: #8FBC8F;
+  --van-warning-color: #DAA520;
+  --van-danger-color: #DC143C;
+  --van-info-color: #4682B4;
+  --van-text-color: #2F2F2F;
+  --van-background-color: #f8f9fa;
+  --van-background-color-light: #ffffff;
+  --van-border-color: #dee2e6;
+}
+
+html, body {
+  @apply bg-gray-50 dark:bg-gray-900;
+  font-family: var(--font-sans);
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+  html {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  html {
+    font-size: 12px;
+  }
+}
+
+/* PC端优化 */
+@media (min-width: 1024px) {
+  .container {
+    max-width: 1200px;
+  }
+}
+
+/* Vant组件样式增强 */
+.van-button {
+  border-radius: 6px;
+  font-weight: 500;
+}
+
+.van-button--primary {
+  background-color: #8B4513 !important;
+  border: none !important;
+}
+
+.van-button--primary:hover {
+  background-color: #A0522D !important;
+}
+
+.van-nav-bar {
+  background: #8B4513 !important;
+}
+
+.van-card {
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  background: white;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* React-Vant组件暗色模式支持 */
+.dark .rv-card,
+.dark .van-card {
+  background-color: #1f2937 !important;
+  border-color: #374151 !important;
+  color: #f9fafb !important;
+}
+
+.dark .rv-card-body,
+.dark .van-card__body,
+.dark .van-card .rv-card-body {
+  background-color: #1f2937 !important;
+  color: #f9fafb !important;
+}
+
+.dark .rv-button,
+.dark .van-button,
+.dark .rv-button--default,
+.dark .van-button--default {
+  background-color: #374151 !important;
+  color: #f9fafb !important;
+  border-color: #4b5563 !important;
+}
+
+.dark .rv-button:hover,
+.dark .van-button:hover,
+.dark .rv-button--default:hover,
+.dark .van-button--default:hover {
+  background-color: #4b5563 !important;
+  color: #ffffff !important;
+}
+
+.dark .rv-button--primary,
+.dark .van-button--primary {
+  background-color: #3b82f6 !important;
+  color: #ffffff !important;
+  border-color: #3b82f6 !important;
+}
+
+.dark .rv-button--primary:hover,
+.dark .van-button--primary:hover {
+  background-color: #2563eb !important;
+  border-color: #2563eb !important;
+}
+
+/* Vant分页组件暗黑模式样式修复 */
+.dark .rv-pagination,
+.dark .van-pagination {
+  background-color: #374151 !important;
+  color: #f9fafb !important;
+}
+
+.dark .rv-pagination__item,
+.dark .van-pagination__item,
+.dark .van-pagination .rv-pagination__item {
+  background-color: #4b5563 !important;
+  color: #d1d5db !important;
+  border-color: #6b7280 !important;
+}
+
+.dark .rv-pagination__item:hover,
+.dark .van-pagination__item:hover,
+.dark .van-pagination .rv-pagination__item:hover {
+  background-color: #6b7280 !important;
+  color: #ffffff !important;
+}
+
+.dark .rv-pagination__item--active,
+.dark .van-pagination__item--active,
+.dark .van-pagination .rv-pagination__item--active {
+  background-color: #3b82f6 !important;
+  color: #ffffff !important;
+  border-color: #3b82f6 !important;
+}
+
+.dark .rv-pagination__item:disabled,
+.dark .van-pagination__item:disabled,
+.dark .van-pagination .rv-pagination__item:disabled {
+  background-color: #6b7280 !important;
+  color: #9ca3af !important;
+  opacity: 0.6;
+}
+
+.dark .rv-pagination__next,
+.dark .van-pagination__next,
+.dark .rv-pagination__prev,
+.dark .van-pagination__prev,
+.dark .van-pagination .rv-pagination__next,
+.dark .van-pagination .rv-pagination__prev {
+  background-color: #4b5563 !important;
+  color: #d1d5db !important;
+  border-color: #6b7280 !important;
+}
+
+.dark .rv-pagination__next:hover,
+.dark .van-pagination__next:hover,
+.dark .rv-pagination__prev:hover,
+.dark .van-pagination__prev:hover,
+.dark .van-pagination .rv-pagination__next:hover,
+.dark .van-pagination .rv-pagination__prev:hover {
+  background-color: #6b7280 !important;
+  color: #ffffff !important;
+}
+
+.dark .rv-pagination__next:disabled,
+.dark .van-pagination__next:disabled,
+.dark .rv-pagination__prev:disabled,
+.dark .van-pagination__prev:disabled,
+.dark .van-pagination .rv-pagination__next:disabled,
+.dark .van-pagination .rv-pagination__prev:disabled {
+  background-color: #6b7280 !important;
+  color: #9ca3af !important;
+  opacity: 0.6;
+}
+
+.dark .rv-pagination__ellipsis,
+.dark .van-pagination__ellipsis,
+.dark .van-pagination .rv-pagination__ellipsis {
+  color: #d1d5db !important;
+}
+
+.dark .rv-pagination__page,
+.dark .van-pagination__page,
+.dark .van-pagination .rv-pagination__page {
+  background-color: transparent !important;
+}
+
+/* 确保分页组件容器在暗黑模式下正常显示 */
+.dark .rv-pagination-wrapper,
+.dark .van-pagination-wrapper {
+  background-color: transparent !important;
+}
+
+/* 简化的小说网站样式 */
+.novel-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.novel-header {
+  background: white;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 1rem 0;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.novel-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.novel-logo-icon {
+  width: 2rem;
+  height: 2rem;
+  background: #8B4513;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.novel-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #8B4513;
+}
+
+.novel-nav {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid #f3f4f6;
+}
+
+.novel-nav a {
+  color: #6b7280;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.novel-nav a:hover {
+  color: #8B4513;
+}
+
+.novel-nav a.active {
+  color: #8B4513;
+  border-bottom: 2px solid #8B4513;
+  padding-bottom: 0.25rem;
+}
+
+/* 书籍卡片样式 */
+.book-card {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 1rem;
+  transition: box-shadow 0.2s;
+}
+
+.book-card:hover {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.book-cover {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.book-title {
+  font-weight: bold;
+  font-size: 1rem;
+  margin: 0.5rem 0;
+  line-height: 1.4;
+}
+
+.book-author {
+  color: #6b7280;
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.book-desc {
+  color: #4b5563;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  margin: 0.5rem 0;
+}
+
+.book-status {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  background: #f3f4f6;
+  color: #374151;
+  font-size: 0.75rem;
+  border-radius: 4px;
+}
+
+/* 分类头部 */
+.category-header {
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.category-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #1f2937;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.category-stats {
+  color: #6b7280;
+  font-size: 0.875rem;
+}
+
+/* 标签 */
+.tag {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+  border-radius: 12px;
+  margin: 0 0.25rem;
+}
+
+.tag-hot {
+  background: #fef2f2;
+  color: #dc2626;
+}
+
+.tag-new {
+  background: #f0fdf4;
+  color: #16a34a;
+}
+
+.tag-recommend {
+  background: #eff6ff;
+  color: #2563eb;
+}
+
+/* 统计数字 */
+.stat-number {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #8B4513;
+}
+
+/* 加载状态 */
+.loading {
+  text-align: center;
+  padding: 3rem;
+  color: #6b7280;
+}
+
+/* 错误状态 */
+.error {
+  text-align: center;
+  padding: 3rem;
+  color: #dc2626;
+}
+
+/* 深色模式 */
+.dark {
+  --van-background-color: #1f2937;
+  --van-background-color-light: #374151;
+  --van-text-color: #f9fafb;
+  --van-border-color: #4b5563;
+}
+
+.dark body {
+  background: #111827;
+}
+
+.dark .van-card {
+  background: #1f2937;
+  border-color: #374151;
+}
+
+.dark .novel-header {
+  background: #1f2937;
+  border-color: #374151;
+}
+
+.dark .category-header {
+  background: #1f2937;
+  border-color: #374151;
+}
+
+.dark .book-card {
+  background: #1f2937;
+  border-color: #374151;
+}
+
+.dark .book-status {
+  background: #374151;
+  color: #d1d5db;
+}
+
+.dark .novel-nav a {
+  color: #d1d5db;
+}
+
+.dark .novel-nav a:hover {
+  color: #ffffff;
+}
+
+.dark .novel-nav a.active {
+  color: #3b82f6;
+  border-bottom-color: #3b82f6;
+}
