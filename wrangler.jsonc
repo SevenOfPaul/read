@@ -1,0 +1,16 @@
+{
+  "name": "read",
+  "main": "./app/entry.worker.ts",
+  "compatibility_date": "2025-04-07",
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
+  "observability": {
+    "enabled": true
+  },
+  "assets": { "directory": "./build/client" },
+  "upload_source_maps": true,
+  "vars": {
+    "VALUE_FROM_CLOUDFLARE": "Hello from Cloudflare"
+  }
+}
