@@ -9,6 +9,7 @@
     "typecheck": "react-router typegen && tsc"
   },
   "dependencies": {
+    "@cloudflare/vite-plugin": "^1.15.3",
     "@react-router/cloudflare": "^7.9.6",
     "@react-router/node": "^7.9.6",
     "@react-router/serve": "^7.9.2",
