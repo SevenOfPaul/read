@@ -1,0 +1,150 @@
+/* 章节阅读页面样式 */
+
+/* 章节阅读容器 */
+.chapter-read-container {
+  @apply min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300;
+}
+
+/* 章节头部样式 */
+.chapter-header {
+  @apply bg-white dark:bg-gray-800 shadow-sm border border-gray-200 dark:border-gray-700;
+}
+
+.chapter-header .chapter-title {
+  @apply text-2xl font-bold text-gray-900 dark:text-white;
+}
+
+/* 章节内容样式 */
+.chapter-content {
+  @apply bg-white dark:bg-gray-800 shadow-sm border border-gray-200 dark:border-gray-700;
+  min-height: 500px;
+}
+
+.chapter-text {
+  @apply p-8;
+}
+
+.chapter-content-text {
+  @apply text-gray-800 dark:text-gray-200 leading-relaxed;
+  line-height: 1.8;
+  font-size: 16px;
+}
+
+.chapter-paragraph {
+  @apply mb-4 text-gray-800 dark:text-gray-200;
+  text-indent: 2em; /* 首行缩进 */
+  line-height: 1.8;
+}
+
+.chapter-paragraph:first-child {
+  @apply mt-0;
+}
+
+.chapter-paragraph:last-child {
+  @apply mb-0;
+}
+
+/* 章节导航样式 */
+.chapter-navigation {
+  @apply bg-white dark:bg-gray-800 shadow-sm border border-gray-200 dark:border-gray-700;
+}
+
+/* Vant分页组件自定义样式 */
+.pagination-custom {
+  @apply flex justify-center;
+}
+
+.pagination-custom .van-pagination {
+  @apply flex justify-center space-x-2;
+}
+
+.pagination-custom .van-pagination__item {
+  @apply px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md text-sm font-medium transition-colors;
+  @apply text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600;
+}
+
+.pagination-custom .van-pagination__item--active {
+  @apply bg-blue-500 text-white border-blue-500;
+}
+
+.pagination-custom .van-pagination__item--disabled {
+  @apply text-gray-400 dark:text-gray-500 bg-gray-100 dark:bg-gray-800 cursor-not-allowed;
+}
+
+/* 按钮样式 */
+.van-button {
+  @apply transition-all duration-200;
+}
+
+.van-button--primary {
+  @apply bg-blue-500 hover:bg-blue-600 text-white;
+}
+
+.van-button--default {
+  @apply bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-white;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .chapter-text {
+    @apply p-4;
+  }
+  
+  .chapter-content-text {
+    font-size: 14px;
+    line-height: 1.7;
+  }
+  
+  .chapter-header .chapter-title {
+    @apply text-xl;
+  }
+}
+
+/* 深色模式兼容性 */
+.dark .chapter-content-text {
+  color: #e5e7eb;
+}
+
+.dark .chapter-paragraph {
+  color: #e5e7eb;
+}
+
+/* 加载和错误状态的样式 */
+.chapter-read-container .loading-spinner {
+  @apply animate-spin rounded-full h-12 w-12 border-4 border-blue-500 border-t-transparent;
+}
+
+.chapter-read-container .error-card {
+  @apply bg-white dark:bg-gray-800 shadow-lg rounded-lg p-8 text-center max-w-md;
+}
+
+/* 阅读体验优化 */
+.chapter-content {
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+}
+
+.dark .chapter-content {
+  background: linear-gradient(135deg, #374151 0%, #1f2937 100%);
+}
+
+/* 导航按钮悬停效果 */
+.chapter-navigation .van-button:hover {
+  @apply transform translate-y-[-1px];
+}
+
+/* 章节内容滚动条样式 */
+.chapter-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.chapter-content::-webkit-scrollbar-track {
+  @apply bg-gray-100 dark:bg-gray-800 rounded-lg;
+}
+
+.chapter-content::-webkit-scrollbar-thumb {
+  @apply bg-gray-300 dark:bg-gray-600 rounded-lg;
+}
+
+.chapter-content::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-400 dark:bg-gray-500;
+}
