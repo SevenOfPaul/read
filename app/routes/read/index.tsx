@@ -26,14 +26,13 @@ async function fetchChapterContent(bookId: string, chapterId: string): Promise<C
           c."bookId",
           c."createTime",
           c."updateTime",
-          b.id as "bookId",
           b.name as "bookName",
           b."authorId",
           a.name as "authorName"
         FROM public.chapter c
         LEFT JOIN public.book b ON c."bookId" = b.id
         LEFT JOIN public.author a ON b."authorId" = a.id
-        WHERE c.id = '${chapterId}' AND c."bookId" = '${bookId}'
+        WHERE c.id = '${chapterId}' AND c."bookId" = '${bookId}' ORDER BY c."idx" ASC
        `
       }),
     });

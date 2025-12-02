@@ -128,14 +128,15 @@ export default function PC() {
 
                   {/* 操作按钮 */}
                   <div className="flex items-center space-x-4 w-[95%]">
+                    <Link className="block w-full" to={`/read/${book.id}/${chapters&&chapters.length?chapters![0].id:''}`}>
                     <Button 
                       className="btn-primary "
                       size="large"
-                      onClick={handleStartReading}
                       disabled={!chapters || chapters.length === 0}
                     >
                       📖 开始阅读
                     </Button>
+                    </Link>
                   </div>
                 </div>
               </div>

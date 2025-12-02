@@ -1,10 +1,9 @@
-import { Button, Card } from "react-vant";
-import { ArrowLeft, ArrowRight, BookOpen, User } from "lucide-react";
+import { Button, Card, Pagination } from "react-vant";
+import { BookOpen, User } from "lucide-react";
 import { Link, useNavigate } from "react-router";
 import { useChapterContent, useChapters, handleChapterJump } from "./index";
 import type { ChapterRead, ChapterInfo } from "../../types/ChapterRead";
 import Navbar from "@/components/Navbar";
-import { Pagination } from "react-vant";
 import { useMemo } from "react";
 
 export default function PC() {
@@ -39,6 +38,9 @@ export default function PC() {
     };
   }, [chapters, chapter]);
 
+
+
+
   // 加载状态
   if (chapterLoading || chaptersLoading) {
     return (
@@ -53,6 +55,12 @@ export default function PC() {
 
   // 错误状态
   if (chapterError || chaptersError) {
+    const errorMessage = chapterError instanceof Error 
+      ? chapterError.message 
+      : chaptersError instanceof Error 
+        ? chaptersError.message 
+        : "无法获取章节内容";
+    
     return (
       <div className="chapter-read-container">
         <div className="flex items-center justify-center min-h-screen">
@@ -60,11 +68,9 @@ export default function PC() {
             <div className="text-6xl mb-4">😵</div>
             <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">加载失败</h3>
             <p className="text-gray-400 dark:text-gray-400 mb-6">
-              {(chapterError || chaptersError) instanceof Error 
-                ? (chapterError || chaptersError).message 
-                : "无法获取章节内容"}
+              {errorMessage}
             </p>
-            <Button onClick={() => window.location.reload()} className="bg-blue-500 hover:bg-blue-600">
+            <Button onClick={() => window.location.reload()} className="bg-blue-500 hover:bg-blue-600 border-0">
               🔄 重新加载
             </Button>
           </Card>
@@ -81,7 +87,7 @@ export default function PC() {
             <div className="text-6xl mb-4">📖</div>
             <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">章节不存在</h3>
             <Link to="/">
-              <Button className="bg-blue-500 hover:bg-blue-600">
+              <Button className="bg-blue-500 hover:bg-blue-600 border-0">
                 🏠 返回首页
               </Button>
             </Link>
@@ -90,19 +96,6 @@ export default function PC() {
       </div>
     );
   }
-
-  // 处理章节导航
-  const handlePrevChapter = () => {
-    if (navigation?.prevChapter) {
-      handleChapterJump(navigate, chapter.bookId, navigation.prevChapter.id);
-    }
-  };
-
-  const handleNextChapter = () => {
-    if (navigation?.nextChapter) {
-      handleChapterJump(navigate, chapter.bookId, navigation.nextChapter.id);
-    }
-  };
 
   const handlePageChange = (page: number) => {
     if (chapters && page >= 1 && page <= chapters.length) {
@@ -118,11 +111,7 @@ export default function PC() {
     if (!content) return "暂无内容";
     
     // 将换行符转换为段落
-    return content.split('\n').map((paragraph, index) => (
-      <p key={index} className="chapter-paragraph mb-4 leading-relaxed text-gray-800 dark:text-gray-200">
-        {paragraph.trim()}
-      </p>
-    )).filter(paragraph => paragraph.props.children.length > 0);
+    return content
   };
 
   return (
@@ -131,22 +120,42 @@ export default function PC() {
       <Navbar />
 
       {/* 主内容区域 */}
-      <div className="max-w-4xl mx-auto px-6 py-8 dark:bg-gray-600 min-h-screen">
-        {/* 书籍和章节信息 */}
+      <div className="max-w-4xl mx-auto px-3 py-6 dark:bg-gray-600 min-h-screen">
+        {/* 美化后的书籍和章节信息 */}
         <Card className="chapter-header mb-6">
-          <div className="text-center">
-            <div className="mb-4">
-              <Link to={`/book/${chapter.book.id}`} className="text-blue-600 dark:text-blue-400 hover:underline">
-                📚 {chapter.book.name}
+          {/* 书籍信息区域 */}
+          <div className="chapter-book-info">
+            <Link to={`/book/${chapter.book.id}`} className="chapter-book-link">
+              <BookOpen className="h-5 w-5" />
+              <span className="font-medium">{chapter.book.name}</span>
+            </Link>
+            
+            <span className="chapter-info-divider">•</span>
+            
+            <div className="chapter-author-info">
+              <Link to={`/author/${chapter.book.authorId}`} className="chapter-User-link">
+                <User className="h-4 w-4" />
+                <span>{chapter.book.authorName}</span>
               </Link>
-              <span className="text-gray-400 mx-2">|</span>
-              <span className="text-gray-600 dark:text-gray-300">作者：{chapter.book.authorName}</span>
             </div>
-            <h1 className="chapter-title text-2xl font-bold text-gray-900 dark:text-white mb-2">
+          </div>
+
+          {/* 章节标题区域 */}
+          <div className="chapter-title-container">
+            <h1 className="chapter-title">
               {chapter.name}
             </h1>
-            <div className="text-sm text-gray-500 dark:text-gray-400">
-              第 {navigation?.currentIndex || 0} 章 / 共 {navigation?.totalChapters || 0} 章
+          </div>
+
+          {/* 进度信息区域 */}
+          <div className="chapter-progress-container">
+            {/* 进度信息 */}
+            <div className="chapter-progress-info">
+              <div className="flex items-center space-x-2">
+                <span className="font-medium">
+                  第 {navigation ? navigation.currentIndex + 1 : 0} 章 / 共 {navigation ? navigation.totalChapters : 0} 章
+                </span>
+              </div>
             </div>
           </div>
         </Card>
@@ -154,75 +163,38 @@ export default function PC() {
         {/* 章节内容 */}
         <Card className="chapter-content mb-6">
           <div className="chapter-text">
-            <div className="chapter-content-text prose prose-lg max-w-none dark:prose-invert">
-              {formatContent(chapter.content)}
+            <div className="chapter-content-text prose prose-lg max-w-none dark:prose-invert" 
+            dangerouslySetInnerHTML={{__html:formatContent(chapter.content)}}>
             </div>
           </div>
         </Card>
 
         {/* 章节导航 */}
-        <Card className="chapter-navigation">
-          <div className="flex items-center justify-between mb-6">
-            {/* 上一章按钮 */}
-            <div className="flex-1">
-              {navigation?.prevChapter ? (
-                <Button 
-                  className="w-full bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-white"
-                  onClick={handlePrevChapter}
-                >
-                  <ArrowLeft className="h-4 w-4 mr-2" />
-                  上一章：{navigation.prevChapter.name}
-                </Button>
-              ) : (
-                <div className="w-full h-10 flex items-center justify-center text-gray-400 dark:text-gray-500">
-                  已经是第一章
-                </div>
-              )}
-            </div>
-
-            {/* 中间间距 */}
-            <div className="w-8"></div>
-
-            {/* 下一章按钮 */}
-            <div className="flex-1">
-              {navigation?.nextChapter ? (
-                <Button 
-                  className="w-full bg-blue-500 hover:bg-blue-600 text-white"
-                  onClick={handleNextChapter}
-                >
-                  下一章：{navigation.nextChapter.name}
-                  <ArrowRight className="h-4 w-4 ml-2" />
-                </Button>
-              ) : (
-                <div className="w-full h-10 flex items-center justify-center text-gray-400 dark:text-gray-500">
-                  已经是最后一章
-                </div>
-              )}
-            </div>
-          </div>
-
-          {/* Vant分页组件 */}
-          <div className="text-center">
+        <Card className="chapter-navigation py-2">
+          {/* Vant分页组件 - 自定义上下页文本 */}
+          <div className="text-center mb-6">
             <Pagination
-              v-model={currentPage}
+              value={currentPage}
               totalItems={navigation?.totalChapters || 0}
               itemsPerPage={1}
               showPageSize={5}
               forceEllipses
               onChange={handlePageChange}
+              prevText="上一章"
+              nextText="下一章"
               className="pagination-custom"
             />
           </div>
 
           {/* 快速返回按钮 */}
-          <div className="flex justify-center mt-4 space-x-4">
+          <div className="flex justify-center space-x-4 ">
             <Link to={`/book/${chapter.bookId}`}>
-              <Button className="bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 text-gray-700 dark:text-white">
-                📚 返回书籍详情
+              <Button className="bg-gray-100 w-43 rounded-xl!  dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 border-0 text-gray-700 dark:text-white transition-colors duration-300">
+                📚 返回目录
               </Button>
             </Link>
             <Link to="/">
-              <Button className="bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 text-gray-700 dark:text-white">
+              <Button className="bg-gray-100 w-43 rounded-xl! dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 border-0 text-gray-700 dark:text-white transition-colors duration-300">
                 🏠 返回首页
               </Button>
             </Link>

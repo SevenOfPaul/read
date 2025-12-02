@@ -97,6 +97,7 @@ export default function PC() {
 
                   return (
                     <Card key={featuredBook.id} className="bg-gray-50 dark:bg-gray-700 border-gray-200 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
+                        <Link to={`/book/${featuredBook.id}`}>
                       <Card.Body className="p-4">
                         <div className="flex space-x-4">
                           {featuredBook.bookImage && (
@@ -124,11 +125,11 @@ export default function PC() {
                               </div>
                               <div className="flex-shrink-0 ml-4">
                                 <span className="text-blue-400 text-xs font-medium block mb-2">🔥 {featuredBook.status}</span>
-                                <Link to={`/book/${featuredBook.id}`}>
+                              
                                   <Button size="small" className="bg-blue-500 hover:bg-blue-600 border-0 text-xs px-3">
                                     立即阅读
                                   </Button>
-                                </Link>
+                         
                               </div>
                             </div>
                             {featuredBook.lastChapter && (
@@ -139,6 +140,7 @@ export default function PC() {
                           </div>
                         </div>
                       </Card.Body>
+                             </Link>
                     </Card>
                   );
                 })}
@@ -274,6 +276,7 @@ export default function PC() {
                   {hasBooks ? (
                     <div className="space-y-4">
                       {category.books.map((book, index) => (
+                           <Link to={`/book/${book.id}`}>
                         <Card key={book.id} className="bg-gray-50 dark:bg-gray-700 border-gray-200 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-600 transition-all duration-200 hover:shadow-lg">
                           <Card.Body className="p-4">
                             <div className="flex space-x-4">
@@ -339,20 +342,20 @@ export default function PC() {
                                         {formatHeat(book.fired!)}
                                       </span>
                                     </div>
-                                    <Link to={`/book/${book.id}`}>
+                                 
                                       <Button
                                         size="small"
                                         className="bg-blue-500 hover:bg-blue-600 border-0 text-sm px-4 py-2 font-bold"
                                       >
                                         📖 阅读
                                       </Button>
-                                    </Link>
                                   </div>
                                 </div>
                               </div>
                             </div>
                           </Card.Body>
                         </Card>
+                           </Link>
                       ))}
                     </div>
                   ) : (

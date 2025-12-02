@@ -1,17 +1,229 @@
 /* 章节阅读页面样式 */
-
+@reference "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
 /* 章节阅读容器 */
 .chapter-read-container {
   @apply min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300;
 }
 
-/* 章节头部样式 */
+/* 章节头部样式 - 美化版本 */
 .chapter-header {
-  @apply bg-white dark:bg-gray-800 shadow-sm border border-gray-200 dark:border-gray-700;
+  @apply bg-white dark:bg-gray-800 shadow-lg border border-gray-200 dark:border-gray-700;
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  border-radius: 16px;
+  padding: 24px;
+  position: relative;
+  overflow: hidden;
 }
 
-.chapter-header .chapter-title {
-  @apply text-2xl font-bold text-gray-900 dark:text-white;
+.dark .chapter-header {
+  background: linear-gradient(135deg, #374151 0%, #1f2937 100%);
+}
+
+/* 装饰性背景元素 */
+.chapter-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 120px;
+  height: 120px;
+  background: linear-gradient(45deg, rgba(59, 130, 246, 0.1) 0%, rgba(147, 197, 253, 0.05) 100%);
+  border-radius: 50%;
+  transform: translate(30px, -30px);
+  pointer-events: none;
+}
+
+.chapter-header::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(45deg, rgba(16, 185, 129, 0.1) 0%, rgba(52, 211, 153, 0.05) 100%);
+  border-radius: 50%;
+  transform: translate(-20px, 20px);
+  pointer-events: none;
+}
+
+/* 书籍信息区域 */
+.chapter-book-info {
+  @apply flex items-center justify-center space-x-4 mb-6;
+  position: relative;
+  z-index: 1;
+}
+
+.chapter-book-link {
+  @apply flex items-center space-x-2 px-4 py-2 rounded-full bg-blue-50 dark:bg-blue-900/20;
+  @apply text-blue-600 dark:text-blue-400 hover:bg-blue-100 dark:hover:bg-blue-900/30;
+  @apply transition-all duration-300 hover:shadow-md hover:scale-105;
+  text-decoration: none;
+  border: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+.chapter-User-link {
+  @apply flex items-center space-x-2 rounded-full ;
+  @apply text-blue-600 dark:text-blue-400 ;
+  @apply duration-300;
+  text-decoration: none;
+}
+.chapter-book-link:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(59, 130, 246, 0.15);
+}
+
+.chapter-author-info {
+  @apply flex items-center space-x-2 px-4 py-2 rounded-full bg-gray-50 dark:bg-gray-700;
+  @apply text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-600;
+}
+
+.chapter-info-divider {
+  @apply text-gray-300 dark:text-gray-600 font-bold;
+}
+
+/* 章节标题区域 */
+.chapter-title-container {
+  @apply text-center mb-6;
+  position: relative;
+  z-index: 1;
+}
+
+.chapter-title {
+  @apply text-3xl font-bold text-gray-900 dark:text-white mb-3;
+  background: linear-gradient(135deg, #1f2937 0%, #4b5563 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  position: relative;
+}
+
+.dark .chapter-title {
+  background: linear-gradient(135deg, #f9fafb 0%, #d1d5db 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* 标题装饰线 */
+.chapter-title::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, #3b82f6, #10b981);
+  border-radius: 2px;
+}
+
+/* 进度信息区域 */
+.chapter-progress-container {
+  @apply flex flex-col items-center space-y-4;
+  position: relative;
+  z-index: 1;
+}
+
+/* 进度条 */
+.chapter-progress-bar {
+  @apply w-64 h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden;
+  position: relative;
+}
+
+.chapter-progress-fill {
+  @apply h-full bg-gradient-to-r from-blue-500 to-green-500 rounded-full;
+  transition: width 0.8s ease-in-out;
+  position: relative;
+}
+
+.chapter-progress-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    rgba(255, 255, 255, 0.3) 50%, 
+    transparent 100%);
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.chapter-progress-info {
+  @apply flex items-center space-x-6 text-sm text-gray-500 dark:text-gray-400;
+}
+
+/* 阅读时间估算 */
+.chapter-reading-time {
+  @apply flex items-center space-x-1 px-3 py-1 rounded-full bg-green-50 dark:bg-green-900/20;
+  @apply text-green-600 dark:text-green-400 border border-green-200 dark:border-green-700;
+}
+
+/* 更新时间 */
+.chapter-update-time {
+  @apply flex items-center space-x-1 px-3 py-1 rounded-full bg-yellow-50 dark:bg-yellow-900/20;
+  @apply text-yellow-600 dark:text-yellow-400 border border-yellow-200 dark:border-yellow-700;
+}
+
+/* 收藏按钮 */
+.chapter-favorite-btn {
+  @apply absolute top-4 right-4 p-2 rounded-full bg-white/80 dark:bg-gray-800/80;
+  @apply hover:bg-white dark:hover:bg-gray-800 shadow-md transition-all duration-300;
+  @apply hover:shadow-lg hover:scale-110;
+}
+
+.chapter-favorite-btn:hover {
+  transform: rotate(15deg) scale(1.1);
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .chapter-header {
+    padding: 16px;
+    border-radius: 12px;
+  }
+  
+  .chapter-book-info {
+    @apply flex-col space-y-2 space-x-0;
+  }
+  
+  .chapter-title {
+    @apply text-2xl;
+  }
+  
+  .chapter-progress-bar {
+    @apply w-48;
+  }
+  
+  .chapter-progress-info {
+    @apply space-x-3 text-xs;
+  }
+}
+
+@media (max-width: 480px) {
+  .chapter-header {
+    padding: 12px;
+  }
+  
+  .chapter-book-link,
+  .chapter-author-info {
+    @apply px-3 py-1 text-sm;
+  }
+  
+  .chapter-title {
+    @apply text-xl;
+  }
+  
+  .chapter-progress-bar {
+    @apply w-40;
+  }
 }
 
 /* 章节内容样式 */
