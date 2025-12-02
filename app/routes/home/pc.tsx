@@ -237,7 +237,7 @@ export default function PC() {
 
             return (
               <div key={category.id} className="bg-white 
-                 dark:bg-gray-800 w-162 rounded-lg overflow-hidden border border-gray-200 
+                 dark:bg-gray-800 max-[1080px]:w-162 w-[32.5%] rounded-lg overflow-hidden border border-gray-200 
                  dark:border-gray-700 transition-colors duration-300">
                 {/* 分类头部 */}
                 <div className="bg-gray-100 dark:bg-gray-700 p-4 border-l-4 border-blue-500">

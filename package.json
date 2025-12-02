@@ -13,10 +13,11 @@
     "cf:deploy": "pnpm build && wrangler pages deploy ./build/client"
   },
   "dependencies": {
-    "@react-router/cloudflare": "^7.6.2",
     "@react-router/dev": "^7.6.2",
+    "@react-router/node": "^7.9.6",
     "@tanstack/react-query": "^5.63.0",
     "ahooks": "^3.9.6",
+    "isbot": "^5",
     "lucide-react": "^0.468.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -27,7 +28,6 @@
     "zustand": "^5.0.8"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20251128.0",
     "@tailwindcss/vite": "^4.1.13",
     "@types/node": "^22",
     "@types/react": "^18.2.45",

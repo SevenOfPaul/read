@@ -137,7 +137,7 @@ export function useCategories() {
 
 export function useHotBooks() {
   return useQuery({
-    queryKey: ['hotBooks'],
+    queryKey: ["hotBooks"],
     queryFn: fetchHotBooks,
   });
 }

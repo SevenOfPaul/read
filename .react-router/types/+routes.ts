@@ -14,15 +14,70 @@ type Pages = {
   "/": {
     params: {};
   };
+  "/book/:bookId": {
+    params: {
+      "bookId": string;
+    };
+  };
+  "/category/:categoryId": {
+    params: {
+      "categoryId": string;
+    };
+  };
+  "/author/:authorId": {
+    params: {
+      "authorId": string;
+    };
+  };
+  "/special/:type": {
+    params: {
+      "type": string;
+    };
+  };
+  "/*": {
+    params: {
+      "*": string;
+    };
+  };
 };
 
 type RouteFiles = {
   "root.tsx": {
     id: "root";
+    page: "/" | "/book/:bookId" | "/category/:categoryId" | "/author/:authorId" | "/special/:type" | "/*";
+  };
+  "routes/home/index.tsx": {
+    id: "routes/home/index";
     page: "/";
+  };
+  "routes/book/index.tsx": {
+    id: "routes/book/index";
+    page: "/book/:bookId";
+  };
+  "routes/category/index.tsx": {
+    id: "routes/category/index";
+    page: "/category/:categoryId";
+  };
+  "routes/author/index.tsx": {
+    id: "routes/author/index";
+    page: "/author/:authorId";
+  };
+  "routes/special/index.tsx": {
+    id: "routes/special/index";
+    page: "/special/:type";
+  };
+  "routes/not-found.tsx": {
+    id: "routes/not-found";
+    page: "/*";
   };
 };
 
 type RouteModules = {
   "root": typeof import("./app/root.tsx");
+  "routes/home/index": typeof import("./app/routes/home/index.tsx");
+  "routes/book/index": typeof import("./app/routes/book/index.tsx");
+  "routes/category/index": typeof import("./app/routes/category/index.tsx");
+  "routes/author/index": typeof import("./app/routes/author/index.tsx");
+  "routes/special/index": typeof import("./app/routes/special/index.tsx");
+  "routes/not-found": typeof import("./app/routes/not-found.tsx");
 };
