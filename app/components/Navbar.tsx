@@ -25,11 +25,11 @@ const getActiveMenuItem = (pathname: string) => {
 
 // 导航菜单项配置
 const menuItems = [
-  { key: '/all', label: '全部作品', href: '/all', isLink: false },
   { key: 'rank', label: '排行榜', href: '/rank', isLink: false },
   { key: 'complete', label: '完结', href: '/special/completed', isLink: true },
   { key: 'new', label: '新书', href: '/special/new', isLink: true },
-  { key: 'category', label: '分类', href: "/category/''", isLink: true }
+  { key: 'category', label: '分类', href: "/category/''", isLink: true },
+    { key: 'rank', label: '我要上传', href: '/upload', isLink: false },
 ];
 
 export default function Navbar({ 
