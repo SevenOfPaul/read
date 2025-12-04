@@ -191,12 +191,6 @@ export function useRelatedBooks(categoryId: string, currentBookId: string) {
   });
 }
 
-// 处理章节点击事件
-export function handleChapterClick(chapterId: string, bookId: string) {
-  console.log(`跳转到阅读页面 - 书籍ID: '${bookId}', 章节ID: '${chapterId}'`);
-  // 这里可以跳转到阅读页面，格式类似 /read/:bookId/:chapterId
-}
-
 // 处理收藏功能
 export function handleBookmark(bookId: string) {
   console.log(`收藏书籍: '${bookId}'`);

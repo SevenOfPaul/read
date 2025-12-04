@@ -1,11 +1,12 @@
 import { Button, Card } from "react-vant";
 import { BookOpen, User, Clock, Heart, Share, Award } from "lucide-react";
 import { Link } from "react-router";
-import { useBookDetail, useChapters, useRelatedBooks, handleChapterClick, handleBookmark, handleShare } from "./index";
+import { useBookDetail, useChapters, useRelatedBooks, handleBookmark, handleShare } from "./index";
 import type { BookDetail as BookDetailType, ChapterInfo, RelatedBook } from "@/types/BookDetail";
 import Navbar from "@/components/Navbar";
 const imgHost = import.meta.env.VITE_imgHost;
 import "./index.css"
+
 export default function PC() {
   const { data: book, isLoading: bookLoading, error: bookError } = useBookDetail();
   const { data: chapters, isLoading: chaptersLoading, error: chaptersError } = useChapters();
@@ -69,13 +70,6 @@ export default function PC() {
     );
   }
 
-  // 跳转到第一章节
-  const handleStartReading = () => {
-    if (chapters && chapters.length > 0) {
-      handleChapterClick(chapters[0].id, book.id);
-    }
-  };
-
   return (
     <div className="book-detail-container">
       {/* 顶部导航 */}
@@ -128,7 +122,7 @@ export default function PC() {
 
                   {/* 操作按钮 */}
                   <div className="flex items-center space-x-4 w-[95%]">
-                    <Link className="block w-full" to={`/read/${book.id}/${chapters&&chapters.length?chapters![0].id:''}`}>
+                    <Link className="block w-full" to={`/read/${book.id}/${chapters && chapters.length ? chapters[0].id : ''}`}>
                     <Button 
                       className="btn-primary "
                       size="large"
@@ -170,13 +164,13 @@ export default function PC() {
               ) : chapters && chapters.length > 0 ? (
                 <div className="chapters-grid">
                   {chapters.map((chapter: ChapterInfo, index: number) => (
-                    <div 
+                    <Link 
                       key={chapter.id} 
-                      className="chapter-grid-item"
-                      onClick={() => handleChapterClick(chapter.id, book.id)}
+                      to={`/read/${book.id}/${chapter.id}`}
+                      className="chapter-grid-item block"
                     >
                       <div className="chapter-grid-name">{chapter.name}</div>
-                    </div>
+                    </Link>
                   ))}
                 </div>
               ) : (
@@ -224,14 +218,18 @@ export default function PC() {
             <Card className="p-4">
               <h4 className="font-bold text-gray-900 dark:text-white mb-4">⚡ 快捷操作</h4>
               <div className="space-y-2">
-                <Button 
-                  block 
-                  className="bg-blue-500 hover:bg-blue-600 text-white my-1"
-                  onClick={handleStartReading}
-                  disabled={!chapters || chapters.length === 0}
+                <Link 
+                  className="block"
+                  to={`/read/${book.id}/${chapters && chapters.length ? chapters[0].id : ''}`}
                 >
-                  📖 立即阅读
-                </Button>
+                  <Button 
+                    block 
+                    className="bg-blue-500 hover:bg-blue-600 text-white my-1"
+                    disabled={!chapters || chapters.length === 0}
+                  >
+                    📖 立即阅读
+                  </Button>
+                </Link>
                 <Button 
                   block 
                   className="my-1 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-white"

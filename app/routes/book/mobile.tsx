@@ -1,10 +1,11 @@
 import { Button, Card } from "react-vant";
 import { BookOpen, User, Clock, Heart, Share, Star, Eye, Award, ArrowLeft, MoreVertical } from "lucide-react";
 import { Link } from "react-router";
-import { useBookDetail, useChapters, useRelatedBooks, handleChapterClick, handleBookmark, handleShare } from "./index";
+import { useBookDetail, useChapters, useRelatedBooks, handleBookmark, handleShare } from "./index";
 import type { BookDetail as BookDetailType, ChapterInfo, RelatedBook } from "../../types/BookDetail";
 const imgHost = import.meta.env.VITE_imgHost;
 import "./index.css"
+
 export default function Mobile() {
   const { data: book, isLoading: bookLoading, error: bookError } = useBookDetail();
   const { data: chapters, isLoading: chaptersLoading, error: chaptersError } = useChapters();
@@ -66,12 +67,6 @@ export default function Mobile() {
     );
   }
 
-  // 跳转到第一章节
-  const handleStartReading = () => {
-    if (chapters && chapters.length > 0) {
-      handleChapterClick(chapters[0].id, book.id);
-    }
-  };
   return (
     <div className="book-detail-container">
       {/* 移动端顶部导航 */}
@@ -155,15 +150,19 @@ export default function Mobile() {
           {/* 移动端操作按钮 */}
           <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
             <div className="grid grid-cols-2 gap-3">
-              <Button 
-                className="bg-blue-500 hover:bg-blue-600 text-white font-bold"
-                onClick={handleStartReading}
-                disabled={!chapters || chapters.length === 0}
+              <Link 
+                className="block"
+                to={`/read/${book.id}/${chapters && chapters.length ? chapters[0].id : ''}`}
               >
-                📖 开始阅读
-              </Button>
+                <Button 
+                  className="bg-blue-500 hover:bg-blue-600 text-white font-bold w-full"
+                  disabled={!chapters || chapters.length === 0}
+                >
+                  📖 开始阅读
+                </Button>
+              </Link>
               <Button 
-                className="bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 text-gray-700 dark:text-white"
+                className="bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 text-gray-700 dark:text-white w-full"
                 onClick={() => handleBookmark(book.id)}
               >
                 <Heart className="h-4 w-4 mr-2" />
@@ -199,20 +198,18 @@ export default function Mobile() {
           ) : chapters && chapters.length > 0 ? (
             <div className="space-y-1 max-h-96 overflow-y-auto">
               {chapters.map((chapter: ChapterInfo) => (
-                <div key={chapter.id} className="border-b border-gray-100 dark:border-gray-700 last:border-b-0 py-3">
-                  <Link 
-                    to="#" 
-                    className="chapter-link flex items-center justify-between"
-                    onClick={() => handleChapterClick(chapter.id, book.id)}
-                  >
-                    <span className="text-gray-700 dark:text-gray-300 text-sm font-medium truncate mr-4">
-                      {chapter.name}
-                    </span>
-                    <span className="text-gray-400 dark:text-gray-500 text-xs flex-shrink-0">
-                      #{chapter.idx}
-                    </span>
-                  </Link>
-                </div>
+                <Link 
+                  key={chapter.id} 
+                  to={`/read/${book.id}/${chapter.id}`}
+                  className="chapter-link flex items-center justify-between border-b border-gray-100 dark:border-gray-700 last:border-b-0 py-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+                >
+                  <span className="text-gray-700 dark:text-gray-300 text-sm font-medium truncate mr-4">
+                    {chapter.name}
+                  </span>
+                  <span className="text-gray-400 dark:text-gray-500 text-xs flex-shrink-0">
+                    #{chapter.idx}
+                  </span>
+                </Link>
               ))}
             </div>
           ) : (
@@ -257,15 +254,19 @@ export default function Mobile() {
         {/* 移动端底部固定操作栏 */}
         <div className="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 p-4 z-50">
           <div className="grid grid-cols-2 gap-3">
-            <Button 
-              className="bg-blue-500 hover:bg-blue-600 text-white font-bold"
-              onClick={handleStartReading}
-              disabled={!chapters || chapters.length === 0}
+            <Link 
+              className="block"
+              to={`/read/${book.id}/${chapters && chapters.length ? chapters[0].id : ''}`}
             >
-              📖 立即阅读
-            </Button>
+              <Button 
+                className="bg-blue-500 hover:bg-blue-600 text-white font-bold w-full"
+                disabled={!chapters || chapters.length === 0}
+              >
+                📖 立即阅读
+              </Button>
+            </Link>
             <Button 
-              className="bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 text-gray-700 dark:text-white"
+              className="bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 text-gray-700 dark:text-white w-full"
               onClick={() => handleBookmark(book.id)}
             >
               <Heart className="h-4 w-4 mr-2" />

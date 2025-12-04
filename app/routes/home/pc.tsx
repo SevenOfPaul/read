@@ -113,7 +113,7 @@ export default function PC() {
 
                   return (
                     <Card key={featuredBook.id} className="bg-gray-50 dark:bg-gray-700 border-gray-200 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
-                        <Link to={`/book/${featuredBook.id}`}>
+                    <Link to={`/book/${featuredBook.id}`}>
                       <Card.Body className="p-4">
                         <div className="flex space-x-4">
                           {featuredBook.bookImage && (
@@ -300,7 +300,7 @@ export default function PC() {
                   {hasBooks ? (
                     <div className="space-y-4">
                       {category.books.map((book, index) => (
-                           <Link to={`/book/${book.id}`}>
+                        <Link to={`/book/${book.id}`} key={book.id}>
                         <Card key={book.id} className="bg-gray-50 dark:bg-gray-700 border-gray-200 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-600 transition-all duration-200 hover:shadow-lg">
                           <Card.Body className="p-4">
                             <div className="flex space-x-4">
