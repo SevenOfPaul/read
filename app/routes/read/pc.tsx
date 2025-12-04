@@ -4,12 +4,21 @@ import { Link, useNavigate } from "react-router";
 import { useChapterContent, useChapters, handleChapterJump } from "./index";
 import type { ChapterRead, ChapterInfo } from "../../types/ChapterRead";
 import Navbar from "@/components/Navbar";
-import { useMemo } from "react";
+import { useMemo, useEffect } from "react";
+import { useChapterStore } from "../../lib/useChapterStore";
 
 export default function PC() {
   const navigate = useNavigate();
+  const { currentChapterId } = useChapterStore();
   const { data: chapter, isLoading: chapterLoading, error: chapterError } = useChapterContent();
   const { data: chapters, isLoading: chaptersLoading, error: chaptersError } = useChapters();
+
+  // 章节变化时更新 store 状态
+  useEffect(() => {
+    if (chapter?.id && chapter?.bookId) {
+      useChapterStore.getState().setCurrentChapter(chapter.id, chapter.bookId);
+    }
+  }, [chapter]);
 
   // 计算当前章节在章节列表中的位置
   const { currentPage, totalPages, navigation } = useMemo(() => {
@@ -37,9 +46,6 @@ export default function PC() {
       }
     };
   }, [chapters, chapter]);
-
-
-
 
   // 加载状态
   if (chapterLoading || chaptersLoading) {
@@ -102,6 +108,7 @@ export default function PC() {
       const targetChapter = chapters[page - 1];
       if (targetChapter) {
         handleChapterJump(navigate, chapter.bookId, targetChapter.id);
+        // store 状态会在 useEffect 中自动更新
       }
     }
   };
@@ -111,7 +118,7 @@ export default function PC() {
     if (!content) return "暂无内容";
     
     // 将换行符转换为段落
-    return content
+    return content;
   };
 
   return (

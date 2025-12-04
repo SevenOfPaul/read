@@ -1,13 +1,26 @@
 import { Button, Card, Badge } from "react-vant";
 import { Clock, User, TrendingUp, Award, Heart, Eye, Star, Crown, BookMarked, Menu, Filter, BookOpen } from "lucide-react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import type { CategoryWithBooks } from "@/types/categorySearch";
 import { useCategories, useHotBooks, formatHeat } from "./index";
 import Navbar from "@/components/Navbar";
+import { useChapterStore } from "@/lib/useChapterStore";
 
 export default function PC() {
+  const navigate = useNavigate();
+  const { currentChapterId, bookId } = useChapterStore();
   const { data: categories, isLoading, error } = useCategories();
   const { data: hotBooks } = useHotBooks();
+
+  // 继续阅读功能
+  const handleContinueReading = () => {
+    if (currentChapterId && bookId) {
+      navigate(`/read/${bookId}/${currentChapterId}`);
+    }
+  };
+
+  // 判断是否有阅读进度
+  const hasReadingProgress = currentChapterId && bookId;
 
   // 截取描述为100字
   const truncateDesc = (desc: string) => {
@@ -18,6 +31,7 @@ export default function PC() {
   // 统计数据
   const totalBooks = categories?.reduce((sum, cat) => sum + (cat.books?.length || 0), 0) || 0;
   const categoriesWithBooks = categories?.filter(cat => cat.books && cat.books.length > 0) || [];
+
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
       {/* 使用公共导航栏组件 */}
@@ -59,6 +73,8 @@ export default function PC() {
 
           {/* 主内容区域 */}
           <main className="flex-1">
+            {/* 继续阅读横幅 */}
+
             {/* 英雄横幅 - 起点风格 */}
             <div className="bg-white dark:bg-gray-800 rounded-lg p-8 mb-6 border border-gray-200 dark:border-gray-700 transition-colors duration-300">
               <div className="flex items-center justify-between">
@@ -189,6 +205,14 @@ export default function PC() {
               <div className="space-y-2">
                 <Button block className="bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 border-0 text-gray-700 dark:text-white">
                   📚 我的书架
+                </Button>
+                <Button 
+                  block 
+                  className="bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 border-0 text-gray-700 dark:text-white"
+                  onClick={handleContinueReading}
+                  disabled={!hasReadingProgress}
+                >
+                  📖 继续阅读
                 </Button>
                 <Button block className="bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 border-0 text-gray-700 dark:text-white">
                   🔖 收藏夹
