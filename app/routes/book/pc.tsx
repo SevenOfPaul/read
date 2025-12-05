@@ -224,7 +224,7 @@ export default function PC() {
                 >
                   <Button 
                     block 
-                    className="bg-blue-500 hover:bg-blue-600 text-white my-1"
+                    className="bg-blue-500! hover:bg-blue-600 text-white my-1"
                     disabled={!chapters || chapters.length === 0}
                   >
                     📖 立即阅读

@@ -25,7 +25,7 @@ const getActiveMenuItem = (pathname: string) => {
 
 // 导航菜单项配置
 const menuItems = [
-  { key: 'rank', label: '排行榜', href: '/rank', isLink: false },
+  { key: 'rank', label: '排行榜', href: '/rank', isLink: true },
   { key: 'complete', label: '完结', href: '/special/completed', isLink: true },
   { key: 'new', label: '新书', href: '/special/new', isLink: true },
   { key: 'category', label: '分类', href: "/category/''", isLink: true },

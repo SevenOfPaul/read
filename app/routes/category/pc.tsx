@@ -210,7 +210,7 @@ export default function PC({
                   itemsPerPage={pagination.pageSize}
                   showPageSize={5}
                   forceEllipses={true}
-                  className="custom-pagination [&_.rv-pagination]:text-gray-600 dark:[&_.rv-pagination]:text-gray-300 [&_.rv-pagination__item]:bg-gray-100 dark:[&_.rv-pagination__item]:bg-gray-700 [&_.rv-pagination__item:hover]:bg-gray-200 dark:[&_.rv-pagination__item:hover]:bg-gray-600 [&_.rv-pagination__item--active]:bg-blue-500"
+                  className="custom-pagination"
                   prevText="上一页"
                   nextText="下一页"
                 />

@@ -1,0 +1,209 @@
+@reference "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* 排行榜页面样式 */
+
+.ranking-container {
+  @apply min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300;
+}
+
+.ranking-header {
+  @apply bg-white dark:bg-gray-800 border-b dark:border-gray-700 border-gray-200 sticky top-0 z-50 transition-colors duration-300;
+}
+
+.ranking-tabs {
+  @apply flex space-x-1 bg-gray-100 dark:bg-gray-700 rounded-lg p-1;
+}
+
+.ranking-tab {
+  @apply flex-1 flex items-center justify-center space-x-2 py-3 px-4 rounded-md text-sm font-medium transition-all duration-200;
+}
+
+.ranking-tab-active {
+  @apply bg-white dark:bg-gray-800 text-blue-600 dark:text-blue-400 shadow-sm;
+}
+
+.ranking-tab-inactive {
+  @apply text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200;
+}
+
+.ranking-banner {
+  @apply rounded-lg p-6 text-white transition-colors duration-300;
+}
+
+.ranking-list {
+  @apply bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 transition-colors duration-300;
+}
+
+.ranking-item {
+  @apply p-6 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors duration-200;
+}
+
+.ranking-rank {
+  @apply flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm;
+}
+
+.ranking-rank-1 {
+  @apply bg-yellow-100 text-yellow-600 border-2 border-yellow-300;
+}
+
+.ranking-rank-2 {
+  @apply bg-gray-100 text-gray-600 border-2 border-gray-300;
+}
+
+.ranking-rank-3 {
+  @apply bg-orange-100 text-orange-600 border-2 border-orange-300;
+}
+
+.ranking-rank-default {
+  @apply bg-blue-100 text-blue-600;
+}
+
+.ranking-book-cover {
+  @apply w-16 h-20 object-cover rounded-lg border border-gray-200 dark:border-gray-600;
+}
+
+.ranking-book-title {
+  @apply text-lg font-semibold text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-colors line-clamp-1;
+}
+
+.ranking-book-desc {
+  @apply text-sm text-gray-600 dark:text-gray-300 mt-1 line-clamp-2;
+}
+
+.ranking-book-meta {
+  @apply flex items-center space-x-4 mt-3 text-sm text-gray-500 dark:text-gray-400;
+}
+
+.ranking-badge {
+  @apply inline-flex items-center px-2 py-1 rounded-full text-xs font-medium;
+}
+
+.ranking-badge-blue {
+  @apply bg-blue-100 text-blue-600;
+}
+
+.ranking-badge-red {
+  @apply bg-red-100 text-red-600;
+}
+
+.ranking-badge-purple {
+  @apply bg-purple-100 text-purple-600;
+}
+
+.ranking-badge-green {
+  @apply bg-green-100 text-green-600;
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+  .ranking-container {
+    @apply px-4;
+  }
+  
+  .ranking-item {
+    @apply p-4;
+  }
+  
+  .ranking-book-cover {
+    @apply w-14 h-16;
+  }
+  
+  .ranking-book-title {
+    @apply text-base;
+  }
+}
+
+/* 暗色模式适配 */
+.dark .ranking-container {
+  @apply bg-gray-900;
+}
+
+.dark .ranking-header {
+  @apply bg-gray-800 border-gray-700;
+}
+
+.dark .ranking-tabs {
+  @apply bg-gray-700;
+}
+
+.dark .ranking-tab-inactive {
+  @apply text-gray-400 hover:text-gray-200;
+}
+
+.dark .ranking-list {
+  @apply bg-gray-800 border-gray-700;
+}
+
+.dark .ranking-item {
+  @apply hover:bg-gray-700/50;
+}
+
+.dark .ranking-book-title {
+  @apply text-white hover:text-blue-400;
+}
+
+.dark .ranking-book-desc {
+  @apply text-gray-300;
+}
+
+.dark .ranking-book-meta {
+  @apply text-gray-400;
+}
+
+/* 动画效果 */
+.ranking-fade-in {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.ranking-slide-in {
+  animation: slideIn 0.3s ease-in-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* 加载状态 */
+.ranking-loading {
+  @apply flex items-center justify-center p-8;
+}
+
+.ranking-loading-spinner {
+  @apply animate-spin rounded-full h-8 w-8 border-2 border-blue-500 border-t-transparent;
+}
+
+/* 空状态 */
+.ranking-empty {
+  @apply p-12 text-center;
+}
+
+.ranking-empty-icon {
+  @apply w-16 h-16 bg-gray-200 dark:bg-gray-600 rounded-full flex items-center justify-center mx-auto mb-4;
+}
+
+.ranking-empty-title {
+  @apply text-gray-400 dark:text-gray-400 font-medium mb-2;
+}
+
+.ranking-empty-desc {
+  @apply text-gray-500 dark:text-gray-500 text-sm;
+}

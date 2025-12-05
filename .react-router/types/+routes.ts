@@ -19,6 +19,9 @@ type Pages = {
       "bookId": string;
     };
   };
+  "/rank": {
+    params: {};
+  };
   "/read/:bookId/:chapterId": {
     params: {
       "bookId": string;
@@ -50,7 +53,7 @@ type Pages = {
 type RouteFiles = {
   "root.tsx": {
     id: "root";
-    page: "/" | "/book/:bookId" | "/read/:bookId/:chapterId" | "/category/:categoryId" | "/author/:authorId" | "/special/:type" | "/*";
+    page: "/" | "/book/:bookId" | "/rank" | "/read/:bookId/:chapterId" | "/category/:categoryId" | "/author/:authorId" | "/special/:type" | "/*";
   };
   "routes/home/index.tsx": {
     id: "routes/home/index";
@@ -59,6 +62,10 @@ type RouteFiles = {
   "routes/book/index.tsx": {
     id: "routes/book/index";
     page: "/book/:bookId";
+  };
+  "routes/rank/index.tsx": {
+    id: "routes/rank/index";
+    page: "/rank";
   };
   "routes/read/index.tsx": {
     id: "routes/read/index";
@@ -86,6 +93,7 @@ type RouteModules = {
   "root": typeof import("./app/root.tsx");
   "routes/home/index": typeof import("./app/routes/home/index.tsx");
   "routes/book/index": typeof import("./app/routes/book/index.tsx");
+  "routes/rank/index": typeof import("./app/routes/rank/index.tsx");
   "routes/read/index": typeof import("./app/routes/read/index.tsx");
   "routes/category/index": typeof import("./app/routes/category/index.tsx");
   "routes/author/index": typeof import("./app/routes/author/index.tsx");
