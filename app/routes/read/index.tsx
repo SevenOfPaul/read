@@ -5,7 +5,7 @@ import type { ChapterReadResponse, ChapterListResponse, ChapterNavigationRespons
 import PC from "./pc";
 import Mobile from "./mobile";
 import "./index.css";
-
+import "react-vant/es/pagination/style";
 const baseUrl = import.meta.env.VITE_webHost;
 
 // 获取章节详细内容

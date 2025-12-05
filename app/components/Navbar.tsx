@@ -17,7 +17,7 @@ const getActiveMenuItem = (pathname: string) => {
   if (pathname === '/all' || pathname.startsWith('/home')) return 'all';
   if (pathname.startsWith('/book')) return 'books';
   if (pathname.startsWith('/category')) return 'category';
-  if (pathname.includes('rank') || pathname.includes('ranking')) return 'rank';
+  if (pathname.includes('rank')) return 'rank';
   if (pathname.includes('complete') || pathname.includes('finished') || pathname.includes('/special/completed')) return 'complete';
   if (pathname.includes('new') || pathname.includes('latest') || pathname.includes('/special/new')) return 'new';
   return 'home'; // 默认返回首页

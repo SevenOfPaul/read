@@ -1,4 +1,6 @@
-/* 分类页分页组件样式修复 */@reference "tailwindcss";@custom-variant dark (&:where(.dark, .dark *));
+/* 分类页分页组件样式修复 */
+@reference "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
 
 /* 基础分页样式 */
 .custom-pagination .rv-pagination {
