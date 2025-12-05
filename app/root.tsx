@@ -11,6 +11,9 @@ import { useEffect } from "react";
 import { useThemeStore, getInitialTheme, syncThemeToDocument, setupSystemThemeListener } from "./lib/useThemeStore";
 import BackToTop from "./components/BackToTop";
 
+// 引入 react-vant 样式
+import "react-vant/es/style";
+
 import "./app.css";
 
 // 创建 QueryClient 实例
