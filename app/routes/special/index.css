@@ -2,33 +2,32 @@
 @reference "tailwindcss";
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* 专题页面特定样式 */
+/* 专题容器 */
 .special-container {
   @apply min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300;
 }
 
-/* 专题横幅样式 */
+/* 专题横幅 */
 .special-banner {
   @apply rounded-lg p-6 text-white transition-colors duration-300;
   background: linear-gradient(to right, var(--tw-gradient-stops));
 }
 
-/* 完结专题颜色 */
 .special-banner.completed {
   @apply from-purple-500 to-indigo-600;
 }
 
-/* 新书专题颜色 */
 .special-banner.new {
   @apply from-blue-500 to-cyan-600;
 }
 
-/* 书籍卡片样式 */
+/* 书籍卡片 */
 .book-card {
-  @apply bg-gray-50 dark:bg-gray-700 border-gray-200 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-600 transition-all duration-200 hover:shadow-lg;
+  @apply bg-gray-50 dark:bg-gray-700 border-gray-200 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-600;
+  @apply hover:shadow-lg transition-all duration-200;
 }
 
-/* 书籍状态标签 */
+/* 状态标签 */
 .status-serial {
   @apply bg-blue-500 text-white;
 }
@@ -37,12 +36,13 @@
   @apply bg-gray-500 text-white;
 }
 
-/* 移动端专题选择器 */
+/* 专题选择器 */
 .special-selector {
-  @apply bg-white dark:bg-gray-800 border-b dark:border-gray-700 border-gray-200 px-4 py-3 transition-colors duration-300;
+  @apply bg-white dark:bg-gray-800 border-b dark:border-gray-700 border-gray-200 px-4 py-3;
+  @apply transition-colors duration-300;
 }
 
-/* 移动端选择器按钮 */
+/* 选择器按钮 */
 .special-tab {
   @apply flex-1 py-2 px-4 rounded-lg text-center transition-colors;
 }
@@ -71,17 +71,17 @@
   }
 }
 
-/* 加载动画优化 */
+/* 加载动画 */
 .loading-spinner {
   @apply animate-spin rounded-full border-4 border-blue-500 border-t-transparent;
 }
 
-/* 热度标签样式 */
+/* 热度标签 */
 .heat-badge {
   @apply bg-red-500 text-white px-2 py-1 rounded text-xs font-bold;
 }
 
-/* 排名徽章样式 */
+/* 排名徽章 */
 .rank-badge {
   @apply absolute -top-1 -left-1 text-white px-2 py-1 rounded text-xs font-bold flex items-center;
 }
@@ -98,7 +98,7 @@
   @apply bg-purple-500;
 }
 
-/* 分页组件样式优化 */
+/* 分页组件 */
 .custom-pagination .rv-pagination {
   @apply text-gray-600 dark:text-gray-300;
 }
@@ -111,7 +111,7 @@
   @apply bg-blue-500 text-white;
 }
 
-/* 移动端优化样式 */
+/* 移动端优化 */
 @media (max-width: 768px) {
   .book-card-mobile {
     @apply mb-3;
@@ -130,16 +130,7 @@
   }
 }
 
-/* 暗色模式适配 */
-.dark .special-banner {
-  @apply text-white;
-}
-
-.dark .book-card {
-  @apply bg-gray-700 hover:bg-gray-600;
-}
-
-/* 响应式网格布局 */
+/* 响应式网格 */
 .special-grid {
   @apply grid gap-4;
 }
@@ -152,12 +143,14 @@
   @apply grid-cols-1;
 }
 
-/* 工具栏样式 */
+/* 工具栏 */
 .special-toolbar {
-  @apply bg-white dark:bg-gray-800 rounded-lg p-4 mb-6 border border-gray-200 dark:border-gray-700 transition-colors duration-300;
+  @apply bg-white dark:bg-gray-800 rounded-lg p-4 mb-6 border border-gray-200 dark:border-gray-700;
+  @apply transition-colors duration-300;
 }
 
-/* 底部信息样式 */
+/* 底部信息 */
 .special-footer {
-  @apply bg-gray-800 dark:bg-gray-800 border-t border-gray-700 dark:border-gray-700 py-6 mt-8 transition-colors duration-300;
+  @apply bg-gray-800 dark:bg-gray-800 border-t border-gray-700 dark:border-gray-700 py-6 mt-8;
+  @apply transition-colors duration-300;
 }

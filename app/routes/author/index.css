@@ -1,14 +1,14 @@
 @reference "tailwindcss";
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* 作者页面专用样式 */
+/* 作者页面样式 */
 
-/* 作者头像动画效果 */
+/* 作者头像动画 */
 .author-avatar {
   @apply transition-all duration-300 hover:scale-105 hover:shadow-lg;
 }
 
-/* 书籍卡片样式增强 */
+/* 书籍卡片 */
 .book-card {
   @apply transition-all duration-200 hover:shadow-xl hover:scale-[1.02];
 }
@@ -17,12 +17,7 @@
   transform: translateY(-2px);
 }
 
-/* 统计数据样式 */
-.stat-item {
-  @apply transition-colors duration-200 hover:bg-gray-100 dark:hover:bg-gray-600;
-}
-
-/* 书籍封面图片样式 */
+/* 书籍封面 */
 .book-cover {
   @apply transition-all duration-200;
 }
@@ -31,26 +26,12 @@
   @apply shadow-lg;
 }
 
-/* 加载动画增强 */
-.loading-spinner {
-  @apply animate-spin;
-}
-
-/* 热度标签动画 */
-.heat-badge {
-  @apply transition-all duration-200;
-}
-
-.heat-badge:hover {
-  @apply scale-110;
-}
-
-/* 状态标签样式 */
+/* 状态标签 */
 .status-tag {
   @apply transition-all duration-200;
 }
 
-/* 移动端特殊样式 */
+/* 移动端适配 */
 @media (max-width: 768px) {
   .mobile-author-card {
     @apply p-4;
@@ -65,7 +46,7 @@
   }
 }
 
-/* PC端特殊样式 */
+/* PC端适配 */
 @media (min-width: 769px) {
   .pc-layout {
     @apply grid-cols-4 gap-4;
@@ -76,53 +57,7 @@
   }
 }
 
-/* 暗色模式适配 */
-.dark .author-section {
-  @apply bg-gray-800 border-gray-700;
-}
-
-.dark .book-section {
-  @apply bg-gray-800 border-gray-700;
-}
-
-.dark .stats-section {
-  @apply bg-gray-700;
-}
-
-/* 动画效果 */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.fade-in-up {
-  animation: fadeInUp 0.5s ease-out;
-}
-
-/* 滚动条样式 */
-.custom-scrollbar::-webkit-scrollbar {
-  width: 6px;
-}
-
-.custom-scrollbar::-webkit-scrollbar-track {
-  @apply bg-gray-100 dark:bg-gray-800;
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb {
-  @apply bg-gray-300 dark:bg-gray-600 rounded-full;
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  @apply bg-gray-400 dark:bg-gray-500;
-}
-
-/* 空状态样式 */
+/* 空状态 */
 .empty-state {
   @apply text-center py-12;
 }
@@ -131,7 +66,7 @@
   @apply w-16 h-16 bg-gray-200 dark:bg-gray-600 rounded-full flex items-center justify-center mx-auto mb-4;
 }
 
-/* 按钮特效 */
+/* 按钮样式 */
 .btn-primary {
   @apply bg-blue-500 hover:bg-blue-600 text-white transition-all duration-200;
 }
@@ -140,7 +75,7 @@
   @apply bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-white transition-all duration-200;
 }
 
-/* 排名徽章样式 */
+/* 排名徽章 */
 .rank-badge {
   @apply absolute -top-1 -left-1 z-10;
 }

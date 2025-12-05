@@ -6,7 +6,7 @@ import type { BookInfo, PaginationInfo, BookListParams } from "../../types/categ
 import type { Response } from "../../types/Response";
 import PC from "./pc";
 import Mobile from "./mobile";
-
+import "./index.css"
 const baseUrl = import.meta.env.VITE_webHost;
 const imgHost = import.meta.env.VITE_imgHost;
 

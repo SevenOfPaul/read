@@ -262,7 +262,7 @@ export default function Ranking() {
           rankingConfig={rankingConfig}
           books={books}
           isLoading={isLoading}
-          error={error}
+          error={error!}
         />
       ) : (
         <PC
@@ -271,7 +271,7 @@ export default function Ranking() {
           rankingConfig={rankingConfig}
           books={books}
           isLoading={isLoading}
-          error={error}
+          error={error!}
         />
       )}
     </div>

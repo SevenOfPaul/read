@@ -7,7 +7,8 @@
   --font-mono: "Fira Code", "Monaco", "Consolas", monospace;
 }
 @custom-variant dark (&:where(.dark, .dark *));
-/* Vant样式兼容 - 简化小说网站主题色 */
+
+/* Vant变量定义 */
 :root {
   --van-primary-color: #8B4513;
   --van-success-color: #8FBC8F;
@@ -25,7 +26,7 @@ html, body {
   font-family: var(--font-sans);
 }
 
-/* 移动端适配 */
+/* 响应式字体大小 */
 @media (max-width: 768px) {
   html {
     font-size: 14px;
@@ -38,14 +39,13 @@ html, body {
   }
 }
 
-/* PC端优化 */
 @media (min-width: 1024px) {
   .container {
     max-width: 1200px;
   }
 }
 
-/* Vant组件样式增强 */
+/* Vant组件基础样式 */
 .van-button {
   border-radius: 6px;
   font-weight: 500;
@@ -71,140 +71,7 @@ html, body {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-/* React-Vant组件暗色模式支持 */
-.dark .rv-card,
-.dark .van-card {
-  background-color: #1f2937 !important;
-  border-color: #374151 !important;
-  color: #f9fafb !important;
-}
-
-.dark .rv-card-body,
-.dark .van-card__body,
-.dark .van-card .rv-card-body {
-  background-color: #1f2937 !important;
-  color: #f9fafb !important;
-}
-
-.dark .rv-button,
-.dark .van-button,
-.dark .rv-button--default,
-.dark .van-button--default {
-  background-color: #374151 !important;
-  color: #f9fafb !important;
-  border-color: #4b5563 !important;
-}
-
-.dark .rv-button:hover,
-.dark .van-button:hover,
-.dark .rv-button--default:hover,
-.dark .van-button--default:hover {
-  background-color: #4b5563 !important;
-  color: #ffffff !important;
-}
-
-.dark .rv-button--primary,
-.dark .van-button--primary {
-  background-color: #3b82f6 !important;
-  color: #ffffff !important;
-  border-color: #3b82f6 !important;
-}
-
-.dark .rv-button--primary:hover,
-.dark .van-button--primary:hover {
-  background-color: #2563eb !important;
-  border-color: #2563eb !important;
-}
-
-/* Vant分页组件暗黑模式样式修复 */
-.dark .rv-pagination,
-.dark .van-pagination {
-  background-color: #374151 !important;
-  color: #f9fafb !important;
-}
-
-.dark .rv-pagination__item,
-.dark .van-pagination__item,
-.dark .van-pagination .rv-pagination__item {
-  background-color: #4b5563 !important;
-  color: #d1d5db !important;
-  border-color: #6b7280 !important;
-}
-
-.dark .rv-pagination__item:hover,
-.dark .van-pagination__item:hover,
-.dark .van-pagination .rv-pagination__item:hover {
-  background-color: #6b7280 !important;
-  color: #ffffff !important;
-}
-
-.dark .rv-pagination__item--active,
-.dark .van-pagination__item--active,
-.dark .van-pagination .rv-pagination__item--active {
-  background-color: #3b82f6 !important;
-  color: #ffffff !important;
-  border-color: #3b82f6 !important;
-}
-
-.dark .rv-pagination__item:disabled,
-.dark .van-pagination__item:disabled,
-.dark .van-pagination .rv-pagination__item:disabled {
-  background-color: #6b7280 !important;
-  color: #9ca3af !important;
-  opacity: 0.6;
-}
-
-.dark .rv-pagination__next,
-.dark .van-pagination__next,
-.dark .rv-pagination__prev,
-.dark .van-pagination__prev,
-.dark .van-pagination .rv-pagination__next,
-.dark .van-pagination .rv-pagination__prev {
-  background-color: #4b5563 !important;
-  color: #d1d5db !important;
-  border-color: #6b7280 !important;
-}
-
-.dark .rv-pagination__next:hover,
-.dark .van-pagination__next:hover,
-.dark .rv-pagination__prev:hover,
-.dark .van-pagination__prev:hover,
-.dark .van-pagination .rv-pagination__next:hover,
-.dark .van-pagination .rv-pagination__prev:hover {
-  background-color: #6b7280 !important;
-  color: #ffffff !important;
-}
-
-.dark .rv-pagination__next:disabled,
-.dark .van-pagination__next:disabled,
-.dark .rv-pagination__prev:disabled,
-.dark .van-pagination__prev:disabled,
-.dark .van-pagination .rv-pagination__next:disabled,
-.dark .van-pagination .rv-pagination__prev:disabled {
-  background-color: #6b7280 !important;
-  color: #9ca3af !important;
-  opacity: 0.6;
-}
-
-.dark .rv-pagination__ellipsis,
-.dark .van-pagination__ellipsis,
-.dark .van-pagination .rv-pagination__ellipsis {
-  color: #d1d5db !important;
-}
-
-.dark .rv-pagination__page,
-.dark .van-pagination__page,
-.dark .van-pagination .rv-pagination__page {
-  background-color: transparent !important;
-}
-
-/* 确保分页组件容器在暗黑模式下正常显示 */
-.dark .rv-pagination-wrapper,
-.dark .van-pagination-wrapper {
-  background-color: transparent !important;
-}
-
-/* 简化的小说网站样式 */
+/* 小说网站容器 */
 .novel-container {
   max-width: 1200px;
   margin: 0 auto;
@@ -268,7 +135,7 @@ html, body {
   padding-bottom: 0.25rem;
 }
 
-/* 书籍卡片样式 */
+/* 书籍卡片基础样式 */
 .book-card {
   background: white;
   border: 1px solid #e5e7eb;
@@ -343,7 +210,7 @@ html, body {
   font-size: 0.875rem;
 }
 
-/* 标签 */
+/* 标签样式 */
 .tag {
   display: inline-block;
   padding: 0.25rem 0.5rem;
@@ -374,21 +241,20 @@ html, body {
   color: #8B4513;
 }
 
-/* 加载状态 */
+/* 加载和错误状态 */
 .loading {
   text-align: center;
   padding: 3rem;
   color: #6b7280;
 }
 
-/* 错误状态 */
 .error {
   text-align: center;
   padding: 3rem;
   color: #dc2626;
 }
 
-/* 深色模式 */
+/* 深色模式变量 */
 .dark {
   --van-background-color: #1f2937;
   --van-background-color-light: #374151;

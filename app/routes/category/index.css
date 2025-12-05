@@ -1,151 +1,114 @@
-/* 分类页分页组件样式修复 */
+/* 分类页分页组件样式修复 */@reference "tailwindcss";@custom-variant dark (&:where(.dark, .dark *));
 
-.custom-pagination {
-  /* 基础样式 */
+/* 基础分页样式 */
+.custom-pagination .rv-pagination {
+  color: #6b7280;
 }
 
-.custom-pagination .rv-pagination,
-.custom-pagination .van-pagination {
-  color: #6b7280 !important;
+.custom-pagination .rv-pagination__item {
+  background-color: #f3f4f6;
+  color: #374151;
+  border-color: #d1d5db;
 }
 
-.custom-pagination .rv-pagination__item,
-.custom-pagination .van-pagination__item,
-.custom-pagination .van-pagination .rv-pagination__item {
-  background-color: #f3f4f6 !important;
-  color: #374151 !important;
-  border-color: #d1d5db !important;
+.custom-pagination .rv-pagination__item:hover {
+  background-color: #e5e7eb;
+  color: #111827;
 }
 
-.custom-pagination .rv-pagination__item:hover,
-.custom-pagination .van-pagination__item:hover,
-.custom-pagination .van-pagination .rv-pagination__item:hover {
-  background-color: #e5e7eb !important;
-  color: #111827 !important;
+.custom-pagination .rv-pagination__item--active {
+  background-color: #3b82f6;
+  color: #ffffff;
+  border-color: #3b82f6;
 }
 
-.custom-pagination .rv-pagination__item--active,
-.custom-pagination .van-pagination__item--active,
-.custom-pagination .van-pagination .rv-pagination__item--active {
-  background-color: #3b82f6 !important;
-  color: #ffffff !important;
-  border-color: #3b82f6 !important;
-}
-
-.custom-pagination .rv-pagination__item:disabled,
-.custom-pagination .van-pagination__item:disabled,
-.custom-pagination .van-pagination .rv-pagination__item:disabled {
-  background-color: #f3f4f6 !important;
-  color: #9ca3af !important;
+.custom-pagination .rv-pagination__item:disabled {
+  background-color: #f3f4f6;
+  color: #9ca3af;
   opacity: 0.6;
 }
 
 .custom-pagination .rv-pagination__next,
-.custom-pagination .van-pagination__next,
-.custom-pagination .rv-pagination__prev,
-.custom-pagination .van-pagination__prev {
-  background-color: #f3f4f6 !important;
-  color: #6b7280 !important;
-  border-color: #d1d5db !important;
+.custom-pagination .rv-pagination__prev {
+  background-color: #f3f4f6;
+  color: #6b7280;
+  border-color: #d1d5db;
 }
 
 .custom-pagination .rv-pagination__next:hover,
-.custom-pagination .van-pagination__next:hover,
-.custom-pagination .rv-pagination__prev:hover,
-.custom-pagination .van-pagination__prev:hover {
-  background-color: #e5e7eb !important;
-  color: #111827 !important;
+.custom-pagination .rv-pagination__prev:hover {
+  background-color: #e5e7eb;
+  color: #111827;
 }
 
 .custom-pagination .rv-pagination__next:disabled,
-.custom-pagination .van-pagination__next:disabled,
-.custom-pagination .rv-pagination__prev:disabled,
-.custom-pagination .van-pagination__prev:disabled {
-  background-color: #f3f4f6 !important;
-  color: #9ca3af !important;
+.custom-pagination .rv-pagination__prev:disabled {
+  background-color: #f3f4f6;
+  color: #9ca3af;
   opacity: 0.6;
 }
 
-.custom-pagination .rv-pagination__ellipsis,
-.custom-pagination .van-pagination__ellipsis {
-  color: #6b7280 !important;
+.custom-pagination .rv-pagination__ellipsis {
+  color: #6b7280;
 }
 
-.custom-pagination .rv-pagination__page,
-.custom-pagination .van-pagination__page {
-  background-color: transparent !important;
+.custom-pagination .rv-pagination__page {
+  background-color: transparent;
 }
 
 /* 暗黑模式样式 */
-.dark .custom-pagination .rv-pagination,
-.dark .custom-pagination .van-pagination {
-  background-color: transparent !important;
-  color: #d1d5db !important;
+.dark .custom-pagination .rv-pagination {
+  background-color: transparent;
+  color: #d1d5db;
 }
 
-.dark .custom-pagination .rv-pagination__item,
-.dark .custom-pagination .van-pagination__item,
-.dark .custom-pagination .van-pagination .rv-pagination__item {
-  background-color: #374151 !important;
-  color: #d1d5db !important;
-  border-color: #4b5563 !important;
+.dark .custom-pagination .rv-pagination__item {
+  background-color: #374151;
+  color: #d1d5db;
+  border-color: #4b5563;
 }
 
-.dark .custom-pagination .rv-pagination__item:hover,
-.dark .custom-pagination .van-pagination__item:hover,
-.dark .custom-pagination .van-pagination .rv-pagination__item:hover {
-  background-color: #4b5563 !important;
-  color: #ffffff !important;
+.dark .custom-pagination .rv-pagination__item:hover {
+  background-color: #4b5563;
+  color: #ffffff;
 }
 
-.dark .custom-pagination .rv-pagination__item--active,
-.dark .custom-pagination .van-pagination__item--active,
-.dark .custom-pagination .van-pagination .rv-pagination__item--active {
-  background-color: #3b82f6 !important;
-  color: #ffffff !important;
-  border-color: #3b82f6 !important;
+.dark .custom-pagination .rv-pagination__item--active {
+  background-color: #3b82f6;
+  color: #ffffff;
+  border-color: #3b82f6;
 }
 
-.dark .custom-pagination .rv-pagination__item:disabled,
-.dark .custom-pagination .van-pagination__item:disabled,
-.dark .custom-pagination .van-pagination .rv-pagination__item:disabled {
-  background-color: #374151 !important;
-  color: #9ca3af !important;
+.dark .custom-pagination .rv-pagination__item:disabled {
+  background-color: #374151;
+  color: #9ca3af;
   opacity: 0.6;
 }
 
 .dark .custom-pagination .rv-pagination__next,
-.dark .custom-pagination .van-pagination__next,
-.dark .custom-pagination .rv-pagination__prev,
-.dark .custom-pagination .van-pagination__prev {
-  background-color: #374151 !important;
-  color: #d1d5db !important;
-  border-color: #4b5563 !important;
+.dark .custom-pagination .rv-pagination__prev {
+  background-color: #374151;
+  color: #d1d5db;
+  border-color: #4b5563;
 }
 
 .dark .custom-pagination .rv-pagination__next:hover,
-.dark .custom-pagination .van-pagination__next:hover,
-.dark .custom-pagination .rv-pagination__prev:hover,
-.dark .custom-pagination .van-pagination__prev:hover {
-  background-color: #4b5563 !important;
-  color: #ffffff !important;
+.dark .custom-pagination .rv-pagination__prev:hover {
+  background-color: #4b5563;
+  color: #ffffff;
 }
 
 .dark .custom-pagination .rv-pagination__next:disabled,
-.dark .custom-pagination .van-pagination__next:disabled,
-.dark .custom-pagination .rv-pagination__prev:disabled,
-.dark .custom-pagination .van-pagination__prev:disabled {
-  background-color: #374151 !important;
-  color: #9ca3af !important;
+.dark .custom-pagination .rv-pagination__prev:disabled {
+  background-color: #374151;
+  color: #9ca3af;
   opacity: 0.6;
 }
 
-.dark .custom-pagination .rv-pagination__ellipsis,
-.dark .custom-pagination .van-pagination__ellipsis {
-  color: #9ca3af !important;
+.dark .custom-pagination .rv-pagination__ellipsis {
+  color: #9ca3af;
 }
 
-.dark .custom-pagination .rv-pagination__page,
-.dark .custom-pagination .van-pagination__page {
-  background-color: transparent !important;
+.dark .custom-pagination .rv-pagination__page {
+  background-color: transparent;
 }
