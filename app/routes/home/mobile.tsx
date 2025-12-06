@@ -206,18 +206,6 @@ export default function Mobile() {
           </div>
         </Card>
 
-        {/* 营销横幅 - 蓝色主题 */}
-        <Card className="mb-6 bg-gradient-to-r from-blue-900 to-blue-800 border-0">
-          <div className="p-4 text-white">
-            <h4 className="font-bold text-lg mb-2">🎉 限时福利</h4>
-            <p className="text-sm text-blue-100 mb-3">
-              新用户注册即送30天VIP体验 · 无广告阅读
-            </p>
-            <Button size="small" className="bg-white text-blue-600 border-0 font-bold touch-target">
-              立即领取 →
-            </Button>
-          </div>
-        </Card>
 
         {/* 精品分类推荐标题 */}
         <div className="bg-gradient-to-r from-blue-500 to-indigo-600 rounded-lg p-4 mb-6 shadow-lg">

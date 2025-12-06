@@ -12,7 +12,7 @@ import { useThemeStore, getInitialTheme, syncThemeToDocument, setupSystemThemeLi
 import BackToTop from "./components/BackToTop";
 
 // 引入 react-vant 样式
-import "react-vant/es/style";
+// import "react-vant/es/style";
 
 import "./app.css";
 
@@ -67,6 +67,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" type="image/jpeg" href="/assets/logo.jpg" />
         <Meta />
         <Links />
       </head>
