@@ -10,6 +10,7 @@ import type { PaginationInfo } from "@/types/categoryPage";
 import type { SpecialConfig } from "@/types/specialPage";
 import { formatHeat } from "./index";
 import BookCard from "@/components/BookCard";
+import MobileNavbar from "@/components/MobileNavbar";
 
 interface SpecialPageProps {
   specialConfig: SpecialConfig;
@@ -32,40 +33,21 @@ export default function Mobile({
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
-      {/* 顶部导航栏 */}
-      <nav className={`${specialConfig.bgColor} border-b-0 border-gray-700 sticky top-0 z-50 transition-colors duration-300`}>
-        <div className="px-4">
-          <div className="flex items-center justify-between py-3">
-            <div className="flex items-center space-x-4">
-              <div className="flex items-center space-x-2">
-                <div className="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center">
-                  <BookOpen className="h-5 w-5 text-white" />
-                </div>
-                <div>
-                  <h1 className="text-lg font-bold text-white">{specialConfig.title}</h1>
-                  <p className="text-xs text-white/80">发现更多精彩 · {specialConfig.description}</p>
-                </div>
-              </div>
-            </div>
-            
-            <div className="flex items-center space-x-2">
-              <button 
-                className="p-2 text-white/80 hover:text-white hover:bg-white/20 rounded-lg transition-colors"
-                onClick={() => {/* 可以添加更多功能 */}}
-              >
-                <MoreHorizontal className="h-5 w-5" />
-              </button>
-            </div>
-          </div>
-        </div>
-      </nav>
+      {/* 统一的移动端导航栏 */}
+      <MobileNavbar
+        title={specialConfig.title}
+        subtitle={`发现更多精彩 · ${specialConfig.description}`}
+        showBack={true}
+        showSearch={true}
+        onBackClick={() => window.history.back()}
+      />
 
       {/* 专题类型选择器 */}
       <div className="bg-white dark:bg-gray-800 border-b dark:border-gray-700 border-gray-200 px-4 py-3 transition-colors duration-300">
         <div className="flex space-x-2">
           <Link
             to="/special/completed"
-            className={`flex-1 py-2 px-4 rounded-lg text-center transition-colors ${
+            className={`flex-1 py-3 px-4 rounded-lg text-center transition-colors touch-target ${
               type === 'completed'
                 ? specialConfig.bgColor.replace('bg-gradient-to-r from-', 'bg-').replace(' to-', '-').replace('-600', '-500') + ' text-white'
                 : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600'
@@ -78,7 +60,7 @@ export default function Mobile({
           </Link>
           <Link
             to="/special/new"
-            className={`flex-1 py-2 px-4 rounded-lg text-center transition-colors ${
+            className={`flex-1 py-3 px-4 rounded-lg text-center transition-colors touch-target ${
               type === 'new'
                 ? specialConfig.bgColor.replace('bg-gradient-to-r from-', 'bg-').replace(' to-', '-').replace('-600', '-500') + ' text-white'
                 : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600'
@@ -118,14 +100,14 @@ export default function Mobile({
             <Button 
               block 
               type="primary"
-              className="bg-white/20 hover:bg-white/30 border-0 h-10 text-white text-sm backdrop-blur-sm"
+              className="bg-white/20 hover:bg-white/30 border-0 h-12 text-white text-sm backdrop-blur-sm touch-target"
             >
               🔍 搜索小说
             </Button>
             <Link to="/">
               <Button 
                 block 
-                className="bg-white/20 hover:bg-white/30 border-0 text-white h-10 text-sm backdrop-blur-sm"
+                className="bg-white/20 hover:bg-white/30 border-0 text-white h-12 text-sm backdrop-blur-sm touch-target"
               >
                 🏠 返回首页
               </Button>
@@ -145,15 +127,15 @@ export default function Mobile({
           </div>
           
           <div className="grid grid-cols-3 gap-2">
-            <Button size="small" className="bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 border-0 text-gray-700 dark:text-white">
+            <Button size="small" className="bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 border-0 text-gray-700 dark:text-white touch-target">
               <Award className="h-4 w-4 mr-1" />
               最新
             </Button>
-            <Button size="small" className="bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 border-0 text-gray-700 dark:text-white">
+            <Button size="small" className="bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 border-0 text-gray-700 dark:text-white touch-target">
               <TrendingUp className="h-4 w-4 mr-1" />
               热门
             </Button>
-            <Button size="small" className="bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 border-0 text-gray-700 dark:text-white">
+            <Button size="small" className="bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 border-0 text-gray-700 dark:text-white touch-target">
               <Heart className="h-4 w-4 mr-1" />
               收藏
             </Button>
@@ -203,7 +185,7 @@ export default function Mobile({
                     size="small"
                     disabled={pagination.currentPage === 1}
                     onClick={() => onPageChange(pagination.currentPage - 1)}
-                    className="bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 border-0 text-gray-700 dark:text-white disabled:opacity-50"
+                    className="bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 border-0 text-gray-700 dark:text-white disabled:opacity-50 touch-target"
                   >
                     <ChevronLeft className="h-4 w-4" />
                   </Button>
@@ -216,7 +198,7 @@ export default function Mobile({
                     size="small"
                     disabled={pagination.currentPage === pagination.totalPages}
                     onClick={() => onPageChange(pagination.currentPage + 1)}
-                    className="bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 border-0 text-gray-700 dark:text-white disabled:opacity-50"
+                    className="bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 border-0 text-gray-700 dark:text-white disabled:opacity-50 touch-target"
                   >
                     <ChevronRight className="h-4 w-4" />
                   </Button>
@@ -245,8 +227,8 @@ export default function Mobile({
                         type={pagination.currentPage === pageNum ? "primary" : "default"}
                         onClick={() => onPageChange(pageNum)}
                         className={pagination.currentPage === pageNum 
-                          ? "bg-blue-500 border-0" 
-                          : "bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 border-0 text-gray-700 dark:text-white"
+                          ? "bg-blue-500 border-0 touch-target" 
+                          : "bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 border-0 text-gray-700 dark:text-white touch-target"
                         }
                       >
                         {pageNum}
@@ -264,15 +246,15 @@ export default function Mobile({
           <div className="p-4">
             <h4 className="text-gray-900 dark:text-white font-bold text-lg mb-4">⚡ 快捷功能</h4>
             <div className="grid grid-cols-3 gap-3">
-              <Link to="/special/completed" className="text-center p-3 bg-purple-50 dark:bg-purple-900 rounded-lg hover:bg-purple-100 dark:hover:bg-purple-800 cursor-pointer transition-colors">
+              <Link to="/special/completed" className="text-center p-3 bg-purple-50 dark:bg-purple-900 rounded-lg hover:bg-purple-100 dark:hover:bg-purple-800 cursor-pointer transition-colors touch-target">
                 <BookOpen className="h-6 w-6 mx-auto mb-2 text-purple-500" />
                 <span className="text-xs text-gray-600 dark:text-gray-300">完结精品</span>
               </Link>
-              <Link to="/special/new" className="text-center p-3 bg-blue-50 dark:bg-blue-900 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-800 cursor-pointer transition-colors">
+              <Link to="/special/new" className="text-center p-3 bg-blue-50 dark:bg-blue-900 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-800 cursor-pointer transition-colors touch-target">
                 <Award className="h-6 w-6 mx-auto mb-2 text-blue-500" />
                 <span className="text-xs text-gray-600 dark:text-gray-300">最新上架</span>
               </Link>
-              <Link to="/" className="text-center p-3 bg-green-50 dark:bg-green-900 rounded-lg hover:bg-green-100 dark:hover:bg-green-800 cursor-pointer transition-colors">
+              <Link to="/" className="text-center p-3 bg-green-50 dark:bg-green-900 rounded-lg hover:bg-green-100 dark:hover:bg-green-800 cursor-pointer transition-colors touch-target">
                 <Crown className="h-6 w-6 mx-auto mb-2 text-green-500" />
                 <span className="text-xs text-gray-600 dark:text-gray-300">返回首页</span>
               </Link>
@@ -308,7 +290,7 @@ export default function Mobile({
               <Button 
                 type="primary"
                 size="small"
-                className="bg-blue-500 hover:bg-blue-600 border-0"
+                className="bg-blue-500 hover:bg-blue-600 border-0 touch-target"
                 onClick={() => window.location.reload()}
               >
                 🔄 重新加载

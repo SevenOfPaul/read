@@ -1,9 +1,10 @@
 import { Button, Card, Badge } from "react-vant";
-import { BookOpen, Search, Clock, User, TrendingUp, Award, Heart, Eye, Star, Crown, BookMarked, Menu, Filter, X } from "lucide-react";
+import { BookOpen, Search, Clock, User, TrendingUp, Award, Heart, Eye, Star, Crown, BookMarked, Filter, X } from "lucide-react";
 import { Link } from "react-router";
 import type { CategoryWithBooks } from "../../types/categorySearch";
 import { useCategories } from "./index";
 import { useState } from "react";
+import MobileNavbar from "../../components/MobileNavbar";
 
 export default function Mobile() {
   const { data: categories, isLoading, error } = useCategories();
@@ -21,38 +22,14 @@ export default function Mobile() {
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
-      {/* 顶部导航栏 - PC风格移动端适配 */}
-      <nav className="bg-white dark:bg-gray-800 border-b dark:border-gray-700 border-gray-200 sticky top-0 z-50 transition-colors duration-300">
-        <div className="px-4">
-          <div className="flex items-center justify-between py-3">
-            <div className="flex items-center space-x-4">
-              <div className="flex items-center space-x-2">
-                <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center">
-                  <BookOpen className="h-5 w-5 text-white" />
-                </div>
-                <div>
-                  <h1 className="text-lg font-bold text-gray-900 dark:text-white">夜读小说网</h1>
-                  <p className="text-xs text-gray-400 dark:text-gray-400">精品小说 · 夜夜精彩</p>
-                </div>
-              </div>
-            </div>
-            
-            <div className="flex items-center space-x-2">
-              <button 
-                className="p-2 text-gray-600 dark:text-gray-400 hover:text-white hover:bg-gray-700 dark:hover:bg-gray-700 rounded-lg transition-colors"
-                onClick={() => setIsSidebarOpen(true)}
-              >
-                <Menu className="h-5 w-5" />
-              </button>
-              <button 
-                className="p-2 text-gray-600 dark:text-gray-400 hover:text-white hover:bg-gray-700 dark:hover:bg-gray-700 rounded-lg transition-colors"
-              >
-                <Search className="h-5 w-5" />
-              </button>
-            </div>
-          </div>
-        </div>
-      </nav>
+      {/* 统一的移动端导航栏 */}
+      <MobileNavbar
+        title="夜读小说网"
+        subtitle="精品小说 · 夜夜精彩"
+        showMenu={true}
+        showSearch={true}
+        onMenuClick={() => setIsSidebarOpen(true)}
+      />
 
       {/* 移动端侧边栏 */}
       {isSidebarOpen && (
@@ -72,7 +49,7 @@ export default function Mobile() {
                   <a
                     key={category.id}
                     href="#"
-                    className="block px-3 py-2 text-gray-600 dark:text-gray-300 hover:text-white hover:bg-gray-700 dark:hover:bg-gray-700 rounded transition-colors"
+                    className="block px-3 py-2 text-gray-600 dark:text-gray-300 hover:text-white hover:bg-gray-700 dark:hover:bg-gray-700 rounded transition-colors touch-target"
                   >
                     {category.name}
                   </a>
@@ -83,9 +60,9 @@ export default function Mobile() {
               <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
                 <h4 className="text-gray-900 dark:text-white font-medium mb-3">快捷功能</h4>
                 <div className="space-y-2">
-                  <a href="#" className="block text-gray-400 dark:text-gray-400 hover:text-white text-sm">我的书架</a>
-                  <a href="#" className="block text-gray-400 dark:text-gray-400 hover:text-white text-sm">阅读历史</a>
-                  <a href="#" className="block text-gray-400 dark:text-gray-400 hover:text-white text-sm">收藏夹</a>
+                  <a href="#" className="block text-gray-400 dark:text-gray-400 hover:text-white text-sm touch-target">我的书架</a>
+                  <a href="#" className="block text-gray-400 dark:text-gray-400 hover:text-white text-sm touch-target">阅读历史</a>
+                  <a href="#" className="block text-gray-400 dark:text-gray-400 hover:text-white text-sm touch-target">收藏夹</a>
                 </div>
               </div>
             </div>
@@ -111,7 +88,7 @@ export default function Mobile() {
               </div>
             </div>
             <div className="text-right">
-              <div className="bg-blue-500 text-white px-4 py-2 rounded-lg font-bold text-sm hover:bg-blue-600 cursor-pointer transition-colors">
+              <div className="bg-blue-500 text-white px-4 py-2 rounded-lg font-bold text-sm hover:bg-blue-600 cursor-pointer transition-colors touch-target">
                 🔥 立即探索
               </div>
             </div>
@@ -122,15 +99,13 @@ export default function Mobile() {
             <Button 
               block 
               type="primary"
-              icon={<Search className="h-4 w-4" />}
-              className="bg-blue-500 hover:bg-blue-600 border-0 h-10 text-white text-sm"
+              className="bg-blue-500 hover:bg-blue-600 border-0 h-12 text-white text-sm touch-target"
             >
               🔍 搜索小说
             </Button>
             <Button 
               block 
-              type="default"
-              className="bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 border-0 text-gray-700 dark:text-white h-10 text-sm"
+              className="bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 border-0 text-gray-700 dark:text-white h-12 text-sm touch-target"
             >
               📝 查看书架
             </Button>
@@ -141,7 +116,7 @@ export default function Mobile() {
         <div className="bg-white dark:bg-gray-800 rounded-lg p-6 mb-6 border border-gray-200 dark:border-gray-700 transition-colors duration-300">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-gray-900 dark:text-white font-bold text-xl">✨ 编辑推荐</h3>
-            <a href="#" className="text-blue-400 hover:text-blue-300 text-sm font-medium">查看更多 →</a>
+            <a href="#" className="text-blue-400 hover:text-blue-300 text-sm font-medium touch-target">查看更多 →</a>
           </div>
           
           <div className="space-y-4">
@@ -150,7 +125,7 @@ export default function Mobile() {
               const featuredBook = category.books[0];
               
               return (
-                <Card key={featuredBook.id} className="bg-gray-50 dark:bg-gray-700 border-gray-200 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
+                <Card key={featuredBook.id} className="bg-gray-50 dark:bg-gray-700 border-gray-200 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors touch-target">
                   <Card.Body className="p-4">
                     <div className="flex space-x-3">
                       {featuredBook.bookImage && (
@@ -178,7 +153,7 @@ export default function Mobile() {
                           <div className="flex-shrink-0 ml-3">
                             <span className="text-blue-400 text-xs font-medium block mb-2">🔥 {featuredBook.status}</span>
                             <Link to={`/book/${featuredBook.id}`}>
-                              <Button size="small" className="bg-blue-500 hover:bg-blue-600 border-0 text-xs px-2 py-1">
+                              <Button size="small" className="bg-blue-500 hover:bg-blue-600 border-0 text-xs px-2 py-1 touch-target">
                                 立即阅读
                               </Button>
                             </Link>
@@ -203,25 +178,25 @@ export default function Mobile() {
           <div className="p-4">
             <h4 className="text-gray-900 dark:text-white font-bold text-lg mb-4">⚡ 快捷功能</h4>
             <div className="grid grid-cols-4 gap-3">
-              <div className="text-center">
+              <div className="text-center touch-target">
                 <div className="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center mx-auto mb-2">
                   <BookOpen className="h-6 w-6 text-white" />
                 </div>
                 <span className="text-xs text-gray-600 dark:text-gray-300">我的书架</span>
               </div>
-              <div className="text-center">
+              <div className="text-center touch-target">
                 <div className="w-12 h-12 bg-indigo-500 rounded-lg flex items-center justify-center mx-auto mb-2">
                   <Crown className="h-6 w-6 text-white" />
                 </div>
                 <span className="text-xs text-gray-600 dark:text-gray-300">排行榜</span>
               </div>
-              <div className="text-center">
+              <div className="text-center touch-target">
                 <div className="w-12 h-12 bg-purple-500 rounded-lg flex items-center justify-center mx-auto mb-2">
                   <Heart className="h-6 w-6 text-white" />
                 </div>
                 <span className="text-xs text-gray-600 dark:text-gray-300">收藏夹</span>
               </div>
-              <div className="text-center">
+              <div className="text-center touch-target">
                 <div className="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center mx-auto mb-2">
                   <User className="h-6 w-6 text-white" />
                 </div>
@@ -238,7 +213,7 @@ export default function Mobile() {
             <p className="text-sm text-blue-100 mb-3">
               新用户注册即送30天VIP体验 · 无广告阅读
             </p>
-            <Button size="small" className="bg-white text-blue-600 border-0 font-bold">
+            <Button size="small" className="bg-white text-blue-600 border-0 font-bold touch-target">
               立即领取 →
             </Button>
           </div>
@@ -312,7 +287,7 @@ export default function Mobile() {
                   {hasBooks ? (
                     <div className="space-y-3">
                       {category.books.map((book, index) => (
-                        <Card key={book.id} className="bg-gray-50 dark:bg-gray-700 border-gray-200 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-600 transition-all duration-200 hover:shadow-lg">
+                        <Card key={book.id} className="bg-gray-50 dark:bg-gray-700 border-gray-200 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-600 transition-all duration-200 hover:shadow-lg touch-target">
                           <Card.Body className="p-4">
                             <div className="flex space-x-3">
                               {/* 书籍封面 */}
@@ -379,7 +354,7 @@ export default function Mobile() {
                                     <Link to={`/book/${book.id}`}>
                                       <Button 
                                         size="small"
-                                        className="bg-blue-500 hover:bg-blue-600 border-0 text-sm px-3 py-1 font-bold"
+                                        className="bg-blue-500 hover:bg-blue-600 border-0 text-sm px-3 py-1 font-bold touch-target"
                                       >
                                         📖 阅读
                                       </Button>
@@ -415,28 +390,28 @@ export default function Mobile() {
           <div className="p-4">
             <h4 className="font-bold text-gray-900 dark:text-white mb-4 text-center">🔥 为什么选择夜读小说网？</h4>
             <div className="space-y-3">
-              <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+              <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg touch-target">
                 <span className="flex items-center text-gray-600 dark:text-gray-300">
                   <Award className="h-5 w-5 mr-3 text-blue-500" />
                   精选优质内容
                 </span>
                 <span className="text-blue-500 font-bold">✓</span>
               </div>
-              <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+              <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg touch-target">
                 <span className="flex items-center text-gray-600 dark:text-gray-300">
                   <TrendingUp className="h-5 w-5 mr-3 text-green-500" />
                   每日持续更新
                 </span>
                 <span className="text-green-500 font-bold">✓</span>
               </div>
-              <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+              <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg touch-target">
                 <span className="flex items-center text-gray-600 dark:text-gray-300">
                   <Heart className="h-5 w-5 mr-3 text-purple-500" />
                   个性化推荐
                 </span>
                 <span className="text-purple-500 font-bold">✓</span>
               </div>
-              <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+              <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg touch-target">
                 <span className="flex items-center text-gray-600 dark:text-gray-300">
                   <Star className="h-5 w-5 mr-3 text-yellow-500" />
                   无广告阅读
@@ -475,7 +450,7 @@ export default function Mobile() {
               <Button 
                 type="primary"
                 size="small"
-                className="bg-blue-500 hover:bg-blue-600 border-0"
+                className="bg-blue-500 hover:bg-blue-600 border-0 touch-target"
                 onClick={() => window.location.reload()}
               >
                 🔄 重新加载

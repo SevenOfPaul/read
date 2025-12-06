@@ -9,6 +9,7 @@ import type { Category } from "@/types/entities";
 import type { BookInfo, PaginationInfo } from "@/types/categoryPage";
 import { formatHeat } from "./index";
 import BookCard from "@/components/BookCard";
+import MobileNavbar from "@/components/MobileNavbar";
 
 interface CategoryPageProps {
   categories: Category[];
@@ -34,33 +35,14 @@ export default function Mobile({
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
-      {/* 顶部导航栏 */}
-      <nav className="bg-white dark:bg-gray-800 border-b dark:border-gray-700 border-gray-200 sticky top-0 z-50 transition-colors duration-300">
-        <div className="px-4">
-          <div className="flex items-center justify-between py-3">
-            <div className="flex items-center space-x-4">
-              <div className="flex items-center space-x-2">
-                <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center">
-                  <BookOpen className="h-5 w-5 text-white" />
-                </div>
-                <div>
-                  <h1 className="text-lg font-bold text-gray-900 dark:text-white">分类浏览</h1>
-                  <p className="text-xs text-gray-400 dark:text-gray-400">发现更多精彩 · 精品小说</p>
-                </div>
-              </div>
-            </div>
-            
-            <div className="flex items-center space-x-2">
-              <button 
-                className="p-2 text-gray-600 dark:text-gray-400 hover:text-white hover:bg-gray-700 dark:hover:bg-gray-700 rounded-lg transition-colors"
-                onClick={() => setShowCategorySelector(!showCategorySelector)}
-              >
-                <MoreHorizontal className="h-5 w-5" />
-              </button>
-            </div>
-          </div>
-        </div>
-      </nav>
+      {/* 统一的移动端导航栏 */}
+      <MobileNavbar
+        title="分类浏览"
+        subtitle="发现更多精彩 · 精品小说"
+        showBack={true}
+        showSearch={true}
+        onBackClick={() => window.history.back()}
+      />
 
       {/* 分类选择器弹窗 */}
       {showCategorySelector && (
@@ -80,7 +62,7 @@ export default function Mobile({
                   <Link
                     key={category.id}
                     to={category.id === '' ? '/category' : `/category/${category.id}`}
-                    className={`p-3 rounded-lg text-center transition-colors block ${
+                    className={`p-3 rounded-lg text-center transition-colors block touch-target ${
                       (categoryId || '') === category.id
                         ? 'bg-blue-500 text-white'
                         : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600'
@@ -113,7 +95,10 @@ export default function Mobile({
               </div>
             </div>
             <div className="text-right">
-              <div className="bg-blue-500 text-white px-4 py-2 rounded-lg font-bold text-sm hover:bg-blue-600 cursor-pointer transition-colors">
+              <div 
+                className="bg-blue-500 text-white px-4 py-2 rounded-lg font-bold text-sm hover:bg-blue-600 cursor-pointer transition-colors touch-target"
+                onClick={() => setShowCategorySelector(!showCategorySelector)}
+              >
                 🔥 精选
               </div>
             </div>
@@ -124,13 +109,13 @@ export default function Mobile({
             <Button 
               block 
               type="primary"
-              className="bg-blue-500 hover:bg-blue-600 border-0 h-10 text-white text-sm"
+              className="bg-blue-500 hover:bg-blue-600 border-0 h-12 text-white text-sm touch-target"
             >
               🔍 搜索小说
             </Button>
             <Button 
               block 
-              className="bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 border-0 text-gray-700 dark:text-white h-10 text-sm"
+              className="bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 border-0 text-gray-700 dark:text-white h-12 text-sm touch-target"
             >
               📚 查看书架
             </Button>
@@ -149,15 +134,15 @@ export default function Mobile({
           </div>
           
           <div className="grid grid-cols-3 gap-2">
-            <Button size="small" className="bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 border-0 text-gray-700 dark:text-white">
+            <Button size="small" className="bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 border-0 text-gray-700 dark:text-white touch-target">
               <Award className="h-4 w-4 mr-1" />
               最新
             </Button>
-            <Button size="small" className="bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 border-0 text-gray-700 dark:text-white">
+            <Button size="small" className="bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 border-0 text-gray-700 dark:text-white touch-target">
               <TrendingUp className="h-4 w-4 mr-1" />
               热门
             </Button>
-            <Button size="small" className="bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 border-0 text-gray-700 dark:text-white">
+            <Button size="small" className="bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 border-0 text-gray-700 dark:text-white touch-target">
               <Heart className="h-4 w-4 mr-1" />
               收藏
             </Button>
@@ -207,7 +192,7 @@ export default function Mobile({
                     size="small"
                     disabled={pagination.currentPage === 1}
                     onClick={() => onPageChange(pagination.currentPage - 1)}
-                    className="bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 border-0 text-gray-700 dark:text-white disabled:opacity-50"
+                    className="bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 border-0 text-gray-700 dark:text-white disabled:opacity-50 touch-target"
                   >
                     <ChevronLeft className="h-4 w-4" />
                   </Button>
@@ -220,7 +205,7 @@ export default function Mobile({
                     size="small"
                     disabled={pagination.currentPage === pagination.totalPages}
                     onClick={() => onPageChange(pagination.currentPage + 1)}
-                    className="bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 border-0 text-gray-700 dark:text-white disabled:opacity-50"
+                    className="bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 border-0 text-gray-700 dark:text-white disabled:opacity-50 touch-target"
                   >
                     <ChevronRight className="h-4 w-4" />
                   </Button>
@@ -249,8 +234,8 @@ export default function Mobile({
                         type={pagination.currentPage === pageNum ? "primary" : "default"}
                         onClick={() => onPageChange(pageNum)}
                         className={pagination.currentPage === pageNum 
-                          ? "bg-blue-500 border-0" 
-                          : "bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 border-0 text-gray-700 dark:text-white"
+                          ? "bg-blue-500 border-0 touch-target" 
+                          : "bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 border-0 text-gray-700 dark:text-white touch-target"
                         }
                       >
                         {pageNum}
@@ -268,11 +253,11 @@ export default function Mobile({
           <div className="p-4">
             <h4 className="text-gray-900 dark:text-white font-bold text-lg mb-4">⚡ 快捷功能</h4>
             <div className="grid grid-cols-2 gap-3">
-              <div className="text-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer transition-colors">
+              <div className="text-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer transition-colors touch-target">
                 <BookOpen className="h-6 w-6 mx-auto mb-2 text-blue-500" />
                 <span className="text-xs text-gray-600 dark:text-gray-300">我的书架</span>
               </div>
-              <Link to="/" className="text-center p-3 bg-blue-50 dark:bg-blue-900 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-800 cursor-pointer transition-colors">
+              <Link to="/" className="text-center p-3 bg-blue-50 dark:bg-blue-900 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-800 cursor-pointer transition-colors touch-target">
                 <Crown className="h-6 w-6 mx-auto mb-2 text-blue-500" />
                 <span className="text-xs text-gray-600 dark:text-gray-300">返回首页</span>
               </Link>
@@ -308,7 +293,7 @@ export default function Mobile({
               <Button 
                 type="primary"
                 size="small"
-                className="bg-blue-500 hover:bg-blue-600 border-0"
+                className="bg-blue-500 hover:bg-blue-600 border-0 touch-target"
                 onClick={() => window.location.reload()}
               >
                 🔄 重新加载

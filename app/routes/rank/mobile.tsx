@@ -2,6 +2,7 @@ import { Button, Card } from "react-vant";
 import { Link } from "react-router";
 import type { RankingBook, RankingType, RankingConfig } from "../../types/rankingPage";
 import { formatHeat } from "./index";
+import MobileNavbar from "../../components/MobileNavbar";
 
 interface RankingPageProps {
   currentTab: RankingType;
@@ -60,22 +61,14 @@ export default function Mobile({
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
-      {/* 顶部导航栏 */}
-      <nav className="bg-white dark:bg-gray-800 border-b dark:border-gray-700 border-gray-200 sticky top-0 z-50 transition-colors duration-300">
-        <div className="px-4">
-          <div className="flex items-center justify-between py-3">
-            <div className="flex items-center space-x-3">
-              <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
-                <span className="text-white text-lg">🏆</span>
-              </div>
-              <div>
-                <h1 className="text-lg font-bold text-gray-900 dark:text-white">排行榜</h1>
-                <p className="text-xs text-gray-400 dark:text-gray-400">发现热门精彩小说</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </nav>
+      {/* 统一的移动端导航栏 */}
+      <MobileNavbar
+        title="排行榜"
+        subtitle="发现热门精彩小说"
+        showBack={true}
+        showSearch={true}
+        onBackClick={() => window.history.back()}
+      />
 
       {/* 标签页切换 */}
       <div className="bg-white dark:bg-gray-800 border-b dark:border-gray-700 border-gray-200 px-4 py-3 transition-colors duration-300">
@@ -93,7 +86,7 @@ export default function Mobile({
                 key={tab.key}
                 onClick={() => onTabChange(tab.key)}
                 className={`
-                  flex-1 flex items-center justify-center space-x-1 py-2 px-3 rounded-lg text-sm font-medium transition-all duration-200
+                  flex-1 flex items-center justify-center space-x-1 py-3 px-3 rounded-lg text-sm font-medium transition-all duration-200 touch-target
                   ${isActive 
                     ? `${config.bgColor} text-white shadow-sm` 
                     : 'bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-600'
@@ -133,7 +126,7 @@ export default function Mobile({
           <div className="grid grid-cols-2 gap-3">
             <Button 
               block 
-              className="bg-white/20 hover:bg-white/30 border-0 h-10 text-white text-sm backdrop-blur-sm"
+              className="bg-white/20 hover:bg-white/30 border-0 h-12 text-white text-sm backdrop-blur-sm touch-target"
               onClick={() => {/* 可以添加搜索功能 */}}
             >
               🔍 搜索小说
@@ -141,7 +134,7 @@ export default function Mobile({
             <Link to="/">
               <Button 
                 block 
-                className="bg-white/20 hover:bg-white/30 border-0 text-white h-10 text-sm backdrop-blur-sm"
+                className="bg-white/20 hover:bg-white/30 border-0 text-white h-12 text-sm backdrop-blur-sm touch-target"
               >
                 🏠 返回首页
               </Button>
@@ -181,7 +174,7 @@ export default function Mobile({
                       <div className="flex items-start justify-between mb-2">
                         <div className="flex-1">
                           <Link to={`/book/${book.id}`}>
-                            <h3 className="text-base font-semibold text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-colors line-clamp-1">
+                            <h3 className="text-base font-semibold text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-colors line-clamp-1 touch-target">
                               {book.name}
                             </h3>
                           </Link>
@@ -240,7 +233,7 @@ export default function Mobile({
                             <Button 
                               size="small" 
                               type="primary"
-                              className="bg-blue-500 hover:bg-blue-600 border-0 text-xs h-8"
+                              className="bg-blue-500 hover:bg-blue-600 border-0 text-xs h-8 touch-target"
                             >
                               详情
                             </Button>
@@ -248,7 +241,7 @@ export default function Mobile({
                           <Link to={`/book/${book.id}/1`}>
                             <Button 
                               size="small" 
-                              className="bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 border-0 text-gray-700 dark:text-white text-xs h-8"
+                              className="bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 border-0 text-gray-700 dark:text-white text-xs h-8 touch-target"
                             >
                               阅读
                             </Button>
@@ -282,22 +275,22 @@ export default function Mobile({
             <h4 className="text-gray-900 dark:text-white font-bold text-lg mb-4">🚀 快捷导航</h4>
             <div className="grid grid-cols-2 gap-3">
               <Link to="/special/completed">
-                <Button block className="bg-purple-100 dark:bg-purple-900/20 hover:bg-purple-200 dark:hover:bg-purple-800/30 border-0 text-purple-600 dark:text-purple-400 h-10">
+                <Button block className="bg-purple-100 dark:bg-purple-900/20 hover:bg-purple-200 dark:hover:bg-purple-800/30 border-0 text-purple-600 dark:text-purple-400 h-12 touch-target">
                   🏆 完结精品
                 </Button>
               </Link>
               <Link to="/special/new">
-                <Button block className="bg-blue-100 dark:bg-blue-900/20 hover:bg-blue-200 dark:hover:bg-blue-800/30 border-0 text-blue-600 dark:text-blue-400 h-10">
+                <Button block className="bg-blue-100 dark:bg-blue-900/20 hover:bg-blue-200 dark:hover:bg-blue-800/30 border-0 text-blue-600 dark:text-blue-400 h-12 touch-target">
                   ✨ 最新上架
                 </Button>
               </Link>
               <Link to="/category/''">
-                <Button block className="bg-green-100 dark:bg-green-900/20 hover:bg-green-200 dark:hover:bg-green-800/30 border-0 text-green-600 dark:text-green-400 h-10">
+                <Button block className="bg-green-100 dark:bg-green-900/20 hover:bg-green-200 dark:hover:bg-green-800/30 border-0 text-green-600 dark:text-green-400 h-12 touch-target">
                   📖 全部分类
                 </Button>
               </Link>
               <Link to="/">
-                <Button block className="bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 border-0 text-gray-600 dark:text-gray-300 h-10">
+                <Button block className="bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 border-0 text-gray-600 dark:text-gray-300 h-12 touch-target">
                   🏠 返回首页
                 </Button>
               </Link>
@@ -314,8 +307,8 @@ export default function Mobile({
                 <div>
                   <div className="font-medium text-gray-900 dark:text-white">正在加载{rankingConfig.title}数据...</div>
                   <div className="text-sm text-gray-400 dark:text-gray-400">请稍候</div>
-                </div>
               </div>
+                </div>
             </div>
           </Card>
         )}
@@ -333,7 +326,7 @@ export default function Mobile({
               <Button 
                 type="primary"
                 size="small"
-                className="bg-blue-500 hover:bg-blue-600 border-0"
+                className="bg-blue-500 hover:bg-blue-600 border-0 touch-target"
                 onClick={() => window.location.reload()}
               >
                 🔄 重新加载

@@ -3,7 +3,7 @@ import { BookOpen, User } from "lucide-react";
 import { Link, useNavigate } from "react-router";
 import { useChapterContent, useChapters, handleChapterJump } from "./index";
 import type { ChapterRead, ChapterInfo } from "../../types/ChapterRead";
-import Navbar from "@/components/Navbar";
+import MobileNavbar from "../../components/MobileNavbar";
 import { useMemo, useEffect } from "react";
 import { useChapterStore } from "../../lib/useChapterStore";
 
@@ -75,7 +75,11 @@ export default function Mobile() {
             <p className="text-sm text-gray-400 dark:text-gray-400 mb-4">
               {errorMessage}
             </p>
-            <Button onClick={() => window.location.reload()} size="small" className="bg-blue-500 hover:bg-blue-600 border-0">
+            <Button 
+              onClick={() => window.location.reload()} 
+              size="small" 
+              className="bg-blue-500 hover:bg-blue-600 border-0 touch-target"
+            >
               🔄 重新加载
             </Button>
           </Card>
@@ -92,7 +96,10 @@ export default function Mobile() {
             <div className="text-5xl mb-4">📖</div>
             <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-3">章节不存在</h3>
             <Link to="/">
-              <Button size="small" className="bg-blue-500 hover:bg-blue-600 border-0">
+              <Button 
+                size="small" 
+                className="bg-blue-500 hover:bg-blue-600 border-0 touch-target"
+              >
                 🏠 返回首页
               </Button>
             </Link>
@@ -122,10 +129,13 @@ export default function Mobile() {
 
   return (
     <div className="chapter-read-container min-h-screen bg-gray-50 dark:bg-gray-900">
-      {/* 移动端导航 */}
-      <div className="sticky top-0 z-10 bg-white dark:bg-gray-800 shadow-sm">
-        <Navbar />
-      </div>
+      {/* 统一的移动端导航栏 */}
+      <MobileNavbar
+        title={chapter.book.name}
+        showBack={true}
+        showSearch={true}
+        onBackClick={() => navigate(`/book/${chapter.bookId}`)}
+      />
 
       {/* 移动端主内容 */}
       <div className="px-4 py-4">
@@ -134,7 +144,10 @@ export default function Mobile() {
           <div className="space-y-3">
             {/* 书籍信息 */}
             <div className="flex items-center space-x-2 text-sm">
-              <Link to={`/book/${chapter.book.id}`} className="flex items-center space-x-1 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300">
+              <Link 
+                to={`/book/${chapter.book.id}`} 
+                className="flex items-center space-x-1 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 touch-target"
+              >
                 <BookOpen className="h-4 w-4" />
                 <span className="font-medium">{chapter.book.name}</span>
               </Link>
@@ -186,12 +199,18 @@ export default function Mobile() {
           {/* 移动端快速返回按钮 */}
           <div className="flex space-x-3">
             <Link to={`/book/${chapter.bookId}`} className="flex-1">
-              <Button className="w-full bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 border-0 text-gray-700 dark:text-white" size="small">
+              <Button 
+                className="w-full bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 border-0 text-gray-700 dark:text-white touch-target" 
+                size="small"
+              >
                 📚 返回目录
               </Button>
             </Link>
             <Link to="/" className="flex-1">
-              <Button className="w-full bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 border-0 text-gray-700 dark:text-white" size="small">
+              <Button 
+                className="w-full bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 border-0 text-gray-700 dark:text-white touch-target" 
+                size="small"
+              >
                 🏠 返回首页
               </Button>
             </Link>
