@@ -113,7 +113,7 @@ export default function Mobile() {
               <div className="space-y-2 mb-3">
                 <div className="flex items-center text-gray-600 dark:text-gray-300 text-sm">
                   <User className="h-4 w-4 mr-2" />
-                  <span>{book.author.name}</span>
+                  <span>{book.authorName}</span>
                 </div>
                 <div className="flex items-center space-x-2">
                   <span className="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-2 py-1 rounded text-xs">

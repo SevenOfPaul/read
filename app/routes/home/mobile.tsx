@@ -1,14 +1,28 @@
 import { Button, Card, Badge } from "react-vant";
 import { BookOpen, Search, Clock, User, TrendingUp, Award, Heart, Eye, Star, Crown, BookMarked, Filter, X } from "lucide-react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import type { CategoryWithBooks } from "../../types/categorySearch";
-import { useCategories } from "./index";
+import { useCategories, useHotBooks, formatHeat } from "./index";
+import { useChapterStore } from "../../lib/useChapterStore";
 import { useState } from "react";
 import MobileNavbar from "../../components/MobileNavbar";
 
 export default function Mobile() {
+  const navigate = useNavigate();
+  const { currentChapterId, bookId } = useChapterStore();
   const { data: categories, isLoading, error } = useCategories();
+  const { data: hotBooks } = useHotBooks();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  // 继续阅读功能
+  const handleContinueReading = () => {
+    if (currentChapterId && bookId) {
+      navigate(`/read/${bookId}/${currentChapterId}`);
+    }
+  };
+
+  // 判断是否有阅读进度
+  const hasReadingProgress = currentChapterId && bookId;
 
   // 截取描述为100字
   const truncateDesc = (desc: string) => {
@@ -46,13 +60,13 @@ export default function Mobile() {
               
               <div className="space-y-1 mb-6">
                 {categories && categories.map((category: CategoryWithBooks) => (
-                  <a
+                  <Link
                     key={category.id}
-                    href="#"
+                    to={`/category/${category.id}`}
                     className="block px-3 py-2 text-gray-600 dark:text-gray-300 hover:text-white hover:bg-gray-700 dark:hover:bg-gray-700 rounded transition-colors touch-target"
                   >
-                    {category.name}
-                  </a>
+                    {category?.name || '未知分类'}
+                  </Link>
                 ))}
               </div>
               
@@ -88,9 +102,11 @@ export default function Mobile() {
               </div>
             </div>
             <div className="text-right">
-              <div className="bg-blue-500 text-white px-4 py-2 rounded-lg font-bold text-sm hover:bg-blue-600 cursor-pointer transition-colors touch-target">
-                🔥 立即探索
-              </div>
+              <Link to="/rank">
+                <div className="bg-blue-500 text-white px-4 py-2 rounded-lg font-bold text-sm hover:bg-blue-600 cursor-pointer transition-colors touch-target">
+                  🔥 立即探索
+                </div>
+              </Link>
             </div>
           </div>
           
@@ -106,11 +122,14 @@ export default function Mobile() {
             <Button 
               block 
               className="bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 border-0 text-gray-700 dark:text-white h-12 text-sm touch-target"
+              onClick={handleContinueReading}
+              disabled={!hasReadingProgress}
             >
-              📝 查看书架
+              📝 继续阅读
             </Button>
           </div>
         </div>
+
 
         {/* 编辑推荐区域 */}
         <div className="bg-white dark:bg-gray-800 rounded-lg p-6 mb-6 border border-gray-200 dark:border-gray-700 transition-colors duration-300">
@@ -121,17 +140,17 @@ export default function Mobile() {
           
           <div className="space-y-4">
             {categories && categories.slice(0, 2).map((category: CategoryWithBooks) => {
-              if (!category.books || category.books.length === 0) return null;
+              if (!category?.books || category.books.length === 0) return null;
               const featuredBook = category.books[0];
               
               return (
-                <Card key={featuredBook.id} className="bg-gray-50 dark:bg-gray-700 border-gray-200 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors touch-target">
+                <Card key={featuredBook?.id} className="bg-gray-50 dark:bg-gray-700 border-gray-200 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors touch-target">
                   <Card.Body className="p-4">
                     <div className="flex space-x-3">
-                      {featuredBook.bookImage && (
+                      {featuredBook?.bookImage && (
                         <img 
                           src={featuredBook.bookImage} 
-                          alt={featuredBook.name}
+                          alt={featuredBook?.name || '书籍封面'}
                           className="w-16 h-20 object-cover rounded flex-shrink-0"
                           onError={(e) => {
                             const target = e.target as HTMLImageElement;
@@ -143,23 +162,25 @@ export default function Mobile() {
                         <div className="flex items-start justify-between">
                           <div className="flex-1 min-w-0">
                             <h4 className="text-gray-900 dark:text-white font-bold text-base mb-1 line-clamp-2">
-                              {featuredBook.name}
+                              {featuredBook?.name || '未知书名'}
                             </h4>
-                            <p className="text-gray-400 dark:text-gray-400 text-sm mb-2">👤 {featuredBook.author}</p>
+                            <Link to={`/author/${featuredBook?.authorId}`}>
+                              <p className="text-gray-400 dark:text-gray-400 text-sm mb-2">👤 {featuredBook?.author || '未知作者'}</p>
+                            </Link>
                             <p className="text-gray-600 dark:text-gray-300 text-sm mb-3 line-clamp-2">
-                              {truncateDesc(featuredBook.desc)}
+                              {truncateDesc(featuredBook?.desc || '')}
                             </p>
                           </div>
                           <div className="flex-shrink-0 ml-3">
-                            <span className="text-blue-400 text-xs font-medium block mb-2">🔥 {featuredBook.status}</span>
-                            <Link to={`/book/${featuredBook.id}`}>
+                            <span className="text-blue-400 text-xs font-medium block mb-2">🔥 {featuredBook?.status || '状态未知'}</span>
+                            <Link to={`/book/${featuredBook?.id}`}>
                               <Button size="small" className="bg-blue-500 hover:bg-blue-600 border-0 text-xs px-2 py-1 touch-target">
                                 立即阅读
                               </Button>
                             </Link>
                           </div>
                         </div>
-                        {featuredBook.lastChapter && (
+                        {featuredBook?.lastChapter && (
                           <div className="mt-2 p-2 bg-gray-100 dark:bg-gray-600 rounded text-xs">
                             <div className="text-gray-600 dark:text-gray-300">📖 最新: {featuredBook.lastChapter}</div>
                           </div>
@@ -184,12 +205,12 @@ export default function Mobile() {
                 </div>
                 <span className="text-xs text-gray-600 dark:text-gray-300">我的书架</span>
               </div>
-              <div className="text-center touch-target">
+              <Link to="/rank" className="text-center touch-target">
                 <div className="w-12 h-12 bg-indigo-500 rounded-lg flex items-center justify-center mx-auto mb-2">
                   <Crown className="h-6 w-6 text-white" />
                 </div>
                 <span className="text-xs text-gray-600 dark:text-gray-300">排行榜</span>
-              </div>
+              </Link>
               <div className="text-center touch-target">
                 <div className="w-12 h-12 bg-purple-500 rounded-lg flex items-center justify-center mx-auto mb-2">
                   <Heart className="h-6 w-6 text-white" />
@@ -205,7 +226,6 @@ export default function Mobile() {
             </div>
           </div>
         </Card>
-
 
         {/* 精品分类推荐标题 */}
         <div className="bg-gradient-to-r from-blue-500 to-indigo-600 rounded-lg p-4 mb-6 shadow-lg">
@@ -236,16 +256,16 @@ export default function Mobile() {
         {/* 分类展示区域 - PC风格移动端适配 */}
         <div className="space-y-6">
           {categories && categories.map((category: CategoryWithBooks) => {
-            const hasBooks = category.books && category.books.length > 0;
+            const hasBooks = category?.books && category.books.length > 0;
             
             return (
-              <div key={category.id} className="bg-white dark:bg-gray-800 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 transition-colors duration-300">
+              <div key={category?.id} className="bg-white dark:bg-gray-800 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 transition-colors duration-300">
                 {/* 分类头部 */}
                 <div className="bg-gray-100 dark:bg-gray-700 p-4 border-l-4 border-blue-500">
                   <div className="flex items-center justify-between">
                     <div className="flex-1">
                       <h3 className="text-gray-900 dark:text-white font-bold text-lg mb-1">
-                        📚 {category.name}
+                        📚 {category?.name || '未知分类'}
                       </h3>
                       <p className="text-gray-400 dark:text-gray-400 text-sm">
                         {hasBooks ? (
@@ -275,15 +295,15 @@ export default function Mobile() {
                   {hasBooks ? (
                     <div className="space-y-3">
                       {category.books.map((book, index) => (
-                        <Card key={book.id} className="bg-gray-50 dark:bg-gray-700 border-gray-200 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-600 transition-all duration-200 hover:shadow-lg touch-target">
+                        <Card key={book?.id} className="bg-gray-50 dark:bg-gray-700 border-gray-200 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-600 transition-all duration-200 hover:shadow-lg touch-target">
                           <Card.Body className="p-4">
                             <div className="flex space-x-3">
                               {/* 书籍封面 */}
                               <div className="relative flex-shrink-0">
-                                {book.bookImage && (
+                                {book?.bookImage && (
                                   <img 
                                     src={book.bookImage} 
-                                    alt={book.name}
+                                    alt={book?.name || '书籍封面'}
                                     className="w-16 h-20 object-cover rounded"
                                     onError={(e) => {
                                       const target = e.target as HTMLImageElement;
@@ -301,8 +321,8 @@ export default function Mobile() {
                                 )}
                                 {/* 状态标签 */}
                                 <div className="absolute -bottom-1 -right-1">
-                                  <span className={`${book.status.includes('连载') ? 'bg-green-500' : 'bg-blue-500'} text-white px-2 py-1 rounded text-xs font-bold`}>
-                                    {book.status}
+                                  <span className={`${book?.status?.includes('连载') ? 'bg-green-500' : 'bg-blue-500'} text-white px-2 py-1 rounded text-xs font-bold`}>
+                                    {book?.status || '状态未知'}
                                   </span>
                                 </div>
                               </div>
@@ -312,21 +332,23 @@ export default function Mobile() {
                                 <div className="flex items-start justify-between">
                                   <div className="flex-1 min-w-0">
                                     <h4 className="text-gray-900 dark:text-white font-bold text-base mb-2 line-clamp-2 leading-tight">
-                                      {book.name}
+                                      {book?.name || '未知书名'}
                                     </h4>
                                     
                                     <div className="flex items-center text-sm text-gray-400 dark:text-gray-400 mb-3">
                                       <User className="h-4 w-4 mr-1" />
-                                      <span className="truncate">{book.author}</span>
+                                      <Link to={`/author/${book?.authorId}`} className="truncate hover:text-blue-400">
+                                        {book?.author || '未知作者'}
+                                      </Link>
                                     </div>
 
                                     {/* 书籍描述 - 限制100字 */}
                                     <p className="text-gray-600 dark:text-gray-300 text-sm mb-3 line-clamp-2">
-                                      {truncateDesc(book.desc)}
+                                      {truncateDesc(book?.desc || '')}
                                     </p>
 
                                     {/* 最新章节 */}
-                                    {book.lastChapter && (
+                                    {book?.lastChapter && (
                                       <div className="mb-3 p-2 bg-gray-100 dark:bg-gray-600 rounded text-sm">
                                         <div className="text-gray-600 dark:text-gray-300">📖 最新: {book.lastChapter}</div>
                                       </div>
@@ -339,7 +361,7 @@ export default function Mobile() {
                                       <Star className="h-4 w-4 text-yellow-500" />
                                       <span className="text-sm text-gray-400 dark:text-gray-400">9.2</span>
                                     </div>
-                                    <Link to={`/book/${book.id}`}>
+                                    <Link to={`/book/${book?.id}`}>
                                       <Button 
                                         size="small"
                                         className="bg-blue-500 hover:bg-blue-600 border-0 text-sm px-3 py-1 font-bold touch-target"
@@ -363,7 +385,7 @@ export default function Mobile() {
                       </div>
                       <h4 className="text-gray-400 dark:text-gray-400 font-medium mb-2">精彩即将呈现</h4>
                       <p className="text-gray-500 dark:text-gray-500 text-sm">
-                        我们正在精心策划优质的{category.name}小说内容，敬请期待！
+                        我们正在精心策划优质的{category?.name || '该分类'}小说内容，敬请期待！
                       </p>
                     </div>
                   )}
