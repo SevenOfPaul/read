@@ -8,5 +8,6 @@ export default [
   route("category/:categoryId", "routes/category/index.tsx"),
   route("author/:authorId", "routes/author/index.tsx"),
   route("special/:type", "routes/special/index.tsx"),
+  route("upload", "routes/upload/index.tsx"),
   route("*", "routes/not-found.tsx"),
 ] satisfies RouteConfig;
