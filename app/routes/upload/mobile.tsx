@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button, Card, Input } from "react-vant";
 import { Upload, FileText, CheckCircle, AlertCircle, Loader, ChevronDown, ChevronRight, Minimize2, Maximize2, Image, X } from "lucide-react";
-import { useUpload } from "./index";
+import { useUpload, useCheckDuplicateBook } from "./index";
 import type { UploadFormData, ParsedChapter } from "../../types/upload";
 import { ChapterParser } from "./chapterParser";
 import {  useUploadImage } from "./imageService";
@@ -21,6 +21,9 @@ export default function MobileUpload() {
   const uploadHook = useUpload();
   const uploadImageMutation = useUploadImage();
   
+  // 重复检查 - 放在组件顶层
+  const duplicateCheck = useCheckDuplicateBook(formData.bookName, formData.authorName);
+  
   // 创建 ChapterParser 实例
   const parser = new ChapterParser();
 
@@ -36,12 +39,6 @@ export default function MobileUpload() {
   const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file || !formData.bookName.trim()) return;
-
-    // 验证文件
-    const validation = uploadImageMutation.mutate;
-    if (validation) {
-      // 文件验证逻辑
-    }
 
     try {
       await uploadImageMutation.mutateAsync({
@@ -135,12 +132,27 @@ export default function MobileUpload() {
   };
 
   // 表单提交
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!formData.bookName || !formData.authorName || !formData.bookContent) {
       alert("请填写完整信息");
       return;
     }
-    uploadHook.mutate(formData);
+
+    try {
+      // 检查重复
+      const isDuplicate = await duplicateCheck.refetch();
+      
+      if (isDuplicate.data === true) {
+        alert("书库中已存在同名同作者书籍，请检查书名和作者信息");
+        return;
+      }
+
+      // 没有重复，继续上传
+      uploadHook.mutate(formData);
+    } catch (error) {
+      console.error('检查重复失败:', error);
+      alert("检查重复失败，请重试");
+    }
   };
 
   // 进度百分比计算
@@ -234,9 +246,8 @@ export default function MobileUpload() {
                 书籍封面
               </label>
               
-              {(
-                <div className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-6 text-center
-                              hover:border-blue-400 dark:hover:border-blue-500 transition-colors duration-200">
+              <div className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-6 text-center
+                            hover:border-blue-400 dark:hover:border-blue-500 transition-colors duration-200">
                   <input
                     type="file"
                     accept="image/*"
@@ -255,7 +266,6 @@ export default function MobileUpload() {
                     </p>
                   </label>
                 </div>
-              )}
             </div>
 
             {/* 文件上传 */}

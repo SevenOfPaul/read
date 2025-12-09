@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { Upload, FileText, CheckCircle, AlertCircle, Loader, ChevronDown, ChevronRight, Minimize2, Maximize2, Image, X } from "lucide-react";
-import { useUpload } from "./index";
+import { useUpload, useCheckDuplicateBook } from "./index";
 import type { UploadFormData, ParsedChapter } from "../../types/upload";
 import { ChapterParser } from "./chapterParser";
-import {  useUploadImage } from "./imageService";
+import { useUploadImage } from "./imageService";
 import Navbar from "../../components/Navbar";
 import { Toast } from "react-vant";
 
@@ -23,6 +23,9 @@ export default function PCUpload() {
 
   const uploadHook = useUpload();
   const uploadImageMutation = useUploadImage();
+  
+  // 重复检查 - 放在组件顶层
+  const duplicateCheck = useCheckDuplicateBook(formData.bookName, formData.authorName);
   
   // 创建 ChapterParser 实例
   const parser = new ChapterParser();
@@ -184,13 +187,28 @@ export default function PCUpload() {
   };
 
   // 表单提交
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.bookName || !formData.authorName || !formData.bookContent) {
-      alert("请填写完整信息");
+      Toast.fail("请填写完整信息");
       return;
     }
-    uploadHook.mutate(formData);
+
+    try {
+      // 检查重复
+      const isDuplicate = await duplicateCheck.refetch();
+      
+      if (isDuplicate.data === true) {
+        Toast.fail("书库中已存在同名同作者书籍，请检查书名和作者信息");
+        return;
+      }
+
+      // 没有重复，继续上传
+      uploadHook.mutate(formData);
+    } catch (error) {
+      console.error('检查重复失败:', error);
+      Toast.fail("检查重复失败，请重试");
+    }
   };
 
   // 进度百分比计算
@@ -342,11 +360,6 @@ export default function PCUpload() {
     );
   };
 
-useEffect(()=>{
-  console.log('当前书名:', formData.bookName);
-  console.log('当前图片:', formData.bookImage);
-  console.log('图片状态:', imageLoadStatus);
-},[formData, imageLoadStatus])
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
       <Navbar title="夜读小说网 - 上传" subtitle="分享你的精彩作品" />
@@ -572,7 +585,7 @@ useEffect(()=>{
                 ) : (
                   <>
                     <Upload className="h-5 w-5 mr-2" />
-                    开始解析
+                    开始上传
                   </>
                 )}
               </button>
