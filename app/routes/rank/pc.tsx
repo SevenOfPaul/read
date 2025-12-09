@@ -226,7 +226,7 @@ export default function PC({
                             查看详情
                           </Button>
                         </Link>
-                        <Link to={`/book/${book.id}/1`}>
+                        <Link to={`/book/${book.id}`}>
                           <Button 
                             size="small" 
                             className="bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 border-0 text-gray-700 dark:text-white"

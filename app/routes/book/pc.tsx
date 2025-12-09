@@ -75,7 +75,7 @@ export default function PC() {
       {/* 顶部导航 */}
       <Navbar />
 
-      <div className="max-w-7xl mx-auto px-6 py-8 dark:bg-gray-600">
+      <div className="max-w-4/5 mx-auto px-6 py-8 dark:bg-gray-60">
         <div className="flex gap-8">
           {/* 左侧内容区域 */}
           <main className="flex-1 space-y-8">
@@ -242,7 +242,7 @@ export default function PC() {
 
             {/* 相关推荐 - 移动到右侧边栏 */}
             {relatedBooks && relatedBooks.length > 0 && (
-              <Card className="related-books">
+              <Card className="related-books p-2">
                 <h3 className="related-title">📖 相关推荐</h3>
                 <div className="space-y-3">
                   {relatedBooks.map((relatedBook: RelatedBook) => (
@@ -254,7 +254,7 @@ export default function PC() {
                       <img 
                         src={`${import.meta.env.VITE_imgHost}${relatedBook.bookImage}`} 
                         alt={relatedBook.name}
-                        className="related-book-cover"
+                        className="related-book-cover w-16"
                         loading="lazy"
                       />
                       <div className="related-book-info">

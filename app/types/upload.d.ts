@@ -14,6 +14,24 @@ export interface UploadFormData {
   bookImage?: string;
   /** 书籍状态（连载中、已完结等） */
   status?: string;
+  /** 图片文件 (临时存储用户选择的文件) */
+  imageFile?: File;
+  /** 图片来源：自动获取或手动上传 */
+  imageSource?: 'auto' | 'upload';
+}
+
+// 图片上传配置类型
+export interface ImageUploadConfig {
+  uploadUrl: string;
+  authToken: string;
+  maxRetries: number;
+  timeout: number;
+  delay: number;
+}
+
+// 图片上传响应类型
+export interface ImageUploadResponse {
+  src: string;
 }
 
 // TXT解析结果类型 - 简化版本

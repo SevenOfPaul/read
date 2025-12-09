@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { Button, Card, Input } from "react-vant";
-import { Upload, FileText, CheckCircle, AlertCircle, Loader } from "lucide-react";
+import { Upload, FileText, CheckCircle, AlertCircle, Loader, ChevronDown, ChevronRight, Minimize2, Maximize2, Image, X } from "lucide-react";
 import { useUpload } from "./index";
 import type { UploadFormData, ParsedChapter } from "../../types/upload";
 import { ChapterParser } from "./chapterParser";
+import {  useUploadImage } from "./imageService";
 import MobileNavbar from "../../components/MobileNavbar";
 
 export default function MobileUpload() {
@@ -14,11 +15,61 @@ export default function MobileUpload() {
   });
   const [parsedChapters, setParsedChapters] = useState<ParsedChapter[]>([]);
   const [showPreview, setShowPreview] = useState(false);
+  const [expandedChapters, setExpandedChapters] = useState<Set<number>>(new Set());
+  const [imageSource, setImageSource] = useState<'auto' | 'upload' | null>(null);
 
   const uploadHook = useUpload();
+  const uploadImageMutation = useUploadImage();
   
   // 创建 ChapterParser 实例
   const parser = new ChapterParser();
+
+  // 监听书名变化，自动获取图片
+  const handleBookNameChange = (bookName: string) => {
+    setFormData(prev => ({ ...prev, bookName }));
+    if (!bookName.trim()) {
+      setImageSource(null);
+    }
+  };
+
+  // 处理图片上传
+  const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file || !formData.bookName.trim()) return;
+
+    // 验证文件
+    const validation = uploadImageMutation.mutate;
+    if (validation) {
+      // 文件验证逻辑
+    }
+
+    try {
+      await uploadImageMutation.mutateAsync({
+        file,
+        bookName: formData.bookName
+      });
+      
+      setFormData(prev => ({ 
+        ...prev, 
+        bookImage: undefined, // 清除缓存的数据，使用查询结果
+        imageSource: 'upload'
+      }));
+      setImageSource('upload');
+    } catch (error) {
+      console.error('图片上传失败:', error);
+    }
+  };
+
+  // 清除自定义图片，回到自动获取
+  const handleClearCustomImage = () => {
+    setFormData(prev => ({ 
+      ...prev, 
+      bookImage: undefined,
+      imageFile: undefined
+    }));
+    setImageSource(null);
+    // 重新获取自动图片
+  };
 
   // 文件上传处理
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -32,6 +83,8 @@ export default function MobileUpload() {
         const chapters = parser.parseTxtContent(content);
         setParsedChapters(chapters);
         setShowPreview(true);
+        // 重置展开状态
+        setExpandedChapters(new Set());
       };
       reader.readAsText(file);
     }
@@ -44,7 +97,41 @@ export default function MobileUpload() {
       const chapters = parser.parseTxtContent(formData.bookContent);
       setParsedChapters(chapters);
       setShowPreview(true);
+      // 重置展开状态
+      setExpandedChapters(new Set());
     }
+  };
+
+  // 切换单个章节展开/收起状态
+  const toggleChapterExpansion = (index: number) => {
+    setExpandedChapters(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(index)) {
+        newSet.delete(index);
+      } else {
+        newSet.add(index);
+      }
+      return newSet;
+    });
+  };
+
+  // 展开所有章节
+  const expandAllChapters = () => {
+    setExpandedChapters(new Set(parsedChapters.map((_, index) => index)));
+  };
+
+  // 收起所有章节
+  const collapseAllChapters = () => {
+    setExpandedChapters(new Set());
+  };
+
+  // 格式化章节内容显示
+  const formatChapterContent = (content: string, isExpanded: boolean) => {
+    const maxPreviewLength = 150;
+    if (content.length <= maxPreviewLength || isExpanded) {
+      return content;
+    }
+    return content.substring(0, maxPreviewLength) + '...';
   };
 
   // 表单提交
@@ -58,6 +145,8 @@ export default function MobileUpload() {
 
   // 进度百分比计算
   const progressPercentage = uploadHook.progress.total > 0 ? (uploadHook.progress.current / uploadHook.progress.total) * 100 : 0;
+
+  // 图片相关状态
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
@@ -121,7 +210,7 @@ export default function MobileUpload() {
               <Input
                 placeholder="请输入书名"
                 value={formData.bookName}
-                onChange={(value: string) => setFormData(prev => ({ ...prev, bookName: value }))}
+                onChange={handleBookNameChange}
                 disabled={uploadHook.isPending}
               />
             </div>
@@ -137,6 +226,36 @@ export default function MobileUpload() {
                 onChange={(value: string) => setFormData(prev => ({ ...prev, authorName: value }))}
                 disabled={uploadHook.isPending}
               />
+            </div>
+
+            {/* 图片上传区域 */}
+           <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                书籍封面
+              </label>
+              
+              {(
+                <div className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-6 text-center
+                              hover:border-blue-400 dark:hover:border-blue-500 transition-colors duration-200">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageUpload}
+                    className="hidden"
+                    id="image-upload-pc"
+                    disabled={uploadHook.isPending || uploadImageMutation.isPending}
+                  />
+                  <label htmlFor="image-upload-pc" className="cursor-pointer">
+                    <Image className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                    <p className="text-gray-600 dark:text-gray-300 mb-2">
+                      点击上传封面图片
+                    </p>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                      支持 JPG 格式，最大 5MB
+                    </p>
+                  </label>
+                </div>
+              )}
             </div>
 
             {/* 文件上传 */}
@@ -166,27 +285,85 @@ export default function MobileUpload() {
               </div>
             </div>
 
-
             {/* 章节预览 */}
             {showPreview && parsedChapters.length > 0 && (
               <Card>
-                <h3 className="text-base font-semibold text-gray-900 dark:text-white mb-3">
-                  章节预览 (共 {parsedChapters.length} 章)
-                </h3>
-                <div className="max-h-48 overflow-y-auto space-y-2">
-                  {parsedChapters.slice(0, 5).map((chapter, index) => (
-                    <div key={index} className="text-xs p-2 bg-gray-50 dark:bg-gray-700 rounded">
-                      <span className="font-medium">{chapter.title}</span>
-                      <span className="text-gray-500 dark:text-gray-400 ml-2">
-                        ({chapter.content.length} 字符)
-                      </span>
-                    </div>
-                  ))}
-                  {parsedChapters.length > 5 && (
-                    <div className="text-xs text-gray-500 dark:text-gray-400 text-center py-2">
-                      还有 {parsedChapters.length - 5} 个章节...
-                    </div>
-                  )}
+                <div className="mb-3">
+                  <h3 className="text-base font-semibold text-gray-900 dark:text-white mb-2">
+                    章节预览 (共 {parsedChapters.length} 章)
+                  </h3>
+                  <div className="flex items-center space-x-2">
+                    <button
+                      type="button"
+                      onClick={expandAllChapters}
+                      className="flex items-center px-2 py-1 text-xs bg-blue-100 hover:bg-blue-200 
+                               dark:bg-blue-900 dark:hover:bg-blue-800 text-blue-700 dark:text-blue-300 
+                               rounded-lg transition-colors duration-200"
+                    >
+                      <Maximize2 className="h-3 w-3 mr-1" />
+                      全部展开
+                    </button>
+                    <button
+                      type="button"
+                      onClick={collapseAllChapters}
+                      className="flex items-center px-2 py-1 text-xs bg-gray-100 hover:bg-gray-200 
+                               dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 
+                               rounded-lg transition-colors duration-200"
+                    >
+                      <Minimize2 className="h-3 w-3 mr-1" />
+                      全部收起
+                    </button>
+                  </div>
+                </div>
+                <div className="max-h-80 overflow-y-auto space-y-2">
+                  {parsedChapters.map((chapter, index) => {
+                    const isExpanded = expandedChapters.has(index);
+                    return (
+                      <div key={index} className="border border-gray-200 dark:border-gray-600 rounded-lg overflow-hidden">
+                        <div 
+                          className="p-2 bg-gray-50 dark:bg-gray-700 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 
+                                   transition-colors duration-200"
+                          onClick={() => toggleChapterExpansion(index)}
+                        >
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center space-x-1">
+                              {isExpanded ? (
+                                <ChevronDown className="h-3 w-3 text-gray-500 dark:text-gray-400" />
+                              ) : (
+                                <ChevronRight className="h-3 w-3 text-gray-500 dark:text-gray-400" />
+                              )}
+                              <span className="text-xs font-medium text-gray-900 dark:text-white truncate flex-1 mr-2">
+                                {chapter.title}
+                              </span>
+                              <span className="text-xs text-gray-500 dark:text-gray-400">
+                                ({chapter.content.length})
+                              </span>
+                            </div>
+                            <span className="text-xs text-gray-400 dark:text-gray-500">
+                              {isExpanded ? '收起' : '展开'}
+                            </span>
+                          </div>
+                        </div>
+                        {isExpanded && (
+                          <div className="p-3 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-600">
+                            <div className="text-xs text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-wrap">
+                              {formatChapterContent(chapter.content, true)}
+                            </div>
+                            {chapter.content.length > 150 && (
+                              <button
+                                type="button"
+                                onClick={() => toggleChapterExpansion(index)}
+                                className="mt-2 text-xs text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 
+                                         font-medium transition-colors duration-200"
+                              >
+                                收起内容
+                              </button>
+                            )}
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
                 </div>
               </Card>
             )}
