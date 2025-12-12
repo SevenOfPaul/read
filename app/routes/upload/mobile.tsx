@@ -55,16 +55,6 @@ export default function MobileUpload() {
     }
   };
 
-  // 清除自定义图片，回到自动获取
-  const handleClearCustomImage = () => {
-    setFormData(prev => ({ 
-      ...prev, 
-      bookImage: undefined,
-      imageFile: undefined
-    }));
-    setImageSource(null);
-    // 重新获取自动图片
-  };
 
   // 文件上传处理
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -82,18 +72,6 @@ export default function MobileUpload() {
         setExpandedChapters(new Set());
       };
       reader.readAsText(file);
-    }
-  };
-
-  // 手动解析章节
-  const handleParseContent = () => {
-    if (formData.bookContent.trim()) {
-      // 使用 ChapterParser 解析章节
-      const chapters = parser.parseTxtContent(formData.bookContent);
-      setParsedChapters(chapters);
-      setShowPreview(true);
-      // 重置展开状态
-      setExpandedChapters(new Set());
     }
   };
 

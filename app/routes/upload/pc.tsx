@@ -42,7 +42,7 @@ export default function PCUpload() {
     } else {
       // 自动设置图片src，清理书名中的特殊字符
       const cleanBookName = bookName;
-      const imageSrc = `${import.meta.env.VITE_imgHost}/file/${cleanBookName}.jpg`;
+      const imageSrc = `${cleanBookName}.jpg`;
       console.log('图片URL:', imageSrc); // 调试信息
       setFormData(prev => ({ ...prev, bookImage: imageSrc }));
       setImageLoadStatus('loading'); // 设置为加载中状态
@@ -101,10 +101,9 @@ export default function PCUpload() {
     setImageLoadStatus('idle');
     setImageErrorMessage('');
     // 重新获取自动图片
-      console.log(formData)
     if (formData.bookName) {
       const cleanBookName = formData.bookName;
-      const imageSrc = `${import.meta.env.VITE_imgHost}/file/${cleanBookName}.jpg`;
+      const imageSrc = `${cleanBookName}.jpg`;
       setFormData(prev => ({ ...prev, bookImage: imageSrc }));
       setImageSource('auto');
       setImageLoadStatus('loading');
@@ -234,14 +233,14 @@ export default function PCUpload() {
             正在加载封面图片...
           </p>
            <img
-              src={formData.bookImage}
+              src={`${import.meta.env.VITE_imgHost}/file/${formData.bookImage}`}
               alt="书籍封面"
               className="w-full max-w-sm mx-auto rounded-lg shadow-lg"
               onLoad={handleImageLoad}
               onError={handleImageError}
             />
           <p className="text-sm text-gray-500 dark:text-gray-400 break-all">
-            {formData.bookImage}
+            {`${import.meta.env.VITE_imgHost}/file/${formData.bookImage}`}
           </p>
         </div>
       );
@@ -253,7 +252,7 @@ export default function PCUpload() {
         <div className="space-y-4">
           <div className="relative group">
             <img
-              src={formData.bookImage}
+              src={`${import.meta.env.VITE_imgHost}/file/${formData.bookImage}`}
               alt="书籍封面"
               className="w-full max-w-sm mx-auto rounded-lg shadow-lg"
             />

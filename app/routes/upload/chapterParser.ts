@@ -293,15 +293,12 @@ export class ChapterParser {
    * 智能解析TXT内容为章节（修复版 - 正确处理分章节合并）
    */
   parseTxtContent(content: string): ParsedChapter[] {
-    console.log('🔍 开始解析TXT内容...');
-     console.log(content.slice(0,200))
     const lines = content.split('\n').filter(line => line.trim());
     const chapters: ParsedChapter[] = [];
     let currentChapter: ParsedChapter | null = null;
     let currentContent: string[] = [];
     let chapterIndex = 0;
 
-    console.log(`📝 总行数: ${lines.length}`);
 
     for (let i = 0; i < lines.length; i++) {
       const line = lines[i].trim();
@@ -310,7 +307,6 @@ export class ChapterParser {
       const splitInfo = this.isSplitChapter(line);
       
       if (splitInfo.isSplit) {
-        console.log(`📖 发现分章节: ${line}`);
         
         // 检查是否与当前章节是同一个
         const isSameChapter = currentChapter && 
@@ -350,8 +346,6 @@ export class ChapterParser {
         const chapterInfo = this.isChapterTitle(line);
         
         if (chapterInfo.isChapter) {
-          // 是章节标题
-          console.log(`📚 发现章节标题: ${line}`);
           
           // 保存上一章节
           if (currentChapter) {

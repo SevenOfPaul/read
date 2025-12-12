@@ -39,29 +39,6 @@ function delay(ms: number): Promise<void> {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-// 验证图片文件
-function validateImageFile(file: File): { isValid: boolean; error?: string } {
-  // 检查文件类型
-  const allowedTypes = ['image/jpeg', 'image/jpg'];
-  if (!allowedTypes.includes(file.type)) {
-    return { 
-      isValid: false, 
-      error: '只支持 JPG'
-    };
-  }
-
-  // 检查文件大小 (5MB)
-  const maxSize = 5 * 1024 * 1024;
-  if (file.size > maxSize) {
-    return { 
-      isValid: false, 
-      error: '图片大小不能超过 5MB' 
-    };
-  }
-
-  return { isValid: true };
-}
-
 
 
 

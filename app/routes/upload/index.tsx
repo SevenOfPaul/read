@@ -228,6 +228,7 @@ async function fetchCreateChapters(bookId: string, chapters: any[]): Promise<voi
     }
     
     console.log(`所有章节保存完成，共 ${chapters.length} 章，${batches.length} 片`);
+    return Promise.resolve();
   } catch (error) {
     console.error("创建章节失败:", error);
     throw error;
