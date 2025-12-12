@@ -125,24 +125,24 @@ export const initializeReadTheme = () => {
 export const getBgThemeClasses = (bg: string, isDark: boolean = false) => {
   const themeMap: Record<string, { light: string; dark: string }> = {
     default: {
-      light: 'bg-white text-gray-900',
-      dark: 'bg-gray-900 text-gray-100'
+      light: 'bg-white',
+      dark: 'bg-gray-900'
     },
     sepia: {
-      light: 'bg-amber-50 text-amber-900',
-      dark: 'bg-amber-900 text-amber-100'
+      light: 'bg-amber-50',
+      dark: 'bg-amber-900'
     },
     dark: {
       light: 'bg-gray-800 text-gray-100',
       dark: 'bg-gray-900 text-gray-100'
     },
     green: {
-      light: 'bg-green-50 text-green-900',
-      dark: 'bg-green-900 text-green-100'
+      light: 'bg-green-50',
+      dark: 'bg-green-900'
     },
     blue: {
-      light: 'bg-blue-50 text-blue-900',
-      dark: 'bg-blue-900 text-blue-100'
+      light: 'bg-blue-50',
+      dark: 'bg-blue-900'
     }
   };
   

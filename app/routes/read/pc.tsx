@@ -265,7 +265,7 @@ export default function PC() {
 
         {/* 章节内容 */}
         <Card className="chapter-content mb-6">
-          <div className={`chapter-text p-8 transition-all duration-300 ${getFontSizeClasses(font)}  ${getBgThemeClasses(bg, document.documentElement.classList.contains('dark'))}`}>
+          <div className={`chapter-text p-8 transition-all duration-300  ${getFontSizeClasses(font)}  ${getBgThemeClasses(bg, document.documentElement.classList.contains('dark'))}`}>
             <div 
               className={`chapter-content-text prose max-w-none dark:prose-invert`} 
               dangerouslySetInnerHTML={{__html:formatContent(chapter.content)}}

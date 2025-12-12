@@ -128,7 +128,7 @@
 }
 
 .chapter-content-text {
-  @apply text-gray-800 dark:text-gray-200 leading-relaxed;
+  @apply  dark:text-gray-200 leading-relaxed;
   line-height: 1.8;
 }
 
