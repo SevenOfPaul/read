@@ -138,13 +138,14 @@ export default function PC() {
             </Link>
             
             <span className="chapter-info-divider">•</span>
-            
-            <div className="chapter-author-info">
               <Link to={`/author/${chapter.book.authorId}`} className="chapter-User-link">
+            <div className="chapter-author-info">
+            
                 <User className="h-4 w-4" />
                 <span>{chapter.book.authorName}</span>
-              </Link>
+           
             </div>
+               </Link>
           </div>
 
           {/* 章节标题区域 */}

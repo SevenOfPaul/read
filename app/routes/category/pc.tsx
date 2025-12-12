@@ -210,7 +210,7 @@ export default function PC({
                   itemsPerPage={pagination.pageSize}
                   showPageSize={5}
                   forceEllipses={true}
-                  className="custom-pagination"
+                  className="pagination-custom"
                   prevText="上一页"
                   nextText="下一页"
                 />
