@@ -5,8 +5,39 @@ import type { Response } from "../../types/Response";
 import { ChapterParser } from "./chapterParser";
 import PC from "./pc";
 import Mobile from "./mobile";
+import type { Category } from "../../types/entities";
 
 const baseUrl = import.meta.env.VITE_webHost;
+
+// 获取分类列表
+async function fetchCategories(): Promise<Category[]> {
+  try {
+    const response = await fetch(baseUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        sql: `SELECT id, name FROM public.category WHERE "deleteFlag" = false ORDER BY name`
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const result = await response.json();
+    
+    if (!result.success) {
+      throw new Error(result.message || "获取分类失败");
+    }
+
+    return result.data || [];
+  } catch (error) {
+    console.error("获取分类失败:", error);
+    throw error;
+  }
+}
 
 // 检查或创建作者
 async function fetchOrCreateAuthor(authorName: string): Promise<string> {
@@ -65,12 +96,15 @@ async function fetchCreateBook(bookData: {
   bookImage?: string;
   desc?: string;
   status?: string;
+  categoryId?: string;
 }): Promise<{ bookId: string; authorId: string; }> {
   try {
     // 提取书名前50个字符作为描述
     const description = bookData.desc || bookData.bookName.substring(0, 50);
     // 默认状态为"连载中"
     const status = bookData.status || '连载中';
+    // 如果没有选择分类，设为null
+    const categoryId = bookData.categoryId || null;
     
     const response = await fetch(baseUrl, {
       method: "POST",
@@ -85,7 +119,7 @@ async function fetchCreateBook(bookData: {
               ),
               new_book AS (
                 INSERT INTO public.book (
-                  "name", "desc", "bookImage", "status", "authorId", 
+                  "name", "desc", "bookImage", "status", "categoryId", "authorId", 
                   "isShow", "deleteFlag", "createTime", "updateTime", "fired"
                 )
                 VALUES (
@@ -93,6 +127,7 @@ async function fetchCreateBook(bookData: {
                   '${description}', 
                   '${bookData.bookImage || ''}', 
                   '${status}', 
+                  ${categoryId ? `'${categoryId}'` : 'NULL'}, 
                   '${bookData.authorId}', 
                   true, 
                   false, 
@@ -199,6 +234,14 @@ async function fetchCreateChapters(bookId: string, chapters: any[]): Promise<voi
   }
 }
 
+// 获取分类数据
+export function useCategories() {
+  return useQuery({
+    queryKey: ['categories'],
+    queryFn: fetchCategories,
+  });
+}
+
 // 上传处理函数 - 实现真正的数据库操作
 export function useUpload() {
   const [progress, setProgress] = useState<UploadProgress>({
@@ -260,13 +303,14 @@ export function useUpload() {
         message: '正在创建书籍记录...'
       });
 
-      // 创建书籍 - 传递status参数
+      // 创建书籍 - 传递categoryId参数
       const bookResult = await fetchCreateBook({
         bookName: formData.bookName,
         authorId,
         bookImage: formData.bookImage,
         desc: formData.desc,
-        status: formData.status
+        status: formData.status,
+        categoryId: formData.categoryId
       });
 
       setProgress({

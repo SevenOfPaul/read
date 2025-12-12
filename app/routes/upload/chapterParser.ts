@@ -319,13 +319,11 @@ export class ChapterParser {
         
         if (isSameChapter) {
           // 同一章节的分章节，添加到当前章节内容
-          console.log(`🔗 合并到当前章节: ${splitInfo.baseTitle} (${splitInfo.current}/${splitInfo.total})`);
           currentContent.push(`\n--- 分章节 ${splitInfo.current}/${splitInfo.total} ---\n`);
           continue;
         } else {
           // 新的章节，开始新章节
           if (currentChapter) {
-            console.log(`💾 保存上一章节: ${currentChapter.title}`);
             currentChapter.content = currentContent.join('\n').trim();
             chapters.push(currentChapter);
           }
@@ -339,7 +337,6 @@ export class ChapterParser {
             processedNumber = number ? number.toString() : '';
           }
           
-          console.log(`🆕 创建新章节: ${chapterTitle}`);
           currentContent = [`--- 分章节 ${splitInfo.current}/${splitInfo.total} ---\n`];
           currentChapter = {
             title: chapterTitle,
@@ -358,7 +355,6 @@ export class ChapterParser {
           
           // 保存上一章节
           if (currentChapter) {
-            console.log(`💾 保存上一章节: ${currentChapter.title}`);
             currentChapter.content = currentContent.join('\n').trim();
             chapters.push(currentChapter);
           }
@@ -376,7 +372,6 @@ export class ChapterParser {
           }
           
           // 创建新章节
-          console.log(`🆕 创建新章节: ${chapterInfo.chapterTitle}`);
           currentContent = [];
           currentChapter = {
             title: chapterInfo.chapterTitle || `第${chapterIndex + 1}章`,
@@ -389,8 +384,6 @@ export class ChapterParser {
           if (currentChapter) {
             currentContent.push(line);
           } else {
-            // 如果没有章节标题，创建第一章
-            console.log(`📝 创建第一章 (序言): ${line.substring(0, 50)}...`);
             currentChapter = {
               title: `第1章 序言`,
               content: '',
@@ -405,16 +398,13 @@ export class ChapterParser {
 
     // 添加最后一章
     if (currentChapter) {
-      console.log(`💾 保存最后一章: ${currentChapter.title}`);
       currentChapter.content = currentContent.join('\n').trim();
       chapters.push(currentChapter);
     }
 
-    console.log(`✅ 解析完成，共识别 ${chapters.length} 个章节`);
     
     // 如果没有识别到任何章节，将整个内容作为一章
     if (chapters.length === 0) {
-      console.log(`⚠️ 未识别到章节，将整个内容作为第一章`);
       return [{
         title: "第1章 内容",
         content: content,
@@ -423,10 +413,6 @@ export class ChapterParser {
       }];
     }
 
-    // 输出解析结果
-    chapters.forEach((chapter, index) => {
-      console.log(`📖 章节${index + 1}: ${chapter.title} (${chapter.content.length} 字符)`);
-    });
 
     return chapters;
   }

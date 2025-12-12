@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Upload, FileText, CheckCircle, AlertCircle, Loader, ChevronDown, ChevronRight, Minimize2, Maximize2, Image, X } from "lucide-react";
-import { useUpload } from "./index";
+import { useUpload, useCategories } from "./index";
 import type { UploadFormData, ParsedChapter } from "../../types/upload";
 import { ChapterParser } from "./chapterParser";
 import { useUploadImage } from "./imageService";
@@ -13,6 +13,7 @@ export default function PCUpload() {
     authorName: "",
     bookContent: "",
     status: "",
+    categoryId: "",
   });
   const [parsedChapters, setParsedChapters] = useState<ParsedChapter[]>([]);
   const [showPreview, setShowPreview] = useState(false);
@@ -24,7 +25,7 @@ export default function PCUpload() {
 
   const uploadHook = useUpload();
   const uploadImageMutation = useUploadImage();
-  
+  const { data: categories, isLoading: categoriesLoading, error: categoriesError } = useCategories();
   
   // 创建 ChapterParser 实例
   const parser = new ChapterParser();
@@ -126,7 +127,6 @@ export default function PCUpload() {
             return;
           }
           
-          console.log(`文件解析开始: ${file.name} (${content.length}字符)`);
           
           // 设置内容并解析章节
           setFormData(prev => ({ ...prev, bookContent: content }));
@@ -436,6 +436,39 @@ export default function PCUpload() {
                 placeholder="请输入作者姓名"
                 disabled={uploadHook.isPending}
               />
+            </div>
+
+            {/* 分类选择 */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                书籍分类
+              </label>
+              <select
+                value={formData.categoryId || ""}
+                onChange={(e) => setFormData(prev => ({ ...prev, categoryId: e.target.value }))}
+                className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg 
+                         bg-white dark:bg-gray-700 text-gray-900 dark:text-white
+                         focus:ring-2 focus:ring-blue-500 focus:border-transparent
+                         transition-colors duration-200"
+                disabled={uploadHook.isPending || categoriesLoading}
+              >
+                <option value="">请选择分类（可选）</option>
+                {categories && categories.map((category) => (
+                  <option key={category.id} value={category.id}>
+                    {category.name}
+                  </option>
+                ))}
+              </select>
+              {categoriesLoading && (
+                <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+                  正在加载分类...
+                </p>
+              )}
+              {categoriesError && (
+                <p className="text-sm text-red-500 dark:text-red-400 mt-1">
+                  分类加载失败: {categoriesError.message}
+                </p>
+              )}
             </div>
 
             {/* 书籍状态 */}

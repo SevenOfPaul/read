@@ -14,6 +14,8 @@ export interface UploadFormData {
   bookImage?: string;
   /** 书籍状态（连载中、已完结等） */
   status?: string;
+  /** 分类ID */
+  categoryId: string;
   /** 图片文件 (临时存储用户选择的文件) */
   imageFile?: File;
   /** 图片来源：自动获取或手动上传 */

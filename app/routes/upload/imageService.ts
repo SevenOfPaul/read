@@ -93,7 +93,7 @@ export async function uploadImage(file: File, bookName: string): Promise<string>
       const uploadData: ImageUploadResponse[] = await response.json();
       
       if (uploadData && uploadData.length > 0 && uploadData[0].src) {
-        return `${import.meta.env.VITE_imgHost}/${bookName}.jpg`;
+        return uploadData[0].src;
       } else {
         throw new Error('上传响应格式不正确');
       }
