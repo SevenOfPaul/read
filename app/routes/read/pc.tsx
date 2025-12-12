@@ -195,14 +195,14 @@ export default function PC() {
           </div>
 
           {/* 快速返回按钮 */}
-          <div className="flex justify-center space-x-4 ">
+          <div className="flex justify-center space-x-4 text-sm text-gray-500 dark:text-gray-400 mb-4">
             <Link to={`/book/${chapter.bookId}`}>
-              <Button className="bg-gray-100 w-43 rounded-xl!  dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 border-0 text-gray-700 dark:text-white transition-colors duration-300">
+              <Button className="bg-gray-100 w-32 rounded-xl hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 border-0 text-gray-700 dark:text-white transition-colors duration-300">
                 📚 返回目录
               </Button>
             </Link>
             <Link to="/">
-              <Button className="bg-gray-100 w-43 rounded-xl! dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 border-0 text-gray-700 dark:text-white transition-colors duration-300">
+              <Button className="bg-gray-100 w-32 rounded-xl hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 border-0 text-gray-700 dark:text-white transition-colors duration-300">
                 🏠 返回首页
               </Button>
             </Link>
