@@ -583,7 +583,7 @@ export default function PCUpload() {
             <div className="pt-4">
               <button
                 type="submit"
-                disabled={uploadHook.isPending || !formData.bookName || !formData.authorName || !formData.bookContent}
+                disabled={uploadHook.isPending||uploadHook.progress.status === 'success' || !formData.bookName || !formData.authorName || !formData.bookContent}
                 className="w-full py-3 px-6 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 
                          text-white font-medium rounded-lg transition-colors duration-200
                          disabled:cursor-not-allowed flex items-center justify-center"
