@@ -130,7 +130,6 @@
 .chapter-content-text {
   @apply text-gray-800 dark:text-gray-200 leading-relaxed;
   line-height: 1.8;
-  font-size: 16px;
 }
 
 .chapter-paragraph {
@@ -199,7 +198,6 @@
   }
   
   .chapter-content-text {
-    font-size: 14px;
     line-height: 1.7;
   }
 }

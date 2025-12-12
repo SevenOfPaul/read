@@ -1,17 +1,22 @@
-import { Button, Card, Pagination } from "react-vant";
-import { BookOpen, User } from "lucide-react";
+import { Button, Card, Pagination, ActionSheet } from "react-vant";
+import { BookOpen, User, Settings, Palette, Type } from "lucide-react";
 import { Link, useNavigate } from "react-router";
 import { useChapterContent, useChapters, handleChapterJump } from "./index";
 import type { ChapterRead, ChapterInfo } from "../../types/ChapterRead";
 import MobileNavbar from "../../components/MobileNavbar";
-import { useMemo, useEffect } from "react";
+import { useMemo, useEffect, useState } from "react";
 import { useChapterStore } from "../../lib/useChapterStore";
+import { useReadThemeStore, getBgThemeClasses, getFontSizeClasses, getLineHeightClasses } from "../../lib/useReadThemeStore";
 
 export default function Mobile() {
   const navigate = useNavigate();
   const { currentChapterId } = useChapterStore();
+  const { bg, font, setBgTheme, setFont, resetToDefault } = useReadThemeStore();
   const { data: chapter, isLoading: chapterLoading, error: chapterError } = useChapterContent();
   const { data: chapters, isLoading: chaptersLoading, error: chaptersError } = useChapters();
+  const [showThemeSheet, setShowThemeSheet] = useState(false);
+  const [showBgSheet, setShowBgSheet] = useState(false);
+  const [showFontSheet, setShowFontSheet] = useState(false);
 
   // 章节变化时更新 store 状态
   useEffect(() => {
@@ -127,14 +132,47 @@ export default function Mobile() {
     return content;
   };
 
+  const handleBgThemeChange = (newBg: string) => {
+    setBgTheme(newBg);
+    setShowBgSheet(false);
+  };
+
+  const handleFontChange = (newFont: string) => {
+    setFont(newFont);
+    setShowFontSheet(false);
+  };
+
+  const bgThemeOptions = [
+    { value: 'default', label: '默认' },
+    { value: 'sepia', label: '护眼' },
+    { value: 'dark', label: '深色' },
+    { value: 'green', label: '绿色' },
+    { value: 'blue', label: '蓝色' },
+  ];
+
+  const fontSizeOptions = [
+    { value: 'small', label: '小号字体' },
+    { value: 'medium', label: '中号字体' },
+    { value: 'large', label: '大号字体' },
+    { value: 'xlarge', label: '超大字体' },
+  ];
+
   return (
-    <div className="chapter-read-container min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div className={`chapter-read-container min-h-screen ${getBgThemeClasses(bg, document.documentElement.classList.contains('dark'))}`}>
       {/* 统一的移动端导航栏 */}
       <MobileNavbar
         title={chapter.book.name}
         showBack={true}
         showSearch={true}
         onBackClick={() => navigate(`/book/${chapter.bookId}`)}
+        customActions={
+          <button 
+            onClick={() => setShowThemeSheet(true)}
+            className="p-2 text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 touch-target"
+          >
+            <Settings className="h-5 w-5" />
+          </button>
+        }
       />
 
       {/* 移动端主内容 */}
@@ -173,8 +211,10 @@ export default function Mobile() {
         {/* 移动端章节内容 */}
         <Card className="mb-4">
           <div className="chapter-content-text">
-            <div className="prose prose-sm max-w-none dark:prose-invert" 
-            dangerouslySetInnerHTML={{__html:formatContent(chapter.content)}}>
+            <div 
+              className={`prose prose-sm max-w-none dark:prose-invert ${getFontSizeClasses(font)} ${getLineHeightClasses(font)}`} 
+              dangerouslySetInnerHTML={{__html:formatContent(chapter.content)}}
+            >
             </div>
           </div>
         </Card>
@@ -217,6 +257,75 @@ export default function Mobile() {
           </div>
         </Card>
       </div>
+
+      {/* 主题设置 ActionSheet */}
+      <ActionSheet
+        show={showThemeSheet}
+        onCancel={() => setShowThemeSheet(false)}
+        cancelText="取消"
+        title="阅读设置"
+      >
+        <div className="p-4 space-y-4">
+          {/* 背景主题选择 */}
+          <div>
+            <div className="flex items-center mb-3">
+              <Palette className="h-5 w-5 mr-2 text-gray-600 dark:text-gray-400" />
+              <span className="text-base font-medium text-gray-800 dark:text-gray-200">背景主题</span>
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              {bgThemeOptions.map((option) => (
+                <button
+                  key={option.value}
+                  onClick={() => handleBgThemeChange(option.value)}
+                  className={`p-3 rounded-lg border-2 text-sm font-medium transition-all duration-200 touch-target ${
+                    bg === option.value 
+                      ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300' 
+                      : 'border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 hover:border-gray-300 dark:hover:border-gray-500 text-gray-700 dark:text-gray-300'
+                  }`}
+                >
+                  {option.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* 字体大小选择 */}
+          <div>
+            <div className="flex items-center mb-3">
+              <Type className="h-5 w-5 mr-2 text-gray-600 dark:text-gray-400" />
+              <span className="text-base font-medium text-gray-800 dark:text-gray-200">字体大小</span>
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              {fontSizeOptions.map((option) => (
+                <button
+                  key={option.value}
+                  onClick={() => handleFontChange(option.value)}
+                  className={`p-3 rounded-lg border-2 text-sm font-medium transition-all duration-200 touch-target ${
+                    font === option.value 
+                      ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300' 
+                      : 'border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 hover:border-gray-300 dark:hover:border-gray-500 text-gray-700 dark:text-gray-300'
+                  }`}
+                >
+                  {option.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* 重置按钮 */}
+          <div className="pt-4 border-t border-gray-200 dark:border-gray-600">
+            <button
+              onClick={() => {
+                resetToDefault();
+                setShowThemeSheet(false);
+              }}
+              className="w-full py-3 px-4 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 transition-colors duration-200 touch-target"
+            >
+              重置为默认设置
+            </button>
+          </div>
+        </div>
+      </ActionSheet>
     </div>
   );
 }

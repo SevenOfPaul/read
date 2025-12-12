@@ -8,77 +8,66 @@ interface ChapterState {
   // 操作方法
   setCurrentChapter: (chapterId: string, bookId: string) => void;
   clearChapter: () => void;
-  
-  // 阅读进度持久化
-  saveReadingProgress: () => void;
-  loadReadingProgress: (bookId: string) => string | null;
-  getReadingProgress: (bookId: string) => string | null;
+}
+
+// 初始状态类型
+interface ReadingProgress {
+  bookId: string | null;
+  currentChapterId: string | null;
 }
 
 // 获取初始状态
-const getInitialState = () => {
-  if (typeof window === 'undefined') {
-    return {
-      currentChapterId: null,
-      bookId: null,
-    };
-  }
-  
+const getInitialState = (): ReadingProgress => {
   try {
-    // 可选：从 URL 参数恢复状态
-    const urlParams = new URLSearchParams(window.location.search);
-    const savedChapterId = urlParams.get('chapter');
-    const savedBookId = urlParams.get('book');
+    // 从 localStorage 读取阅读进度
+    const savedProgress = localStorage.getItem('reading');
+    
+    if (savedProgress) {
+      return JSON.parse(savedProgress);
+    }
     
     return {
-      currentChapterId: savedChapterId,
-      bookId: savedBookId,
+      bookId: null,
+      currentChapterId: null
     };
   } catch (error) {
-    console.warn('无法从 URL 参数恢复状态:', error);
+    console.warn('读取阅读进度失败:', error);
     return {
-      currentChapterId: null,
       bookId: null,
+      currentChapterId: null
     };
   }
 };
 
-export const useChapterStore = create<ChapterState>((set, get) => ({
-  // 初始状态
-  ...getInitialState(),
+export const useChapterStore = create<ChapterState>((set, get) => {
+  const initialState = getInitialState();
   
-  setCurrentChapter: (chapterId: string, bookId: string) => {
-    set({ currentChapterId: chapterId, bookId });
-    // 自动保存阅读进度
-    get().saveReadingProgress();
-  },
-  
-  clearChapter: () => {
-    set({ currentChapterId: null, bookId: null });
-  },
-  
-  saveReadingProgress: () => {
-    const { currentChapterId, bookId } = get();
-    if (currentChapterId && bookId) {
+  return {
+    // 初始状态从 localStorage 获取
+    currentChapterId: initialState.currentChapterId,
+    bookId: initialState.bookId,
+    
+    setCurrentChapter: (chapterId: string, bookId: string) => {
+      set({ currentChapterId: chapterId, bookId });
+      
+      // 手动保存到 localStorage
       try {
-        localStorage.setItem(`reading-progress-${bookId}`, currentChapterId);
-        console.log(`阅读进度已保存: 书籍${bookId}, 章节${currentChapterId}`);
+        const progress = { bookId, currentChapterId: chapterId };
+        localStorage.setItem('reading', JSON.stringify(progress));
       } catch (error) {
         console.warn('保存阅读进度失败:', error);
       }
+    },
+    
+    clearChapter: () => {
+      set({ currentChapterId: null, bookId: null });
+      
+      // 清除 localStorage 中的阅读进度
+      try {
+        localStorage.removeItem('reading');
+      } catch (error) {
+        console.warn('清除阅读进度失败:', error);
+      }
     }
-  },
-  
-  loadReadingProgress: (bookId: string) => {
-    try {
-      return localStorage.getItem(`reading-progress-${bookId}`);
-    } catch (error) {
-      console.warn('读取阅读进度失败:', error);
-      return null;
-    }
-  },
-  
-  getReadingProgress: (bookId: string) => {
-    return get().loadReadingProgress(bookId);
-  }
-}));
+  };
+});

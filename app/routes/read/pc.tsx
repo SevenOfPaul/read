@@ -1,17 +1,20 @@
 import { Button, Card, Pagination } from "react-vant";
-import { BookOpen, User } from "lucide-react";
+import { BookOpen, User, Settings, Palette, Type } from "lucide-react";
 import { Link, useNavigate } from "react-router";
 import { useChapterContent, useChapters, handleChapterJump } from "./index";
 import type { ChapterRead, ChapterInfo } from "../../types/ChapterRead";
 import Navbar from "@/components/Navbar";
-import { useMemo, useEffect } from "react";
+import { useMemo, useEffect, useState } from "react";
 import { useChapterStore } from "../../lib/useChapterStore";
+import { useReadThemeStore, getBgThemeClasses,getFontSizeClasses,getLineHeightClasses } from "../../lib/useReadThemeStore";
 
 export default function PC() {
   const navigate = useNavigate();
   const { currentChapterId } = useChapterStore();
+  const { bg, font, setBgTheme, setFont, resetToDefault } = useReadThemeStore();
   const { data: chapter, isLoading: chapterLoading, error: chapterError } = useChapterContent();
   const { data: chapters, isLoading: chaptersLoading, error: chaptersError } = useChapters();
+  const [showThemePanel, setShowThemePanel] = useState(false);
 
   // 章节变化时更新 store 状态
   useEffect(() => {
@@ -121,15 +124,107 @@ export default function PC() {
     return content;
   };
 
+  const handleBgThemeChange = (newBg: string) => {
+    setBgTheme(newBg);
+  };
+
+  const handleFontChange = (newFont: string) => {
+    setFont(newFont);
+  };
+
+  const bgThemeOptions = [
+    { value: 'default', label: '默认', color: 'bg-white border-gray-300' },
+    { value: 'sepia', label: '护眼', color: 'bg-amber-50 border-amber-300' },
+    { value: 'dark', label: '深色', color: 'bg-gray-800 border-gray-600' },
+    { value: 'green', label: '绿色', color: 'bg-green-50 border-green-300' },
+    { value: 'blue', label: '蓝色', color: 'bg-blue-50 border-blue-300' },
+  ];
+
+  const fontSizeOptions = [
+    { value: 'small', label: '小' },
+    { value: 'medium', label: '中' },
+    { value: 'large', label: '大' },
+    { value: 'xlarge', label: '超大' },
+  ];
+
   return (
-    <div className="chapter-read-container">
+    <div className={`chapter-read-container min-h-screen`}>
       {/* 顶部导航 */}
       <Navbar />
 
       {/* 主内容区域 */}
-      <div className="max-w-4xl mx-auto px-3 py-6 dark:bg-gray-600 min-h-screen">
+      <div className="max-w-4xl mx-auto px-3 py-6 min-h-screen">
+
+        {/* 主题设置面板 */}
+        {showThemePanel && (
+          <div className="fixed top-32 right-6 z-20 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg shadow-xl p-4 w-64">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">阅读设置</h3>
+            
+            {/* 背景主题选择 */}
+            <div className="mb-4">
+              <div className="flex items-center mb-2">
+                <Palette className="h-4 w-4 mr-2 text-gray-600 dark:text-gray-400" />
+                <span className="text-sm font-medium text-gray-700 dark:text-gray-300">背景主题</span>
+              </div>
+              <div className="grid grid-cols-2 gap-2">
+                {bgThemeOptions.map((option) => (
+                  <button
+                    key={option.value}
+                    onClick={() => handleBgThemeChange(option.value)}
+                    className={`p-2  cursor-pointer rounded border text-xs ${
+                      bg === option.value 
+                        ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20' 
+                        : 'border-gray-300 dark:border-gray-600 hover:border-gray-400'
+                    } ${option.color} transition-colors duration-200`}
+                  >
+                    {option.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* 字体大小选择 */}
+            <div className="mb-4">
+              <div className="flex items-center mb-2">
+                <Type className="h-4 w-4 mr-2  text-gray-600 dark:text-gray-400" />
+                <span className="text-sm font-medium text-gray-700 dark:text-gray-300">字体大小</span>
+              </div>
+              <div className="grid grid-cols-2 gap-2">
+                {fontSizeOptions.map((option) => (
+                  <button
+                    key={option.value}
+                    onClick={() => handleFontChange(option.value)}
+                    className={`p-2 rounded border text-xs cursor-pointer ${
+                      font === option.value 
+                        ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20' 
+                        : 'border-gray-300 dark:border-gray-600 hover:border-gray-400'
+                    } transition-colors duration-200`}
+                  >
+                    {option.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* 重置按钮 */}
+            <button
+              onClick={() => resetToDefault()}
+              className="w-full py-2 px-4 cursor-pointer bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded text-sm font-medium transition-colors duration-200"
+            >
+              重置默认
+            </button>
+          </div>
+        )}
+
         {/* 美化后的书籍和章节信息 */}
-        <Card className="chapter-header mb-6">
+        <Card className="chapter-header mb-6 relative">
+              {/* 主题设置按钮 */}
+        <div className="absolute top-[2%] right-4 z-10">
+          <div 
+            onClick={() => setShowThemePanel(!showThemePanel)}
+            className=" bg-transparent cursor-pointer dark:text-gray-400 border-0!  hover:shadow-xl transition-shadow duration-300 rounded-full p-3"
+          ><Settings className="h-5 w-5" /></div>
+        </div>
           {/* 书籍信息区域 */}
           <div className="chapter-book-info">
             <Link to={`/book/${chapter.book.id}`} className="chapter-book-link">
@@ -170,9 +265,11 @@ export default function PC() {
 
         {/* 章节内容 */}
         <Card className="chapter-content mb-6">
-          <div className="chapter-text">
-            <div className="chapter-content-text prose prose-lg max-w-none dark:prose-invert" 
-            dangerouslySetInnerHTML={{__html:formatContent(chapter.content)}}>
+          <div className={`chapter-text p-8 transition-all duration-300 ${getFontSizeClasses(font)}  ${getBgThemeClasses(bg, document.documentElement.classList.contains('dark'))}`}>
+            <div 
+              className={`chapter-content-text prose max-w-none dark:prose-invert`} 
+              dangerouslySetInnerHTML={{__html:formatContent(chapter.content)}}
+            >
             </div>
           </div>
         </Card>

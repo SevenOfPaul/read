@@ -21,7 +21,6 @@ export default function PC() {
 
   // 判断是否有阅读进度
   const hasReadingProgress = currentChapterId && bookId;
-
   // 截取描述为100字
   const truncateDesc = (desc: string) => {
     if (!desc) return '';

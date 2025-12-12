@@ -23,7 +23,7 @@ export default function Mobile() {
 
   // 判断是否有阅读进度
   const hasReadingProgress = currentChapterId && bookId;
-
+  console.log(currentChapterId,bookId)
   // 截取描述为100字
   const truncateDesc = (desc: string) => {
     if (!desc) return '';
