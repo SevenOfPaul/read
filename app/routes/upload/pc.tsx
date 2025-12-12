@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Upload, FileText, CheckCircle, AlertCircle, Loader, ChevronDown, ChevronRight, Minimize2, Maximize2, Image, X } from "lucide-react";
-import { useUpload, useCheckDuplicateBook } from "./index";
+import { useUpload } from "./index";
 import type { UploadFormData, ParsedChapter } from "../../types/upload";
 import { ChapterParser } from "./chapterParser";
 import { useUploadImage } from "./imageService";
@@ -12,6 +12,7 @@ export default function PCUpload() {
     bookName: "",
     authorName: "",
     bookContent: "",
+    status: "",
   });
   const [parsedChapters, setParsedChapters] = useState<ParsedChapter[]>([]);
   const [showPreview, setShowPreview] = useState(false);
@@ -24,8 +25,6 @@ export default function PCUpload() {
   const uploadHook = useUpload();
   const uploadImageMutation = useUploadImage();
   
-  // 重复检查 - 放在组件顶层
-  const duplicateCheck = useCheckDuplicateBook(formData.bookName, formData.authorName);
   
   // 创建 ChapterParser 实例
   const parser = new ChapterParser();
@@ -195,19 +194,10 @@ export default function PCUpload() {
     }
 
     try {
-      // 检查重复
-      const isDuplicate = await duplicateCheck.refetch();
-      
-      if (isDuplicate.data === true) {
-        Toast.fail("书库中已存在同名同作者书籍，请检查书名和作者信息");
-        return;
-      }
-
-      // 没有重复，继续上传
       uploadHook.mutate(formData);
     } catch (error) {
-      console.error('检查重复失败:', error);
-      Toast.fail("检查重复失败，请重试");
+      console.error('上传失败:', error);
+      Toast.fail("上传失败，请重试");
     }
   };
 
@@ -416,6 +406,7 @@ export default function PCUpload() {
               <input
                 type="text"
                 required
+                defaultValue={'斗破苍穹'}
                 value={formData.bookName}
                 onChange={handleBookNameChange}
                 className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg 
@@ -435,6 +426,7 @@ export default function PCUpload() {
               <input
                 type="text"
                 required
+                 defaultValue={'天蚕土豆'}
                 value={formData.authorName}
                 onChange={(e) => setFormData(prev => ({ ...prev, authorName: e.target.value }))}
                 className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg 
@@ -444,6 +436,25 @@ export default function PCUpload() {
                 placeholder="请输入作者姓名"
                 disabled={uploadHook.isPending}
               />
+            </div>
+
+            {/* 书籍状态 */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                书籍状态
+              </label>
+              <select
+                value={formData.status || "连载中"}
+                onChange={(e) => setFormData(prev => ({ ...prev, status: e.target.value }))}
+                className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg 
+                         bg-white dark:bg-gray-700 text-gray-900 dark:text-white
+                         focus:ring-2 focus:ring-blue-500 focus:border-transparent
+                         transition-colors duration-200"
+                disabled={uploadHook.isPending}
+              >
+                <option value="连载中">连载中</option>
+                <option value="已完结">已完结</option>
+              </select>
             </div>
 
             {/* 图片上传区域 */}
@@ -532,7 +543,7 @@ export default function PCUpload() {
                               {isExpanded ? (
                                 <ChevronDown className="h-4 w-4 text-gray-500 dark:text-gray-400" />
                               ) : (
-                                <ChevronRight className="h-4 w-4 text-gray-500 dark:text-gray-400" />
+                                <ChevronRight className="h-4 w-4 text-gray-500 dark-gray-400" />
                               )}
                               <span className="font-medium text-gray-900 dark:text-white">{chapter.title}</span>
                               <span className="text-sm text-gray-500 dark:text-gray-400">
@@ -580,7 +591,12 @@ export default function PCUpload() {
                 {uploadHook.isPending ? (
                   <>
                     <Loader className="h-5 w-5 mr-2 animate-spin" />
-                    解析中...
+                    {uploadHook.progress.status === 'uploading' ? '上传中...' : '解析中...'}
+                  </>
+                ) : uploadHook.progress.status === 'success' ? (
+                  <>
+                    <CheckCircle className="h-5 w-5 mr-2" />
+                    上传成功
                   </>
                 ) : (
                   <>

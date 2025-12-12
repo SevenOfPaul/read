@@ -21,8 +21,6 @@ export default function MobileUpload() {
   const uploadHook = useUpload();
   const uploadImageMutation = useUploadImage();
   
-  // 重复检查 - 放在组件顶层
-  const duplicateCheck = useCheckDuplicateBook(formData.bookName, formData.authorName);
   
   // 创建 ChapterParser 实例
   const parser = new ChapterParser();
@@ -139,13 +137,6 @@ export default function MobileUpload() {
     }
 
     try {
-      // 检查重复
-      const isDuplicate = await duplicateCheck.refetch();
-      
-      if (isDuplicate.data === true) {
-        alert("书库中已存在同名同作者书籍，请检查书名和作者信息");
-        return;
-      }
 
       // 没有重复，继续上传
       uploadHook.mutate(formData);
