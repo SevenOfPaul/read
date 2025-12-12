@@ -42,7 +42,7 @@ export default function PCUpload() {
     } else {
       // 自动设置图片src，清理书名中的特殊字符
       const cleanBookName = bookName;
-      const imageSrc = `${import.meta.env.VITE_imgHost}/${cleanBookName}.jpg`;
+      const imageSrc = `${import.meta.env.VITE_imgHost}/file/${cleanBookName}.jpg`;
       console.log('图片URL:', imageSrc); // 调试信息
       setFormData(prev => ({ ...prev, bookImage: imageSrc }));
       setImageLoadStatus('loading'); // 设置为加载中状态
@@ -104,7 +104,7 @@ export default function PCUpload() {
       console.log(formData)
     if (formData.bookName) {
       const cleanBookName = formData.bookName;
-      const imageSrc = `${import.meta.env.VITE_imgHost}/${cleanBookName}.jpg`;
+      const imageSrc = `${import.meta.env.VITE_imgHost}/file/${cleanBookName}.jpg`;
       setFormData(prev => ({ ...prev, bookImage: imageSrc }));
       setImageSource('auto');
       setImageLoadStatus('loading');
