@@ -133,7 +133,7 @@ async function fetchRelatedBooks(categoryId: string, currentBookId: string): Pro
           b."name",
           b."bookImage",
           b."lastChapter",
-          b status,
+          b."status",
           a."name" as "authorName",
           b."authorId" as "authorId"
         FROM public.book b
@@ -204,11 +204,15 @@ export function handleShare(bookId: string, bookName: string) {
 }
 
 export default function BookDetail() {
-  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
-  
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
-      {isMobile ? <Mobile /> : <PC />}
+      {/* 使用Tailwind CSS的响应式类来控制显示 */}
+      <div className="hidden md:block">
+        <PC />
+      </div>
+      <div className="block md:hidden">
+        <Mobile />
+      </div>
     </div>
   );
 }

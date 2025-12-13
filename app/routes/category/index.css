@@ -1,3 +1,376 @@
 /* 分类页面样式 */
 @reference "tailwindcss";
 @custom-variant dark (&:where(.dark, .dark *));
+
+/* 整体布局 */
+.category-page-container {
+  @apply min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300;
+}
+
+/* 分类导航侧边栏 */
+.category-sidebar {
+  @apply bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 transition-colors duration-300;
+}
+
+.category-sidebar-card {
+  @apply p-4 hover:shadow-lg transition-all duration-300;
+}
+
+.category-sidebar-title {
+  @apply font-bold text-gray-900 dark:text-white mb-4 flex items-center;
+  background: linear-gradient(135deg, #3b82f6 0%, #6366f1 50%, #8b5cf6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.category-sidebar-icon {
+  @apply h-5 w-5 mr-2;
+}
+
+/* 分类列表 */
+.category-list {
+  @apply space-y-1;
+}
+
+.category-item {
+  @apply block cursor-pointer px-3 py-2 rounded transition-colors;
+  @apply hover:shadow-sm hover:transform hover:translate-x-1;
+}
+
+.category-item.active {
+  @apply text-white bg-blue-500 shadow-md;
+}
+
+.category-item:not(.active) {
+  @apply text-gray-600 dark:text-gray-300 hover:text-white hover:bg-gray-700 dark:hover:bg-gray-700;
+}
+
+/* 统计卡片 */
+.category-stats-card {
+  @apply bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700;
+  @apply hover:shadow-lg transition-all duration-300;
+}
+
+.category-stats-title {
+  @apply font-bold text-gray-900 dark:text-white mb-4 flex items-center;
+  background: linear-gradient(135deg, #7c3aed 0%, #8b5cf6 50%, #a78bfa 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.category-stats-item {
+  @apply flex justify-between items-center p-2 bg-gray-50 dark:bg-gray-700 rounded mb-3;
+  @apply hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors duration-300;
+}
+
+.category-stats-label {
+  @apply text-gray-600 dark:text-gray-300 text-sm font-medium;
+}
+
+.category-stats-value {
+  @apply font-bold text-sm;
+}
+
+.category-stats-value.current {
+  @apply text-blue-500;
+}
+
+.category-stats-value.total {
+  @apply text-green-500;
+}
+
+.category-stats-value.page {
+  @apply text-purple-500;
+}
+
+/* 快捷操作卡片 */
+.category-actions-card {
+  @apply bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700;
+  @apply hover:shadow-lg transition-all duration-300;
+}
+
+.category-actions-title {
+  @apply font-bold text-gray-900 dark:text-white mb-4 flex items-center;
+  background: linear-gradient(135deg, #ef4444 0%, #f97316 50%, #eab308 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.category-action-btn {
+  @apply w-full bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 border-0 text-gray-700 dark:text-white;
+  @apply shadow-sm hover:shadow-md transition-all duration-300 mb-2;
+  @apply text-sm;
+}
+
+.category-action-btn.primary {
+  @apply bg-blue-500 hover:bg-blue-600 text-white;
+}
+
+/* 分类横幅 */
+.category-hero-banner {
+  @apply bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg text-white shadow-lg;
+  @apply transition-all duration-300;
+}
+
+.category-hero-content {
+  @apply relative;
+}
+
+.category-hero-title {
+  @apply font-bold mb-2;
+}
+
+.category-hero-subtitle {
+  @apply opacity-90;
+}
+
+.category-hero-stats {
+  @apply text-center sm:text-right;
+}
+
+.category-hero-number {
+  @apply font-bold;
+}
+
+.category-hero-label {
+  @apply opacity-90 text-sm;
+}
+
+/* 书籍列表容器 */
+.category-books-container {
+  @apply bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700;
+  @apply hover:shadow-lg transition-all duration-300;
+}
+
+/* 书籍网格 - 响应式设计 */
+.category-books-grid {
+  @apply space-y-2;
+}
+
+.books-grid-row {
+  @apply border-b border-gray-200 dark:border-gray-600 last:border-b-0;
+}
+
+.books-grid-container {
+  display: grid;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+/* 响应式网格布局 */
+@media (min-width: 640px) {
+  .books-grid-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .books-grid-container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1280px) {
+  .books-grid-container {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* 空状态 */
+.category-empty-state {
+  @apply w-full text-center py-12;
+}
+
+.category-empty-icon {
+  @apply w-16 h-16 bg-gray-200 dark:bg-gray-600 rounded-full flex items-center justify-center mx-auto mb-4;
+}
+
+.category-empty-title {
+  @apply text-gray-400 dark:text-gray-400 font-medium mb-2;
+}
+
+.category-empty-message {
+  @apply text-gray-500 dark:text-gray-500 text-sm;
+}
+
+/* 分页组件 */
+.category-pagination-card {
+  @apply bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700;
+  @apply hover:shadow-lg transition-all duration-300;
+}
+
+.category-pagination-info {
+  @apply text-gray-600 dark:text-gray-300 text-xs sm:text-sm;
+}
+
+.pagination-custom {
+  @apply mt-4;
+}
+
+/* 加载状态 */
+.category-loading-overlay {
+  @apply fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center;
+}
+
+.category-loading-content {
+  @apply bg-white dark:bg-gray-800 rounded-lg p-8 text-center shadow-2xl border border-gray-200 dark:border-gray-700;
+  @apply transition-all duration-300;
+}
+
+.category-loading-spinner {
+  @apply animate-spin rounded-full h-12 w-12 border-4 border-blue-500 border-t-transparent mx-auto mb-4;
+}
+
+.category-loading-text {
+  @apply text-gray-900 dark:text-white text-lg font-bold mb-2;
+}
+
+.category-loading-subtext {
+  @apply text-gray-400 dark:text-gray-400 text-sm;
+}
+
+/* 错误状态 */
+.category-error-overlay {
+  @apply fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center;
+}
+
+.category-error-content {
+  @apply bg-white dark:bg-gray-800 rounded-lg p-8 text-center shadow-2xl max-w-md;
+  @apply border border-gray-200 dark:border-gray-700 transition-all duration-300;
+}
+
+.category-error-icon {
+  @apply text-6xl mb-4;
+}
+
+.category-error-title {
+  @apply text-xl font-bold text-gray-900 dark:text-white mb-4;
+}
+
+.category-error-message {
+  @apply text-gray-400 dark:text-gray-400 mb-6;
+}
+
+.category-error-button {
+  @apply bg-blue-500 hover:bg-blue-600 text-white font-medium py-3 px-8 rounded-lg;
+  @apply shadow-md hover:shadow-lg transition-all duration-300;
+}
+
+/* 主内容区域 */
+.category-main-content {
+  @apply flex-1;
+}
+
+/* 响应式间距调整 */
+@media (max-width: 1023px) {
+  .category-sidebar {
+    @apply order-2;
+  }
+  
+  .category-main-content {
+    @apply order-1;
+  }
+}
+
+/* PC端特定样式 */
+@media (min-width: 1024px) {
+  .category-sidebar {
+    @apply w-56;
+  }
+}
+
+@media (min-width: 1280px) {
+  .category-sidebar {
+    @apply w-64;
+  }
+}
+
+/* 暗色主题优化 */
+@media (prefers-color-scheme: dark) {
+  .category-empty-icon {
+    @apply bg-gray-600;
+  }
+  
+  .books-grid-row {
+    @apply border-gray-600;
+  }
+}
+
+/* 平滑滚动 */
+html {
+  scroll-behavior: smooth;
+}
+
+/* 选择文本样式 */
+::selection {
+  @apply bg-blue-500 text-white;
+}
+
+/* 焦点样式 */
+.focus\:outline-custom:focus {
+  @apply outline-none ring-2 ring-blue-500;
+}
+
+/* 按钮动画 */
+.btn-animate {
+  @apply transform transition-all duration-200 hover:scale-105 active:scale-95;
+}
+
+/* 卡片悬浮效果 */
+.card-hover {
+  @apply transition-all duration-300 hover:shadow-xl hover:-translate-y-1;
+}
+
+/* 渐变文字效果 */
+.gradient-text {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* 响应式字体大小 */
+@media (max-width: 640px) {
+  .category-hero-title {
+    @apply text-xl;
+  }
+  
+  .category-hero-subtitle {
+    @apply text-sm;
+  }
+  
+  .category-hero-number {
+    @apply text-xl;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 1023px) {
+  .category-hero-title {
+    @apply text-2xl;
+  }
+  
+  .category-hero-subtitle {
+    @apply text-base;
+  }
+  
+  .category-hero-number {
+    @apply text-2xl;
+  }
+}
+
+@media (min-width: 1024px) {
+  .category-hero-title {
+    @apply text-3xl;
+  }
+  
+  .category-hero-subtitle {
+    @apply text-lg;
+  }
+  
+  .category-hero-number {
+    @apply text-3xl;
+  }
+}

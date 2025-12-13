@@ -1,6 +1,6 @@
 import { BookOpen, Search, Moon, Sun } from "lucide-react";
 import { Link, useLocation } from "react-router";
-import { useThemeStore } from "../lib/useThemeStore";
+import { useThemeStore } from "../store/useThemeStore";
 
 interface NavbarProps {
   title?: string;

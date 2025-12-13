@@ -5,8 +5,8 @@ import { useChapterContent, useChapters, handleChapterJump } from "./index";
 import type { ChapterRead, ChapterInfo } from "../../types/ChapterRead";
 import MobileNavbar from "../../components/MobileNavbar";
 import { useMemo, useEffect, useState } from "react";
-import { useChapterStore } from "../../lib/useChapterStore";
-import { useReadThemeStore, getBgThemeClasses, getFontSizeClasses, getLineHeightClasses } from "../../lib/useReadThemeStore";
+import { useChapterStore } from "../../store/useChapterStore";
+import { useReadThemeStore, getBgThemeClasses, getFontSizeClasses, getLineHeightClasses } from "../../store/useReadThemeStore";
 
 export default function Mobile() {
   const navigate = useNavigate();

@@ -8,7 +8,7 @@ import {
 } from "react-router";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useEffect } from "react";
-import { useThemeStore, getInitialTheme, syncThemeToDocument, setupSystemThemeListener } from "./lib/useThemeStore";
+import { useThemeStore, getInitialTheme, syncThemeToDocument, setupSystemThemeListener } from "./store/useThemeStore";
 import BackToTop from "./components/BackToTop";
 
 // 引入 react-vant 样式

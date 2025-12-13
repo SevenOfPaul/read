@@ -29,7 +29,8 @@ export default function BookCard({
   if (layout === 'mobile') {
     // 移动端布局 - 垂直紧凑布局
     return (
-      <Card className={`bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-750 transition-all duration-200 hover:shadow-lg ${className}`}>
+      <Card className={`bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700
+       hover:bg-gray-50 dark:hover:bg-gray-750 transition-all duration-200 hover:shadow-lg ${className}`}>
         <Card.Body className="p-4">
           <div className="flex space-x-4">
             {/* 书籍封面 */}
@@ -125,7 +126,7 @@ export default function BookCard({
   return (
     <Link to={`/book/${book.id}`} key={book.id}>
       <div className={`relative flex-shrink-0 ${className}`}>
-        <Card className="bg-gray-50 w-120 h-45 p-0 dark:bg-gray-700 border-gray-200 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-600 transition-all duration-200 hover:shadow-lg">
+        <Card className="bg-gray-50 w-full h-full p-0 dark:bg-gray-700 border-gray-200 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-600 transition-all duration-200 hover:shadow-lg">
           <Card.Body className="py-0!">
             {/* 左图右文的Flex布局 */}
             <div className="flex gap-4">
