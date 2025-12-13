@@ -6,11 +6,11 @@ import Mobile from "./mobile";
 
 const baseUrl = import.meta.env.VITE_webHost;
 const imgHost = import.meta.env.VITE_imgHost;
-
+import customFetch from "@/lib/fetch";
 // 使用联合查询获取分类及其对应的书籍信息
 async function fetchCategories(): Promise<CategoryWithBooks[]> {
   try {
-    const response = await fetch(baseUrl, {
+    const response = await customFetch(baseUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -90,7 +90,7 @@ async function fetchCategories(): Promise<CategoryWithBooks[]> {
 // 获取热度最高的5本书（畅销榜）
 async function fetchHotBooks(): Promise<HotBook[]> {
   try {
-    const response = await fetch(baseUrl, {
+    const response = await customFetch(baseUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -1,9 +1,10 @@
-import { Button, Card, Pagination, Badge } from "react-vant";
+import { Button, Card, Badge } from "react-vant";
 import { Link, useParams } from "react-router";
 import type { Category } from "@/types/entities";
 import type { BookInfo, PaginationInfo } from "@/types/categoryPage";
 import Navbar from "@/components/Navbar";
 import BookCard from "@/components/BookCard";
+import { Pagination } from "@/components/ui/pagination";
 
 interface CategoryPageProps {
   categories: Category[];
@@ -157,7 +158,7 @@ export default function PC({
               )}
             </div>
 
-            {/* 分页组件 - 使用 vant 的 Pagination */}
+            {/* 分页组件 - 使用 shadcn 的 Pagination */}
             {pagination.totalPages > 1 && (
               <div className="bg-white dark:bg-gray-800 rounded-lg p-4 sm:p-6 border border-gray-200 dark:border-gray-700 transition-colors duration-300">
                 <div className="flex items-center justify-between mb-4">
@@ -166,7 +167,7 @@ export default function PC({
                   </div>
                 </div>
                 
-                {/* 使用 vant 的 Pagination 组件 */}
+                {/* 使用 shadcn 的 Pagination 组件 */}
                 <Pagination 
                   value={pagination.currentPage}
                   onChange={onPageChange}
