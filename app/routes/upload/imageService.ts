@@ -1,5 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import type { ImageUploadConfig, ImageUploadResponse } from "../../types/upload";
+import { customFetch } from "../../lib/fetch";
 
 // 图片服务配置
 const imageConfig: ImageUploadConfig = {
@@ -16,7 +17,7 @@ async function fetchWithTimeout(url: string, options: RequestInit = {}): Promise
   const timeoutId = setTimeout(() => controller.abort(), imageConfig.timeout);
 
   try {
-    const response = await fetch(url, {
+    const response = await customFetch(url, {
       ...options,
       signal: controller.signal
     });

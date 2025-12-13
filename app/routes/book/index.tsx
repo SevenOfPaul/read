@@ -4,6 +4,7 @@ import type { BookDetail, ChapterInfo, RelatedBook, BookDetailResponse, ChapterL
 import PC from "./pc";
 import Mobile from "./mobile";
 import "./index.css";
+import { customFetch } from "../../lib/fetch";
 
 const baseUrl = import.meta.env.VITE_webHost;
 const imgHost = import.meta.env.VITE_imgHost;
@@ -11,7 +12,7 @@ const imgHost = import.meta.env.VITE_imgHost;
 // 根据书籍ID获取书籍详情
 async function fetchBookDetail(bookId: string): Promise<BookDetail|undefined> {
   try {
-    const response = await fetch(baseUrl, {
+    const response = await customFetch(baseUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -45,7 +46,7 @@ async function fetchBookDetail(bookId: string): Promise<BookDetail|undefined> {
       }),
     });
 
-    await fetch(baseUrl, {
+    await customFetch(baseUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -84,7 +85,7 @@ async function fetchBookDetail(bookId: string): Promise<BookDetail|undefined> {
 // 获取章节列表（不分卷）
 async function fetchChapters(bookId: string): Promise<ChapterInfo[]> {
   try {
-    const response = await fetch(baseUrl, {
+    const response = await customFetch(baseUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -122,7 +123,7 @@ async function fetchChapters(bookId: string): Promise<ChapterInfo[]> {
 // 获取相关书籍推荐
 async function fetchRelatedBooks(categoryId: string, currentBookId: string): Promise<RelatedBook[]> {
   try {
-    const response = await fetch(baseUrl, {
+    const response = await customFetch(baseUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

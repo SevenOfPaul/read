@@ -4,6 +4,7 @@ import type { AuthorDetail } from "../../types/authorPage";
 import type { Response } from "../../types/Response";
 import PC from "./pc";
 import Mobile from "./mobile";
+import { customFetch } from "../../lib/fetch";
 
 const baseUrl = import.meta.env.VITE_webHost;
 const imgHost = import.meta.env.VITE_imgHost;
@@ -11,7 +12,7 @@ const imgHost = import.meta.env.VITE_imgHost;
 // 获取作者详情及其所有书籍信息
 async function fetchAuthorDetail(authorId: string): Promise<AuthorDetail> {
   try {
-    const response = await fetch(baseUrl, {
+    const response = await customFetch(baseUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

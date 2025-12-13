@@ -5,13 +5,14 @@ import type { ChapterReadResponse, ChapterListResponse, ChapterNavigationRespons
 import PC from "./pc";
 import Mobile from "./mobile";
 import "./index.css";
+import { customFetch } from "../../lib/fetch";
 
 const baseUrl = import.meta.env.VITE_webHost;
 
 // 获取章节详细内容
 async function fetchChapterContent(bookId: string, chapterId: string): Promise<ChapterRead|undefined> {
   try {
-    const response = await fetch(baseUrl, {
+    const response = await customFetch(baseUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -80,7 +81,7 @@ async function fetchChapterContent(bookId: string, chapterId: string): Promise<C
 // 获取章节列表
 async function fetchChapters(bookId: string): Promise<ChapterInfo[]> {
   try {
-    const response = await fetch(baseUrl, {
+    const response = await customFetch(baseUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

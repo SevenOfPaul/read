@@ -6,13 +6,14 @@ import { ChapterParser } from "./chapterParser";
 import PC from "./pc";
 import Mobile from "./mobile";
 import type { Category } from "../../types/entities";
+import { customFetch } from "../../lib/fetch";
 
 const baseUrl = import.meta.env.VITE_webHost;
 
 // 获取分类列表
 async function fetchCategories(): Promise<Category[]> {
   try {
-    const response = await fetch(baseUrl, {
+    const response = await customFetch(baseUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -44,7 +45,7 @@ async function fetchOrCreateAuthor(authorName: string): Promise<string> {
   try {
     const escapedAuthorName = authorName;
     
-    const response = await fetch(baseUrl, {
+    const response = await customFetch(baseUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -106,7 +107,7 @@ async function fetchCreateBook(bookData: {
     // 如果没有选择分类，设为null
     const categoryId = bookData.categoryId || null;
     
-    const response = await fetch(baseUrl, {
+    const response = await customFetch(baseUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -199,7 +200,7 @@ async function fetchCreateChapters(bookId: string, chapters: any[]): Promise<voi
         return `('${title}', '${content}', '${bookId}', ${actualIndex}, NOW(), NOW())`;
       }).join(',');
 
-      const response = await fetch(baseUrl, {
+      const response = await customFetch(baseUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
