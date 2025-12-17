@@ -7,13 +7,15 @@ import type { Response } from "../../types/Response";
 import PC from "./pc";
 import Mobile from "./mobile";
 import "./index.css"
+import { customFetch } from "../../lib/fetch";
+
 const baseUrl = import.meta.env.VITE_webHost;
 const imgHost = import.meta.env.VITE_imgHost;
 
 // 获取所有分类列表
 async function fetchCategories(): Promise<Category[]> {
   try {
-    const response = await fetch(baseUrl, {
+    const response = await customFetch(baseUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -65,7 +67,7 @@ async function fetchCategoryBooks(params: BookListParams): Promise<{ books: Book
 
     // 并行获取书籍列表和总数
     const [booksResponse, countResponse] = await Promise.all([
-      fetch(baseUrl, {
+      customFetch(baseUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -88,7 +90,7 @@ async function fetchCategoryBooks(params: BookListParams): Promise<{ books: Book
           LIMIT ${pageSize} OFFSET ${offset}`
         }),
       }),
-      fetch(baseUrl, {
+      customFetch(baseUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

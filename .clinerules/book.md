@@ -23,6 +23,8 @@ entities.d.ts文件内容禁止修改
 注意ui需要使用tailwind的dark兼容黑白模式
 每个模块的index.css都要单独增加
 @reference "tailwindcss";
-@custom-variant dark (&:where(.dark, .dark *));
+@custom-variant dark (&:where(.dark, .dark *));]
+不要用什么乱七八糟的trim replace 整理文字格式
+可以点击的功能 都要加上cursor-pointer
 已安装ahooks
 状态管理使用zustand

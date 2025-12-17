@@ -6,6 +6,7 @@ import {
 import { Link, useParams } from "react-router";
 import type { AuthorBookInfo } from "../../types/authorPage";
 import { formatHeat, formatDate } from "./index";
+import MobileNavbar from "../../components/MobileNavbar";
 
 interface AuthorPageProps {
   authorDetail?: {
@@ -45,19 +46,14 @@ export default function Mobile({
   if (error) {
     return (
       <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
-        {/* 移动端顶部导航栏 */}
-        <nav className="bg-white dark:bg-gray-800 border-b dark:border-gray-700 border-gray-200 sticky top-0 z-50 transition-colors duration-300">
-          <div className="px-4">
-            <div className="flex items-center justify-between py-3">
-              <Link to="/" className="flex items-center text-gray-600 dark:text-gray-400">
-                <ArrowLeft className="h-5 w-5 mr-1" />
-                返回
-              </Link>
-              <h1 className="text-lg font-bold text-gray-900 dark:text-white">作者信息</h1>
-              <div className="w-12"></div> {/* 占位符 */}
-            </div>
-          </div>
-        </nav>
+        {/* 统一的移动端导航栏 */}
+        <MobileNavbar
+          title="作者信息"
+          subtitle="精彩作品一览"
+          showBack={true}
+          showSearch={true}
+          onBackClick={() => window.history.back()}
+        />
 
         <div className="px-4 py-4">
           <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 transition-colors duration-300">
@@ -68,7 +64,7 @@ export default function Mobile({
               <Button 
                 type="primary"
                 size="small"
-                className="bg-blue-500 hover:bg-blue-600 border-0"
+                className="bg-blue-500 hover:bg-blue-600 border-0 touch-target"
                 onClick={() => window.location.reload()}
               >
                 🔄 重新加载
@@ -82,27 +78,14 @@ export default function Mobile({
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
-      {/* 移动端顶部导航栏 */}
-      <nav className="bg-white dark:bg-gray-800 border-b dark:border-gray-700 border-gray-200 sticky top-0 z-50 transition-colors duration-300">
-        <div className="px-4">
-          <div className="flex items-center justify-between py-3">
-            <Link to="/" className="flex items-center text-gray-600 dark:text-gray-400 hover:text-white hover:bg-gray-700 dark:hover:bg-gray-700 rounded-lg transition-colors px-2 py-1">
-              <ArrowLeft className="h-5 w-5 mr-1" />
-              返回
-            </Link>
-            <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center">
-                <User className="h-5 w-5 text-white" />
-              </div>
-              <div>
-                <h1 className="text-lg font-bold text-gray-900 dark:text-white">作者页面</h1>
-                <p className="text-xs text-gray-400 dark:text-gray-400">精彩作品一览</p>
-              </div>
-            </div>
-            <div className="w-12"></div> {/* 占位符 */}
-          </div>
-        </div>
-      </nav>
+      {/* 统一的移动端导航栏 */}
+      <MobileNavbar
+        title="作者页面"
+        subtitle="精彩作品一览"
+        showBack={true}
+        showSearch={true}
+        onBackClick={() => window.history.back()}
+      />
 
       <div className="px-4 py-4">
         {/* 作者信息横幅 */}
@@ -140,13 +123,13 @@ export default function Mobile({
               <Button 
                 block 
                 type="primary"
-                className="bg-blue-500 hover:bg-blue-600 border-0 h-10 text-white text-sm"
+                className="bg-blue-500 hover:bg-blue-600 border-0 h-12 text-white text-sm touch-target"
               >
                 📚 我的书架
               </Button>
               <Button 
                 block 
-                className="bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 border-0 text-gray-700 dark:text-white h-10 text-sm"
+                className="bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 border-0 text-gray-700 dark:text-white h-12 text-sm touch-target"
               >
                 🔖 收藏夹
               </Button>
@@ -252,7 +235,7 @@ export default function Mobile({
                         <Link to={`/book/${book.id}`}>
                           <Button 
                             size="small"
-                            className="bg-blue-500 hover:bg-blue-600 border-0 text-sm px-3 py-1 font-bold"
+                            className="bg-blue-500 hover:bg-blue-600 border-0 text-sm px-3 py-1 font-bold touch-target"
                           >
                             📖 阅读
                           </Button>
@@ -286,11 +269,11 @@ export default function Mobile({
           <div className="p-4">
             <h4 className="text-gray-900 dark:text-white font-bold text-lg mb-4">📚 相关推荐</h4>
             <div className="grid grid-cols-2 gap-3">
-              <div className="text-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer transition-colors">
+              <div className="text-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer transition-colors touch-target">
                 <BookOpen className="h-6 w-6 mx-auto mb-2 text-blue-500" />
                 <span className="text-xs text-gray-600 dark:text-gray-300">同类作者</span>
               </div>
-              <Link to="/" className="text-center p-3 bg-blue-50 dark:bg-blue-900 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-800 cursor-pointer transition-colors">
+              <Link to="/" className="text-center p-3 bg-blue-50 dark:bg-blue-900 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-800 cursor-pointer transition-colors touch-target">
                 <Crown className="h-6 w-6 mx-auto mb-2 text-blue-500" />
                 <span className="text-xs text-gray-600 dark:text-gray-300">返回首页</span>
               </Link>

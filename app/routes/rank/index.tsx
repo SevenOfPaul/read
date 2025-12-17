@@ -4,6 +4,7 @@ import type { RankingBook, RankingType, RankingConfig, RankingData } from "../..
 import type { Response } from "../../types/Response";
 import PC from "./pc";
 import Mobile from "./mobile";
+import { customFetch } from "../../lib/fetch";
 
 const baseUrl = import.meta.env.VITE_webHost;
 const imgHost = import.meta.env.VITE_imgHost;
@@ -39,7 +40,7 @@ const RANKING_CONFIGS: Record<RankingType, RankingConfig> = {
 // 获取更新榜数据（按更新时间排序）
 async function fetchUpdateRanking(): Promise<RankingBook[]> {
   try {
-    const response = await fetch(baseUrl, {
+    const response = await customFetch(baseUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -94,7 +95,7 @@ async function fetchUpdateRanking(): Promise<RankingBook[]> {
 // 获取热度榜数据（按热度排序）
 async function fetchHeatRanking(): Promise<RankingBook[]> {
   try {
-    const response = await fetch(baseUrl, {
+    const response = await customFetch(baseUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -147,7 +148,7 @@ async function fetchHeatRanking(): Promise<RankingBook[]> {
 // 获取字数榜数据（按章节数量排序）
 async function fetchWordsRanking(): Promise<RankingBook[]> {
   try {
-    const response = await fetch(baseUrl, {
+    const response = await customFetch(baseUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

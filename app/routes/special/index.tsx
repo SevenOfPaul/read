@@ -6,6 +6,7 @@ import type { Response } from "../../types/Response";
 import type { SpecialConfig, SpecialType,PaginationInfo } from "../../types/specialPage";
 import PC from "./pc";
 import Mobile from "./mobile";
+import { customFetch } from "../../lib/fetch";
 
 const baseUrl = import.meta.env.VITE_webHost;
 const imgHost = import.meta.env.VITE_imgHost;
@@ -48,7 +49,7 @@ async function fetchSpecialBooks(params: { type: SpecialType; page: number; page
 
     // 并行获取书籍列表和总数
     const [booksResponse, countResponse] = await Promise.all([
-      fetch(baseUrl, {
+      customFetch(baseUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -73,7 +74,7 @@ async function fetchSpecialBooks(params: { type: SpecialType; page: number; page
           LIMIT ${pageSize} OFFSET ${offset}`
         }),
       }),
-      fetch(baseUrl, {
+      customFetch(baseUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

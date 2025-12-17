@@ -4,6 +4,7 @@ import type { BookDetail, ChapterInfo, RelatedBook, BookDetailResponse, ChapterL
 import PC from "./pc";
 import Mobile from "./mobile";
 import "./index.css";
+import { customFetch } from "../../lib/fetch";
 
 const baseUrl = import.meta.env.VITE_webHost;
 const imgHost = import.meta.env.VITE_imgHost;
@@ -11,7 +12,7 @@ const imgHost = import.meta.env.VITE_imgHost;
 // 根据书籍ID获取书籍详情
 async function fetchBookDetail(bookId: string): Promise<BookDetail|undefined> {
   try {
-    const response = await fetch(baseUrl, {
+    const response = await customFetch(baseUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -45,7 +46,7 @@ async function fetchBookDetail(bookId: string): Promise<BookDetail|undefined> {
       }),
     });
 
-    await fetch(baseUrl, {
+    await customFetch(baseUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -84,7 +85,7 @@ async function fetchBookDetail(bookId: string): Promise<BookDetail|undefined> {
 // 获取章节列表（不分卷）
 async function fetchChapters(bookId: string): Promise<ChapterInfo[]> {
   try {
-    const response = await fetch(baseUrl, {
+    const response = await customFetch(baseUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -122,7 +123,7 @@ async function fetchChapters(bookId: string): Promise<ChapterInfo[]> {
 // 获取相关书籍推荐
 async function fetchRelatedBooks(categoryId: string, currentBookId: string): Promise<RelatedBook[]> {
   try {
-    const response = await fetch(baseUrl, {
+    const response = await customFetch(baseUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -133,7 +134,7 @@ async function fetchRelatedBooks(categoryId: string, currentBookId: string): Pro
           b."name",
           b."bookImage",
           b."lastChapter",
-          b status,
+          b."status",
           a."name" as "authorName",
           b."authorId" as "authorId"
         FROM public.book b
@@ -204,11 +205,15 @@ export function handleShare(bookId: string, bookName: string) {
 }
 
 export default function BookDetail() {
-  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
-  
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
-      {isMobile ? <Mobile /> : <PC />}
+      {/* 使用Tailwind CSS的响应式类来控制显示 */}
+      <div className="hidden md:block">
+        <PC />
+      </div>
+      <div className="block md:hidden">
+        <Mobile />
+      </div>
     </div>
   );
 }

@@ -6,11 +6,11 @@ import Mobile from "./mobile";
 
 const baseUrl = import.meta.env.VITE_webHost;
 const imgHost = import.meta.env.VITE_imgHost;
-
+import customFetch from "@/lib/fetch";
 // 使用联合查询获取分类及其对应的书籍信息
 async function fetchCategories(): Promise<CategoryWithBooks[]> {
   try {
-    const response = await fetch(baseUrl, {
+    const response = await customFetch(baseUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -57,6 +57,7 @@ async function fetchCategories(): Promise<CategoryWithBooks[]> {
         LEFT JOIN public.author a ON b."authorId" = a.id
         WHERE c."deleteFlag" = false
         GROUP BY c.id, c.name, c."createTime", c."updateTime", c."deleteFlag"
+        HAVING COUNT(b.id) > 0
         ORDER BY c."createTime" DESC` 
       }),
     });
@@ -90,7 +91,7 @@ async function fetchCategories(): Promise<CategoryWithBooks[]> {
 // 获取热度最高的5本书（畅销榜）
 async function fetchHotBooks(): Promise<HotBook[]> {
   try {
-    const response = await fetch(baseUrl, {
+    const response = await customFetch(baseUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -149,16 +150,20 @@ export function formatHeat(fired: number): string {
   } else if (fired >= 1000) {
     return `🔥 ${(fired / 1000).toFixed(1)}千`;
   } else {
-    return `🔥 ${fired}`;
+    return `🔥 ${fired||0}`;
   }
 }
 
 export default function Home() {
-  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
-  
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
-      {isMobile ? <Mobile /> : <PC />}
+      {/* 使用Tailwind CSS的响应式类来控制显示 */}
+      <div className="hidden md:block">
+        <PC />
+      </div>
+      <div className="block md:hidden">
+        <Mobile />
+      </div>
     </div>
   );
 }

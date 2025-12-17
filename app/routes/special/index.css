@@ -20,7 +20,7 @@
 .special-banner.new {
   @apply from-blue-500 to-cyan-600;
 }
-
+。
 /* 书籍卡片 */
 .book-card {
   @apply bg-gray-50 dark:bg-gray-700 border-gray-200 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-600;
@@ -98,18 +98,6 @@
   @apply bg-purple-500;
 }
 
-/* 分页组件 */
-.custom-pagination .rv-pagination {
-  @apply text-gray-600 dark:text-gray-300;
-}
-
-.custom-pagination .rv-pagination__item {
-  @apply bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600;
-}
-
-.custom-pagination .rv-pagination__item--active {
-  @apply bg-blue-500 text-white;
-}
 
 /* 移动端优化 */
 @media (max-width: 768px) {

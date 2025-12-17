@@ -1,9 +1,10 @@
-import { Button, Card, Pagination } from "react-vant";
+import { Button, Card } from "react-vant";
 import { Link, useParams } from "react-router";
 import type { BookInfo } from "@/types/categorySearch";
-import type { SpecialConfig,PaginationInfo } from "@/types/specialPage";
+import type { SpecialConfig, PaginationInfo } from "@/types/specialPage";
 import Navbar from "@/components/Navbar";
 import BookCard from "@/components/BookCard";
+import { Pagination } from "@/components/ui/pagination";
 
 interface SpecialPageProps {
   specialConfig: SpecialConfig;
@@ -79,7 +80,7 @@ export default function PC({
                     type === 'completed'
                       ? 'text-white bg-purple-500'
                       : 'text-gray-600 dark:text-gray-300 hover:text-white hover:bg-gray-700 dark:hover:bg-gray-700'
-                    }`}
+                  }`}
                 >
                   🏆 完结精品
                 </Link>
@@ -89,7 +90,7 @@ export default function PC({
                     type === 'new'
                       ? 'text-white bg-blue-500'
                       : 'text-gray-600 dark:text-gray-300 hover:text-white hover:bg-gray-700 dark:hover:bg-gray-700'
-                    }`}
+                  }`}
                 >
                   ✨ 最新上架
                 </Link>
@@ -175,11 +176,13 @@ export default function PC({
                       {/* 一行书籍 */}
                       <div className="flex gap-2">
                         {row.map((book) => (
-                          <BookCard 
+                         <div  className="w-1/2">
+                           <BookCard 
                             key={book.id}
                             book={book}
                             layout="pc"
                           />
+                          </div>
                         ))}
                       </div>
                       
@@ -206,7 +209,7 @@ export default function PC({
               )}
             </div>
 
-            {/* 分页组件 - 使用 vant 的 Pagination */}
+            {/* 分页组件 - 使用我们的自定义 Pagination 组件 */}
             {pagination.totalPages > 1 && (
               <div className="bg-white dark:bg-gray-800 rounded-lg p-6 border border-gray-200 dark:border-gray-700 transition-colors duration-300">
                 <div className="flex items-center justify-between mb-4">
@@ -215,7 +218,7 @@ export default function PC({
                   </div>
                 </div>
                 
-                {/* 使用 vant 的 Pagination 组件 */}
+                {/* 使用我们的自定义 Pagination 组件 */}
                 <Pagination 
                   value={pagination.currentPage}
                   onChange={onPageChange}
@@ -223,9 +226,10 @@ export default function PC({
                   itemsPerPage={pagination.pageSize}
                   showPageSize={5}
                   forceEllipses={true}
-                  className="custom-pagination [&_.rv-pagination]:text-gray-600 dark:[&_.rv-pagination]:text-gray-300 [&_.rv-pagination__item]:bg-gray-100 dark:[&_.rv-pagination__item]:bg-gray-700 [&_.rv-pagination__item:hover]:bg-gray-200 dark:[&_.rv-pagination__item:hover]:bg-gray-600 [&_.rv-pagination__item--active]:bg-blue-500"
+                  className="pagination-custom"
                   prevText="上一页"
                   nextText="下一页"
+                  disabled={isLoading}
                 />
               </div>
             )}

@@ -1,6 +1,6 @@
 import { BookOpen, Search, Moon, Sun } from "lucide-react";
 import { Link, useLocation } from "react-router";
-import { useThemeStore } from "../lib/useThemeStore";
+import { useThemeStore } from "../store/useThemeStore";
 
 interface NavbarProps {
   title?: string;
@@ -29,7 +29,7 @@ const menuItems = [
   { key: 'complete', label: '完结', href: '/special/completed', isLink: true },
   { key: 'new', label: '新书', href: '/special/new', isLink: true },
   { key: 'category', label: '分类', href: "/category/''", isLink: true },
-    { key: 'rank', label: '我要上传', href: '/upload', isLink: false },
+    { key: 'upload', label: '我要上传', href: '/upload', isLink: true },
 ];
 
 export default function Navbar({ 

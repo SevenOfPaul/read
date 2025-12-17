@@ -28,7 +28,6 @@ export interface RankingConfig {
   icon: string;
   bgColor: string;
   textColor: string;
-  orderBy: string;
 }
 
 // 排行榜数据结构
