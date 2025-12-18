@@ -119,20 +119,21 @@ export default function Mobile({
         <Card className="mb-6 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 transition-colors duration-300">
           <div className="p-4">
             <h3 className="text-gray-900 dark:text-white font-bold text-lg mb-4">⚡ 快捷操作</h3>
-            <div className="grid grid-cols-2 gap-3">
-              <Button 
-                block 
-                type="primary"
-                className="bg-blue-500 hover:bg-blue-600 border-0 h-12 text-white text-sm touch-target"
-              >
-                📚 我的书架
-              </Button>
+            <div className="space-y-2">
               <Button 
                 block 
                 className="bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 border-0 text-gray-700 dark:text-white h-12 text-sm touch-target"
               >
-                🔖 收藏夹
+                📚 我的书架
               </Button>
+              <Link to="/" className="block">
+                <Button 
+                  block 
+                  className="bg-blue-500 hover:bg-blue-600 border-0 text-white h-12 text-sm touch-target"
+                >
+                  🏠 返回首页
+                </Button>
+              </Link>
             </div>
           </div>
         </Card>

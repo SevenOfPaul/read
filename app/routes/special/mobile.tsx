@@ -47,28 +47,28 @@ export default function Mobile({
         <div className="flex space-x-2">
           <Link
             to="/special/completed"
-            className={`flex-1 py-3 px-4 rounded-lg text-center transition-colors touch-target ${
+            className={`flex-1 py-2 px-3 rounded-lg text-center transition-colors touch-target ${
               type === 'completed'
-                ? specialConfig.bgColor.replace('bg-gradient-to-r from-', 'bg-').replace(' to-', '-').replace('-600', '-500') + ' text-white'
+                ? 'bg-blue-500 text-white'
                 : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600'
             }`}
           >
             <div className="flex items-center justify-center space-x-1">
-              <span className="text-lg">🏆</span>
-              <span className="font-medium">完结精品</span>
+              <span className="text-sm">🏆</span>
+              <span className="text-sm font-medium">完结精品</span>
             </div>
           </Link>
           <Link
             to="/special/new"
-            className={`flex-1 py-3 px-4 rounded-lg text-center transition-colors touch-target ${
+            className={`flex-1 py-2 px-3 rounded-lg text-center transition-colors touch-target ${
               type === 'new'
-                ? specialConfig.bgColor.replace('bg-gradient-to-r from-', 'bg-').replace(' to-', '-').replace('-600', '-500') + ' text-white'
+                ? 'bg-blue-500 text-white'
                 : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600'
             }`}
           >
             <div className="flex items-center justify-center space-x-1">
-              <span className="text-lg">✨</span>
-              <span className="font-medium">最新上架</span>
+              <span className="text-sm">✨</span>
+              <span className="text-sm font-medium">最新上架</span>
             </div>
           </Link>
         </div>

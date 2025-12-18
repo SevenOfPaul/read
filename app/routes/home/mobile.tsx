@@ -12,8 +12,6 @@ export default function Mobile() {
   const { currentChapterId, bookId } = useChapterStore();
   const { data: categories, isLoading, error } = useCategories();
   const { data: hotBooks } = useHotBooks();
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-
   // 继续阅读功能
   const handleContinueReading = () => {
     if (currentChapterId && bookId) {
@@ -23,7 +21,7 @@ export default function Mobile() {
 
   // 判断是否有阅读进度
   const hasReadingProgress = currentChapterId && bookId;
-  console.log(currentChapterId,bookId)
+  
   // 截取描述为100字
   const truncateDesc = (desc: string) => {
     if (!desc) return '';
@@ -40,49 +38,10 @@ export default function Mobile() {
       <MobileNavbar
         title="夜读小说网"
         subtitle="精品小说 · 夜夜精彩"
-        showMenu={true}
+        showBack={true}
         showSearch={true}
-        onMenuClick={() => setIsSidebarOpen(true)}
+        onBackClick={() => window.history.back()}
       />
-
-      {/* 移动端侧边栏 */}
-      {isSidebarOpen && (
-        <div className="fixed inset-0 z-50 lg:hidden">
-          <div className="fixed inset-0 bg-black/50" onClick={() => setIsSidebarOpen(false)}></div>
-          <aside className="fixed left-0 top-0 bottom-0 w-64 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700">
-            <div className="p-4">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-gray-900 dark:text-white font-bold text-lg">作品分类</h3>
-                <button onClick={() => setIsSidebarOpen(false)}>
-                  <X className="h-5 w-5 text-gray-400" />
-                </button>
-              </div>
-              
-              <div className="space-y-1 mb-6">
-                {categories && categories.map((category: CategoryWithBooks) => (
-                  <Link
-                    key={category.id}
-                    to={`/category/${category.id}`}
-                    className="block px-3 py-2 text-gray-600 dark:text-gray-300 hover:text-white hover:bg-gray-700 dark:hover:bg-gray-700 rounded transition-colors touch-target cursor-pointer"
-                  >
-                    {category?.name || '未知分类'}
-                  </Link>
-                ))}
-              </div>
-              
-              {/* 快捷功能 */}
-              <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
-                <h4 className="text-gray-900 dark:text-white font-medium mb-3">快捷功能</h4>
-                <div className="space-y-2">
-                  <a href="#" className="block text-gray-400 dark:text-gray-400 hover:text-white text-sm touch-target cursor-pointer">我的书架</a>
-                  <a href="#" className="block text-gray-400 dark:text-gray-400 hover:text-white text-sm touch-target cursor-pointer">阅读历史</a>
-                  <a href="#" className="block text-gray-400 dark:text-gray-400 hover:text-white text-sm touch-target cursor-pointer">收藏夹</a>
-                </div>
-              </div>
-            </div>
-          </aside>
-        </div>
-      )}
 
       <div className="px-4 py-4">
         {/* 英雄横幅 - 移动端优化 */}
@@ -193,35 +152,58 @@ export default function Mobile() {
           </div>
         </div>
 
-        {/* 功能按钮区 - 移动端优化 */}
+        {/* 畅销榜 - 新增功能 */}
+        {hotBooks && hotBooks.length > 0 && (
+          <div className="bg-white dark:bg-gray-800 rounded-lg p-4 mb-6 border border-gray-200 dark:border-gray-700 transition-colors duration-300">
+            <h3 className="text-gray-900 dark:text-white font-bold text-lg mb-4 flex items-center">
+              <Crown className="h-5 w-5 mr-2 text-yellow-500" />
+              🔥 畅销榜
+            </h3>
+            <div className="space-y-3">
+              {hotBooks.map((book, index) => {
+                const rank = index + 1;
+                return (
+                  <Link key={book.id} to={`/book/${book.id}`}>
+                    <div className="flex items-center space-x-3 hover:bg-gray-100 dark:hover:bg-gray-700 p-2 rounded cursor-pointer transition-colors touch-target">
+                      <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${rank === 1 ? 'bg-blue-500 text-white' :
+                        rank === 2 ? 'bg-indigo-500 text-white' :
+                          rank === 3 ? 'bg-purple-500 text-white' :
+                            'bg-gray-300 dark:bg-gray-600 text-gray-700 dark:text-gray-300'
+                        }`}>
+                        {rank}
+                      </div>
+                      <div className="flex-1">
+                        <div className="text-gray-900 dark:text-white text-sm font-medium line-clamp-1">{book.name}</div>
+                        <Link to={`/author/${book.authorId}`}> <div className="text-gray-400 dark:text-gray-400 text-xs">👤 {book.author}</div></Link>
+                      </div>
+                      <div className="text-blue-400 text-xs">{formatHeat(book.fired)}</div>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {/* 功能按钮区 - 简化版本 */}
         <Card className="mb-6 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 transition-colors duration-300">
           <div className="p-4">
             <h4 className="text-gray-900 dark:text-white font-bold text-lg mb-4">⚡ 快捷功能</h4>
-            <div className="grid grid-cols-4 gap-2 sm:gap-3">
-              <div className="text-center touch-target">
-                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-500 rounded-lg flex items-center justify-center mx-auto mb-2">
-                  <BookOpen className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
-                </div>
-                <span className="text-xs text-gray-600 dark:text-gray-300">我的书架</span>
-              </div>
-              <Link to="/rank" className="text-center touch-target">
-                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-indigo-500 rounded-lg flex items-center justify-center mx-auto mb-2">
-                  <Crown className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
-                </div>
-                <span className="text-xs text-gray-600 dark:text-gray-300">排行榜</span>
+            <div className="grid grid-cols-2 gap-3">
+              <Button 
+                block 
+                className="bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 border-0 text-gray-700 dark:text-white h-12 text-sm touch-target"
+              >
+                📚 我的书架
+              </Button>
+              <Link to="/rank" className="block">
+                <Button 
+                  block 
+                  className="bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 border-0 text-gray-700 dark:text-white h-12 text-sm touch-target"
+                >
+                  🏆 排行榜
+                </Button>
               </Link>
-              <div className="text-center touch-target">
-                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-purple-500 rounded-lg flex items-center justify-center mx-auto mb-2">
-                  <Heart className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
-                </div>
-                <span className="text-xs text-gray-600 dark:text-gray-300">收藏夹</span>
-              </div>
-              <div className="text-center touch-target">
-                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-600 rounded-lg flex items-center justify-center mx-auto mb-2">
-                  <User className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
-                </div>
-                <span className="text-xs text-gray-600 dark:text-gray-300">个人中心</span>
-              </div>
             </div>
           </div>
         </Card>
@@ -394,42 +376,6 @@ export default function Mobile() {
           })}
         </div>
 
-        {/* 移动端特色说明 */}
-        <Card className="mt-6 mb-6 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 transition-colors duration-300">
-          <div className="p-4">
-            <h4 className="font-bold text-gray-900 dark:text-white mb-4 text-center text-lg">🔥 为什么选择夜读小说网？</h4>
-            <div className="space-y-3">
-              <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg touch-target">
-                <span className="flex items-center text-gray-600 dark:text-gray-300">
-                  <Award className="h-4 w-4 sm:h-5 sm:w-5 mr-2 sm:mr-3 text-blue-500" />
-                  精选优质内容
-                </span>
-                <span className="text-blue-500 font-bold">✓</span>
-              </div>
-              <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg touch-target">
-                <span className="flex items-center text-gray-600 dark:text-gray-300">
-                  <TrendingUp className="h-4 w-4 sm:h-5 sm:w-5 mr-2 sm:mr-3 text-green-500" />
-                  每日持续更新
-                </span>
-                <span className="text-green-500 font-bold">✓</span>
-              </div>
-              <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg touch-target">
-                <span className="flex items-center text-gray-600 dark:text-gray-300">
-                  <Heart className="h-4 w-4 sm:h-5 sm:w-5 mr-2 sm:mr-3 text-purple-500" />
-                  个性化推荐
-                </span>
-                <span className="text-purple-500 font-bold">✓</span>
-              </div>
-              <div className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg touch-target">
-                <span className="flex items-center text-gray-600 dark:text-gray-300">
-                  <Star className="h-4 w-4 sm:h-5 sm:w-5 mr-2 sm:mr-3 text-yellow-500" />
-                  无广告阅读
-                </span>
-                <span className="text-yellow-500 font-bold">✓</span>
-              </div>
-            </div>
-          </div>
-        </Card>
 
         {/* 状态显示 */}
         {isLoading && (

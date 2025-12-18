@@ -168,6 +168,14 @@ export default function Mobile() {
               <div className="text-lg font-bold text-orange-500">{book.fired}</div>
               <div className="text-xs text-gray-500 dark:text-gray-400">热度值</div>
             </div>
+            <div className="text-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+              <div className="text-lg font-bold text-green-500">{book.status}</div>
+              <div className="text-xs text-gray-500 dark:text-gray-400">状态</div>
+            </div>
+            <div className="text-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+              <div className="text-lg font-bold text-purple-500">{book.categoryName}</div>
+              <div className="text-xs text-gray-500 dark:text-gray-400">分类</div>
+            </div>
           </div>
           {book.lastChapter && (
             <div className="mt-4 p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
@@ -177,6 +185,40 @@ export default function Mobile() {
               </div>
             </div>
           )}
+          {book.updateTime && (
+            <div className="mt-3 p-2 bg-gray-50 dark:bg-gray-700 rounded-lg">
+              <div className="text-xs text-gray-500 dark:text-gray-400">
+                <Clock className="h-3 w-3 inline mr-1" />
+                更新时间：{new Date(book.updateTime).toLocaleDateString()}
+              </div>
+            </div>
+          )}
+        </Card>
+
+        {/* 快捷操作 */}
+        <Card className="p-4">
+          <h4 className="font-bold text-gray-900 dark:text-white mb-4 text-lg">⚡ 快捷操作</h4>
+          <div className="grid grid-cols-2 gap-3">
+            <Link 
+              className="block"
+              to={`/read/${book.id}/${chapters && chapters.length ? chapters[0].id : ''}`}
+            >
+              <Button 
+                block 
+                className="bg-blue-500 hover:bg-blue-600 text-white h-10 touch-target"
+                disabled={!chapters || chapters.length === 0}
+              >
+                📖 立即阅读
+              </Button>
+            </Link>
+            <Button 
+              block 
+              className="bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-white h-10 touch-target"
+              onClick={() => handleBookmark(book.id)}
+            >
+              🔖 收藏本书
+            </Button>
+          </div>
         </Card>
 
         {/* 章节目录 */}
@@ -276,7 +318,7 @@ export default function Mobile() {
             </Button>
           </Link>
           <Button 
-            className="bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 text-gray-700 dark:text-white w-full h-12 touch-target"
+            className="bg-gray-100 dark:bg-gray-700 flex flex-col hover:bg-gray-200 text-gray-700 dark:text-white w-full h-12 touch-target"
             onClick={() => handleBookmark(book.id)}
           >
             <Heart className="h-4 w-4 mr-2" />

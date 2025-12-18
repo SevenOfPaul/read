@@ -279,16 +279,6 @@ export default function Mobile({
                   🏆 完结精品
                 </Button>
               </Link>
-              <Link to="/special/new">
-                <Button block className="bg-blue-100 dark:bg-blue-900/20 hover:bg-blue-200 dark:hover:bg-blue-800/30 border-0 text-blue-600 dark:text-blue-400 h-12 touch-target">
-                  ✨ 最新上架
-                </Button>
-              </Link>
-              <Link to="/category/''">
-                <Button block className="bg-green-100 dark:bg-green-900/20 hover:bg-green-200 dark:hover:bg-green-800/30 border-0 text-green-600 dark:text-green-400 h-12 touch-target">
-                  📖 全部分类
-                </Button>
-              </Link>
               <Link to="/">
                 <Button block className="bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 border-0 text-gray-600 dark:text-gray-300 h-12 touch-target">
                   🏠 返回首页
