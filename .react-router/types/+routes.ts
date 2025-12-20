@@ -46,6 +46,9 @@ type Pages = {
   "/upload": {
     params: {};
   };
+  "/search": {
+    params: {};
+  };
   "/*": {
     params: {
       "*": string;
@@ -56,7 +59,7 @@ type Pages = {
 type RouteFiles = {
   "root.tsx": {
     id: "root";
-    page: "/" | "/book/:bookId" | "/rank" | "/read/:bookId/:chapterId" | "/category/:categoryId" | "/author/:authorId" | "/special/:type" | "/upload" | "/*";
+    page: "/" | "/book/:bookId" | "/rank" | "/read/:bookId/:chapterId" | "/category/:categoryId" | "/author/:authorId" | "/special/:type" | "/upload" | "/search" | "/*";
   };
   "routes/home/index.tsx": {
     id: "routes/home/index";
@@ -90,6 +93,10 @@ type RouteFiles = {
     id: "routes/upload/index";
     page: "/upload";
   };
+  "routes/search/index.tsx": {
+    id: "routes/search/index";
+    page: "/search";
+  };
   "routes/not-found.tsx": {
     id: "routes/not-found";
     page: "/*";
@@ -106,5 +113,6 @@ type RouteModules = {
   "routes/author/index": typeof import("./app/routes/author/index.tsx");
   "routes/special/index": typeof import("./app/routes/special/index.tsx");
   "routes/upload/index": typeof import("./app/routes/upload/index.tsx");
+  "routes/search/index": typeof import("./app/routes/search/index.tsx");
   "routes/not-found": typeof import("./app/routes/not-found.tsx");
 };

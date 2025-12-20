@@ -1,10 +1,9 @@
-import { Button, Card, Badge } from "react-vant";
-import { BookOpen, Search, Clock, User, TrendingUp, Award, Heart, Eye, Star, Crown, BookMarked, Filter, X } from "lucide-react";
+import { Button, Card } from "react-vant";
+import { BookOpen, User, TrendingUp, Award, Heart, Star, Crown } from "lucide-react";
 import { Link, useNavigate } from "react-router";
 import type { CategoryWithBooks } from "../../types/categorySearch";
 import { useCategories, useHotBooks, formatHeat } from "./index";
 import { useChapterStore } from "../../store/useChapterStore";
-import { useState } from "react";
 import MobileNavbar from "../../components/MobileNavbar";
 
 export default function Mobile() {
@@ -12,29 +11,25 @@ export default function Mobile() {
   const { currentChapterId, bookId } = useChapterStore();
   const { data: categories, isLoading, error } = useCategories();
   const { data: hotBooks } = useHotBooks();
-  // 继续阅读功能
+
   const handleContinueReading = () => {
     if (currentChapterId && bookId) {
       navigate(`/read/${bookId}/${currentChapterId}`);
     }
   };
 
-  // 判断是否有阅读进度
   const hasReadingProgress = currentChapterId && bookId;
   
-  // 截取描述为100字
   const truncateDesc = (desc: string) => {
     if (!desc) return '';
     return desc.length > 100 ? desc.substring(0, 100) + '...' : desc;
   };
 
-  // 统计数据
   const totalBooks = categories?.reduce((sum, cat) => sum + (cat.books?.length || 0), 0) || 0;
   const categoriesWithBooks = categories?.filter(cat => cat.books && cat.books.length > 0) || [];
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
-      {/* 统一的移动端导航栏 */}
       <MobileNavbar
         title="夜读小说网"
         subtitle="精品小说 · 夜夜精彩"
@@ -44,7 +39,6 @@ export default function Mobile() {
       />
 
       <div className="px-4 py-4">
-        {/* 英雄横幅 - 移动端优化 */}
         <div className="bg-white dark:bg-gray-800 rounded-lg p-4 sm:p-6 mb-6 border border-gray-200 dark:border-gray-700 transition-colors duration-300">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4">
             <div className="flex-1 mb-4 sm:mb-0">
@@ -69,12 +63,12 @@ export default function Mobile() {
             </div>
           </div>
           
-          {/* 快捷按钮 */}
           <div className="grid grid-cols-2 gap-3">
             <Button 
               block 
               type="primary"
               className="bg-blue-500 hover:bg-blue-600 border-0 h-12 text-white text-sm touch-target"
+              onClick={() => navigate('/search')}
             >
               🔍 搜索小说
             </Button>
@@ -89,7 +83,6 @@ export default function Mobile() {
           </div>
         </div>
 
-        {/* 编辑推荐区域 */}
         <div className="bg-white dark:bg-gray-800 rounded-lg p-4 sm:p-6 mb-6 border border-gray-200 dark:border-gray-700 transition-colors duration-300">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-gray-900 dark:text-white font-bold text-lg sm:text-xl">✨ 编辑推荐</h3>
@@ -152,7 +145,6 @@ export default function Mobile() {
           </div>
         </div>
 
-        {/* 畅销榜 - 新增功能 */}
         {hotBooks && hotBooks.length > 0 && (
           <div className="bg-white dark:bg-gray-800 rounded-lg p-4 mb-6 border border-gray-200 dark:border-gray-700 transition-colors duration-300">
             <h3 className="text-gray-900 dark:text-white font-bold text-lg mb-4 flex items-center">
@@ -185,7 +177,6 @@ export default function Mobile() {
           </div>
         )}
 
-        {/* 功能按钮区 - 简化版本 */}
         <Card className="mb-6 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 transition-colors duration-300">
           <div className="p-4">
             <h4 className="text-gray-900 dark:text-white font-bold text-lg mb-4">⚡ 快捷功能</h4>
@@ -208,7 +199,6 @@ export default function Mobile() {
           </div>
         </Card>
 
-        {/* 精品分类推荐标题 */}
         <div className="bg-gradient-to-r from-blue-500 to-indigo-600 rounded-lg p-4 mb-6 shadow-lg">
           <div className="text-center">
             <h2 className="text-lg sm:text-xl font-bold text-white mb-2">
@@ -234,14 +224,12 @@ export default function Mobile() {
           </div>
         </div>
 
-        {/* 分类展示区域 - 移动端优化 */}
         <div className="space-y-4 sm:space-y-6">
           {categories && categories.map((category: CategoryWithBooks) => {
             const hasBooks = category?.books && category.books.length > 0;
             
             return (
               <div key={category?.id} className="bg-white dark:bg-gray-800 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 transition-colors duration-300">
-                {/* 分类头部 */}
                 <div className="bg-gray-100 dark:bg-gray-700 p-3 sm:p-4 border-l-4 border-blue-500">
                   <div className="flex items-center justify-between">
                     <div className="flex-1">
@@ -273,7 +261,6 @@ export default function Mobile() {
                   </div>
                 </div>
 
-                {/* 书籍列表 - 移动端垂直布局 */}
                 <div className="p-3 sm:p-4">
                   {hasBooks ? (
                     <div className="space-y-3">
@@ -281,7 +268,6 @@ export default function Mobile() {
                         <Card key={book?.id} className="bg-gray-50 dark:bg-gray-700 border-gray-200 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-600 transition-all duration-200 hover:shadow-lg touch-target">
                           <Card.Body className="p-3 sm:p-4">
                             <div className="flex space-x-3">
-                              {/* 书籍封面 */}
                               <div className="relative flex-shrink-0">
                                 {book?.bookImage && (
                                   <img 
@@ -294,7 +280,6 @@ export default function Mobile() {
                                     }}
                                   />
                                 )}
-                                {/* 排名徽章 */}
                                 {index < 3 && (
                                   <div className="absolute -top-1 -left-1">
                                     <div className={`${index === 0 ? 'bg-blue-500' : index === 1 ? 'bg-indigo-500' : 'bg-purple-500'} text-white px-2 py-1 rounded text-xs font-bold flex items-center`}>
@@ -302,7 +287,6 @@ export default function Mobile() {
                                     </div>
                                   </div>
                                 )}
-                                {/* 状态标签 */}
                                 <div className="absolute -bottom-1 -right-1">
                                   <span className={`${book?.status?.includes('连载') ? 'bg-green-500' : 'bg-blue-500'} text-white px-2 py-1 rounded text-xs font-bold`}>
                                     {book?.status || '状态未知'}
@@ -310,7 +294,6 @@ export default function Mobile() {
                                 </div>
                               </div>
 
-                              {/* 书籍信息 */}
                               <div className="flex-1 min-w-0">
                                 <div className="flex items-start justify-between">
                                   <div className="flex-1 min-w-0">
@@ -325,12 +308,10 @@ export default function Mobile() {
                                       </Link>
                                     </div>
 
-                                    {/* 书籍描述 - 限制100字 */}
                                     <p className="text-gray-600 dark:text-gray-300 text-xs sm:text-sm mb-3 line-clamp-2">
                                       {truncateDesc(book?.desc || '')}
                                     </p>
 
-                                    {/* 最新章节 */}
                                     {book?.lastChapter && (
                                       <div className="mb-3 p-2 bg-gray-100 dark:bg-gray-600 rounded text-xs sm:text-sm">
                                         <div className="text-gray-600 dark:text-gray-300">📖 最新: {book.lastChapter}</div>
@@ -338,7 +319,6 @@ export default function Mobile() {
                                     )}
                                   </div>
                                   
-                                  {/* 右侧操作区域 */}
                                   <div className="flex-shrink-0 ml-3 flex flex-col items-end space-y-2">
                                     <div className="flex items-center space-x-1">
                                       <span className="text-xs sm:text-sm text-gray-400 dark:text-gray-400">🔥 热门</span>
@@ -360,14 +340,13 @@ export default function Mobile() {
                       ))}
                     </div>
                   ) : (
-                    /* 空分类状态 */
                     <div className="text-center py-8 sm:py-12">
                       <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gray-200 dark:bg-gray-600 rounded-full flex items-center justify-center mx-auto mb-4">
                         <BookOpen className="h-6 w-6 sm:h-8 sm:w-8 text-gray-400 dark:text-gray-400" />
                       </div>
                       <h4 className="text-gray-400 dark:text-gray-400 font-medium mb-2">精彩即将呈现</h4>
                       <p className="text-gray-500 dark:text-gray-500 text-xs sm:text-sm">
-                        我们正在精心策划优质的{category?.name || '该分类'}小说内容，敬请期待！
+                        我们正在精心策划优质的{category?.name}小说内容，敬请期待！
                       </p>
                     </div>
                   )}
@@ -377,8 +356,6 @@ export default function Mobile() {
           })}
         </div>
 
-
-        {/* 状态显示 */}
         {isLoading && (
           <Card className="mt-6 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 transition-colors duration-300">
             <div className="p-6 sm:p-8 text-center">
@@ -416,7 +393,6 @@ export default function Mobile() {
         )}
       </div>
 
-      {/* 移动端底部信息 */}
       <footer className="bg-gray-800 dark:bg-gray-800 border-t border-gray-700 dark:border-gray-700 py-6 sm:py-8 mt-8 transition-colors duration-300">
         <div className="px-4 text-center">
           <h4 className="font-bold text-white mb-3 text-base sm:text-lg">📚 夜读小说网</h4>

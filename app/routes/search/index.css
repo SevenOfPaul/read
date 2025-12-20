@@ -1,0 +1,141 @@
+/* 搜索页面样式 */
+@reference "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* 搜索输入框样式增强 */
+.search-input {
+  @apply w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200;
+}
+
+.search-input:focus {
+  @apply shadow-lg ring-2 ring-blue-500 ring-opacity-50;
+}
+
+/* 搜索按钮样式 */
+.search-button {
+  @apply bg-blue-500 hover:bg-blue-600 border-0 px-6 py-3 text-white font-medium rounded-lg transition-all duration-200 cursor-pointer;
+}
+
+.search-button:disabled {
+  @apply bg-gray-300 dark:bg-gray-600 text-gray-500 dark:text-gray-400 cursor-not-allowed;
+}
+
+/* 搜索历史和热门搜索标签 */
+.search-tag {
+  @apply px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-full text-sm hover:bg-gray-200 dark:hover:bg-gray-600 cursor-pointer transition-all duration-200;
+}
+
+.search-tag-hot {
+  @apply px-3 py-2 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-gray-700 dark:to-gray-600 text-gray-700 dark:text-gray-300 rounded-lg text-sm hover:from-blue-100 hover:to-indigo-100 dark:hover:from-gray-600 dark:hover:to-gray-500 cursor-pointer transition-all duration-200;
+}
+
+/* 书籍卡片悬停效果 */
+.book-card {
+  @apply bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg transition-all duration-200 hover:shadow-lg hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer;
+}
+
+/* 排名徽章样式 */
+.rank-badge {
+  @apply text-white px-2 py-1 rounded text-xs font-bold flex items-center justify-center;
+}
+
+.rank-badge.gold {
+  @apply bg-blue-500;
+}
+
+.rank-badge.silver {
+  @apply bg-indigo-500;
+}
+
+.rank-badge.bronze {
+  @apply bg-purple-500;
+}
+
+/* 状态标签 */
+.status-tag {
+  @apply text-white px-2 py-1 rounded text-xs font-bold;
+}
+
+.status-tag.ongoing {
+  @apply bg-green-500;
+}
+
+.status-tag.completed {
+  @apply bg-blue-500;
+}
+
+/* 加载动画 */
+.loading-spinner {
+  @apply animate-spin rounded-full border-2 border-blue-500 border-t-transparent;
+}
+
+/* 空状态样式 */
+.empty-state {
+  @apply text-center py-12;
+}
+
+.empty-state-icon {
+  @apply text-6xl mb-4;
+}
+
+.empty-state-title {
+  @apply text-xl font-semibold text-gray-900 dark:text-white mb-2;
+}
+
+.empty-state-description {
+  @apply text-gray-500 dark:text-gray-400;
+}
+
+/* 响应式优化 */
+@media (max-width: 768px) {
+  .search-input {
+    @apply text-base;
+  }
+  
+  .book-card {
+    @apply p-3;
+  }
+  
+  .rank-badge {
+    @apply text-xs px-1 py-1;
+  }
+}
+
+/* 触摸目标优化 */
+.touch-target {
+  @apply min-h-[44px] min-w-[44px];
+}
+
+/* 搜索结果列表动画 */
+.search-results {
+  animation: fadeInUp 0.3s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 搜索建议下拉框 */
+.search-suggestions {
+  @apply absolute top-full left-0 right-0 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg mt-1 z-50 max-h-64 overflow-y-auto;
+}
+
+.search-suggestion-item {
+  @apply px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer transition-colors duration-200;
+}
+
+.search-suggestion-item:last-child {
+  @apply border-b-0;
+}
+
+/* 搜索高亮 */
+.search-highlight {
+  @apply bg-yellow-200 dark:bg-yellow-800 px-1 rounded;
+}

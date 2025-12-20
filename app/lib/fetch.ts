@@ -1,6 +1,7 @@
 import CryptoJS from "crypto-js";
 
 function encryptData(data: string): string {
+  console.log(data)
   return CryptoJS.AES.encrypt(data, import.meta.env.VITE_SALT).toString();
 }
 

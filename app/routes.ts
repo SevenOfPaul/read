@@ -9,5 +9,6 @@ export default [
   route("author/:authorId", "routes/author/index.tsx"),
   route("special/:type", "routes/special/index.tsx"),
   route("upload", "routes/upload/index.tsx"),
+  route("search", "routes/search/index.tsx"),
   route("*", "routes/not-found.tsx"),
 ] satisfies RouteConfig;

@@ -1,5 +1,5 @@
 import { BookOpen, Search, Moon, Sun } from "lucide-react";
-import { Link, useLocation } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import { useThemeStore } from "../store/useThemeStore";
 
 interface NavbarProps {
@@ -8,30 +8,6 @@ interface NavbarProps {
   showSearch?: boolean;
 }
 
-function handleSearch() {
-  console.log("搜索功能开发中...");
-}
-
-// 路径匹配逻辑，判断当前激活的菜单项
-const getActiveMenuItem = (pathname: string) => {
-  if (pathname === '/all' || pathname.startsWith('/home')) return 'all';
-  if (pathname.startsWith('/book')) return 'books';
-  if (pathname.startsWith('/category')) return 'category';
-  if (pathname.includes('rank')) return 'rank';
-  if (pathname.includes('complete') || pathname.includes('finished') || pathname.includes('/special/completed')) return 'complete';
-  if (pathname.includes('new') || pathname.includes('latest') || pathname.includes('/special/new')) return 'new';
-  return 'home'; // 默认返回首页
-};
-
-// 导航菜单项配置
-const menuItems = [
-  { key: 'rank', label: '排行榜', href: '/rank', isLink: true },
-  { key: 'complete', label: '完结', href: '/special/completed', isLink: true },
-  { key: 'new', label: '新书', href: '/special/new', isLink: true },
-  { key: 'category', label: '分类', href: "/category/''", isLink: true },
-    { key: 'upload', label: '我要上传', href: '/upload', isLink: true },
-];
-
 export default function Navbar({ 
   title = "夜读小说网", 
   subtitle = "精品小说 · 夜夜精彩",
@@ -39,6 +15,33 @@ export default function Navbar({
 }: NavbarProps) {
   const { isDark, toggleTheme } = useThemeStore();
   const location = useLocation();
+  const navigate = useNavigate();
+  
+  // 搜索功能 - 跳转到搜索页面
+  const handleSearch = () => {
+    navigate("/search");
+  };
+
+  // 路径匹配逻辑，判断当前激活的菜单项
+  const getActiveMenuItem = (pathname: string) => {
+    if (pathname === '/all' || pathname.startsWith('/home')) return 'all';
+    if (pathname.startsWith('/book')) return 'books';
+    if (pathname.startsWith('/category')) return 'category';
+    if (pathname.includes('rank')) return 'rank';
+    if (pathname.includes('complete') || pathname.includes('finished') || pathname.includes('/special/completed')) return 'complete';
+    if (pathname.includes('new') || pathname.includes('latest') || pathname.includes('/special/new')) return 'new';
+    return 'home'; // 默认返回首页
+  };
+
+  // 导航菜单项配置
+  const menuItems = [
+    { key: 'rank', label: '排行榜', href: '/rank', isLink: true },
+    { key: 'complete', label: '完结', href: '/special/completed', isLink: true },
+    { key: 'new', label: '新书', href: '/special/new', isLink: true },
+    { key: 'category', label: '分类', href: "/category/''", isLink: true },
+    { key: 'upload', label: '我要上传', href: '/upload', isLink: true },
+  ];
+
   const activeMenuItem = getActiveMenuItem(location.pathname);
 
   return (

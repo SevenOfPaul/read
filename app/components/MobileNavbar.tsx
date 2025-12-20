@@ -9,6 +9,7 @@ interface MobileNavbarProps {
   showSearch?: boolean;
   onMenuClick?: () => void;
   onBackClick?: () => void;
+  onSearchClick?: () => void;
   showDivider?: boolean;
   className?: string;
 }
@@ -21,9 +22,20 @@ export default function MobileNavbar({
   showSearch = false,
   onMenuClick,
   onBackClick,
+  onSearchClick,
   showDivider = true,
   className = ""
 }: MobileNavbarProps) {
+  // 搜索处理函数
+  const handleSearch = () => {
+    if (onSearchClick) {
+      onSearchClick();
+    } else {
+      // 默认行为：跳转到搜索页面
+      window.location.href = "/search";
+    }
+  };
+
   return (
     <>
       <nav className={`bg-white dark:bg-gray-800 border-b dark:border-gray-700 border-gray-200 sticky top-0 z-50 transition-colors duration-300 ${className}`}>
@@ -62,7 +74,8 @@ export default function MobileNavbar({
             <div className="flex items-center space-x-2">
               {showSearch && (
                 <button 
-                  className="p-2 text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors duration-200 touch-target"
+                  className="p-2 text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors duration-200 touch-target cursor-pointer"
+                  onClick={handleSearch}
                   title="搜索"
                 >
                   <Search className="h-5 w-5" />
@@ -71,7 +84,7 @@ export default function MobileNavbar({
               
               {showMenu && (
                 <button 
-                  className="p-2 text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors duration-200 touch-target"
+                  className="p-2 text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors duration-200 touch-target cursor-pointer"
                   onClick={onMenuClick}
                   title="菜单"
                 >
