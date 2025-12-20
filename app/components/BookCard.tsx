@@ -102,8 +102,7 @@ export default function BookCard({
                 {/* 右侧操作区域 */}
                 <div className="flex-shrink-0 ml-3 flex flex-col items-end space-y-2">
                   <div className="flex items-center space-x-1">
-                    <Star className="h-4 w-4 text-yellow-500" />
-                    <span className="text-sm text-gray-400 dark:text-gray-400">9.2</span>
+                    <span className="text-sm text-gray-400 dark:text-gray-400">🔥 热门</span>
                   </div>
                   <Link to={`/book/${book.id}`}>
                     <Button 

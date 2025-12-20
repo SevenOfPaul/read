@@ -116,9 +116,13 @@ export default function Mobile() {
                   <span>{book.authorName}</span>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <span className="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-2 py-1 rounded text-xs">
-                    {book.categoryName}
-                  </span>
+                  {book.categoryId && (
+                    <Link to={`/category/${book.categoryId}`}>
+                      <span className="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-2 py-1 rounded text-xs hover:bg-blue-200 dark:hover:bg-blue-800 cursor-pointer transition-colors">
+                        {book.categoryName}
+                      </span>
+                    </Link>
+                  )}
                   <span className="bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-2 py-1 rounded text-xs">
                     {book.status}
                   </span>
@@ -173,8 +177,17 @@ export default function Mobile() {
               <div className="text-xs text-gray-500 dark:text-gray-400">状态</div>
             </div>
             <div className="text-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
-              <div className="text-lg font-bold text-purple-500">{book.categoryName}</div>
-              <div className="text-xs text-gray-500 dark:text-gray-400">分类</div>
+              {book.categoryId ? (
+                <Link to={`/category/${book.categoryId}`}>
+                  <div className="text-lg font-bold text-purple-500 hover:text-purple-600 cursor-pointer transition-colors">{book.categoryName}</div>
+                  <div className="text-xs text-gray-500 dark:text-gray-400">分类</div>
+                </Link>
+              ) : (
+                <>
+                  <div className="text-lg font-bold text-purple-500">{book.categoryName}</div>
+                  <div className="text-xs text-gray-500 dark:text-gray-400">分类</div>
+                </>
+              )}
             </div>
           </div>
           {book.lastChapter && (
@@ -293,8 +306,7 @@ export default function Mobile() {
                     )}
                   </div>
                   <div className="flex flex-col items-center">
-                    <Star className="h-4 w-4 text-yellow-500 mb-1" />
-                    <span className="text-xs text-gray-400">9.2</span>
+                    <span className="text-xs text-gray-400">🔥 热门</span>
                   </div>
                 </Link>
               ))}

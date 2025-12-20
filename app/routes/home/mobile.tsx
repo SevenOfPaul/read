@@ -61,7 +61,7 @@ export default function Mobile() {
               </div>
             </div>
             <div className="text-right">
-              <Link to="/rank">
+              <Link to="/category/''">
                 <div className="bg-blue-500 text-white px-4 py-2 rounded-lg font-bold text-sm hover:bg-blue-600 cursor-pointer transition-colors touch-target">
                   🔥 立即探索
                 </div>
@@ -245,9 +245,11 @@ export default function Mobile() {
                 <div className="bg-gray-100 dark:bg-gray-700 p-3 sm:p-4 border-l-4 border-blue-500">
                   <div className="flex items-center justify-between">
                     <div className="flex-1">
-                      <h3 className="text-gray-900 dark:text-white font-bold text-base sm:text-lg mb-1">
-                        📚 {category?.name || '未知分类'}
-                      </h3>
+                      <Link to={`/category/${category?.id}`}>
+                        <h3 className="text-gray-900 dark:text-white font-bold text-base sm:text-lg mb-1 cursor-pointer hover:text-blue-500 transition-colors">
+                          📚 {category?.name || '未知分类'}
+                        </h3>
+                      </Link>
                       <p className="text-gray-400 dark:text-gray-400 text-xs sm:text-sm">
                         {hasBooks ? (
                           <>
@@ -339,8 +341,7 @@ export default function Mobile() {
                                   {/* 右侧操作区域 */}
                                   <div className="flex-shrink-0 ml-3 flex flex-col items-end space-y-2">
                                     <div className="flex items-center space-x-1">
-                                      <Star className="h-3 w-3 sm:h-4 sm:w-4 text-yellow-500" />
-                                      <span className="text-xs sm:text-sm text-gray-400 dark:text-gray-400">9.2</span>
+                                      <span className="text-xs sm:text-sm text-gray-400 dark:text-gray-400">🔥 热门</span>
                                     </div>
                                     <Link to={`/book/${book?.id}`}>
                                       <Button 
