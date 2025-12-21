@@ -123,6 +123,9 @@ export const initializeReadTheme = () => {
 
 // 获取背景主题对应的Tailwind类名
 export const getBgThemeClasses = (bg: string, isDark: boolean = false) => {
+  // 如果用户选择的是'dark'主题，始终使用深色样式
+  const shouldUseDark = bg === 'dark' || isDark;
+  
   const themeMap: Record<string, { light: string; dark: string }> = {
     default: {
       light: 'bg-white',
@@ -147,7 +150,7 @@ export const getBgThemeClasses = (bg: string, isDark: boolean = false) => {
   };
   
   const theme = themeMap[bg] || themeMap.default;
-  return isDark ? theme.dark : theme.light;
+  return shouldUseDark ? theme.dark : theme.light;
 };
 
 // 获取字体大小对应的Tailwind类名

@@ -1,4 +1,4 @@
-import { Button, Card, Pagination, ActionSheet } from "react-vant";
+import { Button, Card, Pagination } from "react-vant";
 import { BookOpen, User, Settings, Palette, Type } from "lucide-react";
 import { Link, useNavigate } from "react-router";
 import { useChapterContent, useChapters, handleChapterJump } from "./index";
@@ -15,8 +15,7 @@ export default function Mobile() {
   const { data: chapter, isLoading: chapterLoading, error: chapterError } = useChapterContent();
   const { data: chapters, isLoading: chaptersLoading, error: chaptersError } = useChapters();
   const [showThemeSheet, setShowThemeSheet] = useState(false);
-  const [showBgSheet, setShowBgSheet] = useState(false);
-  const [showFontSheet, setShowFontSheet] = useState(false);
+  const bgTheme = getBgThemeClasses(bg, document.documentElement.classList.contains('dark'));
 
   // 章节变化时更新 store 状态
   useEffect(() => {
@@ -134,12 +133,12 @@ export default function Mobile() {
 
   const handleBgThemeChange = (newBg: string) => {
     setBgTheme(newBg);
-    setShowBgSheet(false);
+    setShowThemeSheet(false);
   };
 
   const handleFontChange = (newFont: string) => {
     setFont(newFont);
-    setShowFontSheet(false);
+    setShowThemeSheet(false);
   };
 
   const bgThemeOptions = [
@@ -158,27 +157,19 @@ export default function Mobile() {
   ];
 
   return (
-    <div className={`chapter-read-container min-h-screen ${getBgThemeClasses(bg, document.documentElement.classList.contains('dark'))}`}>
+    <div className={`chapter-read-container min-h-screen ${bgTheme}`}>
       {/* 统一的移动端导航栏 */}
       <MobileNavbar
         title={chapter.book.name}
         showBack={true}
         showSearch={true}
         onBackClick={() => navigate(`/book/${chapter.bookId}`)}
-        customActions={
-          <button 
-            onClick={() => setShowThemeSheet(true)}
-            className="p-2 text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 touch-target"
-          >
-            <Settings className="h-5 w-5" />
-          </button>
-        }
       />
 
       {/* 移动端主内容 */}
       <div className="px-4 py-4">
         {/* 移动端书籍和章节信息 */}
-        <Card className="mb-4">
+        <Card className="mb-4 relative">
           <div className="space-y-3">
             {/* 书籍信息 */}
             <div className="flex items-center space-x-2 text-sm">
@@ -206,11 +197,21 @@ export default function Mobile() {
               第 {navigation ? navigation.currentIndex + 1 : 0} 章 / 共 {navigation ? navigation.totalChapters : 0} 章
             </div>
           </div>
+          
+          {/* 设置按钮 */}
+          <div className="absolute top-3 right-3">
+            <button 
+              onClick={() => setShowThemeSheet(true)}
+              className="p-2 text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 touch-target"
+            >
+              <Settings className="h-5 w-5" />
+            </button>
+          </div>
         </Card>
 
         {/* 移动端章节内容 */}
         <Card className="mb-4">
-          <div className="chapter-content-text">
+          <div className={`chapter-content-text ${bgTheme} px-2`}>
             <div 
               className={`prose prose-sm max-w-none dark:prose-invert ${getFontSizeClasses(font)} ${getLineHeightClasses(font)}`} 
               dangerouslySetInnerHTML={{__html:formatContent(chapter.content)}}
@@ -258,74 +259,77 @@ export default function Mobile() {
         </Card>
       </div>
 
-      {/* 主题设置 ActionSheet */}
-      <ActionSheet
-        show={showThemeSheet}
-        onCancel={() => setShowThemeSheet(false)}
-        cancelText="取消"
-        title="阅读设置"
-      >
-        <div className="p-4 space-y-4">
-          {/* 背景主题选择 */}
-          <div>
-            <div className="flex items-center mb-3">
-              <Palette className="h-5 w-5 mr-2 text-gray-600 dark:text-gray-400" />
-              <span className="text-base font-medium text-gray-800 dark:text-gray-200">背景主题</span>
+      {/* 自定义主题设置弹窗 */}
+      {showThemeSheet && (
+        <div className="fixed inset-0 z-50 bg-black/50" onClick={() => setShowThemeSheet(false)}>
+          <div className={`absolute bottom-0 left-0 right-0 rounded-t-xl p-4 ${bgTheme}`} onClick={(e) => e.stopPropagation()}>
+            <div className="flex items-center justify-center mb-4">
+              <div className="w-12 h-1 bg-gray-300 dark:bg-gray-600 rounded-full"></div>
             </div>
-            <div className="grid grid-cols-2 gap-3">
-              {bgThemeOptions.map((option) => (
-                <button
-                  key={option.value}
-                  onClick={() => handleBgThemeChange(option.value)}
-                  className={`p-3 rounded-lg border-2 text-sm font-medium transition-all duration-200 touch-target ${
-                    bg === option.value 
-                      ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300' 
-                      : 'border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 hover:border-gray-300 dark:hover:border-gray-500 text-gray-700 dark:text-gray-300'
-                  }`}
-                >
-                  {option.label}
-                </button>
-              ))}
+            
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 text-center">阅读设置</h3>
+            
+            {/* 背景主题选择 */}
+            <div className="mb-4">
+              <div className="flex items-center mb-3">
+                <Palette className="h-5 w-5 mr-2 text-gray-600 dark:text-gray-400" />
+                <span className="text-base font-medium text-gray-800 dark:text-gray-200">背景主题</span>
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                {bgThemeOptions.map((option) => (
+                  <button
+                    key={option.value}
+                    onClick={() => handleBgThemeChange(option.value)}
+                    className={`p-3 rounded-lg border-2 text-sm font-medium transition-all duration-200 touch-target ${
+                      bg === option.value 
+                        ? `border-blue-500 ${bgTheme} dark:bg-gray-700 text-blue-700 dark:text-blue-300` 
+                        : `border-gray-200 dark:border-gray-600 ${bgTheme} dark:bg-gray-700 hover:border-gray-300 dark:hover:border-gray-500 text-gray-200 dark:text-gray-300`
+                    }`}
+                  >
+                    {option.label}
+                  </button>
+                ))}
+              </div>
             </div>
-          </div>
 
-          {/* 字体大小选择 */}
-          <div>
-            <div className="flex items-center mb-3">
-              <Type className="h-5 w-5 mr-2 text-gray-600 dark:text-gray-400" />
-              <span className="text-base font-medium text-gray-800 dark:text-gray-200">字体大小</span>
+            {/* 字体大小选择 */}
+            <div className="mb-4">
+              <div className="flex items-center mb-3">
+                <Type className="h-5 w-5 mr-2 text-gray-600 dark:text-gray-400" />
+                <span className="text-base font-medium text-gray-800 dark:text-gray-200">字体大小</span>
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                {fontSizeOptions.map((option) => (
+                  <button
+                    key={option.value}
+                    onClick={() => handleFontChange(option.value)}
+                    className={`p-3 rounded-lg border-2 text-sm font-medium transition-all duration-200 touch-target ${
+                      font === option.value 
+                        ? `border-blue-500 ${bgTheme} dark:bg-gray-700 text-blue-700 dark:text-blue-300` 
+                        : `border-gray-200 dark:border-gray-600 ${bgTheme} dark:bg-gray-700 hover:border-gray-300 dark:hover:border-gray-500 text-gray-200 dark:text-gray-300`
+                    }`}
+                  >
+                    {option.label}
+                  </button>
+                ))}
+              </div>
             </div>
-            <div className="grid grid-cols-2 gap-3">
-              {fontSizeOptions.map((option) => (
-                <button
-                  key={option.value}
-                  onClick={() => handleFontChange(option.value)}
-                  className={`p-3 rounded-lg border-2 text-sm font-medium transition-all duration-200 touch-target ${
-                    font === option.value 
-                      ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300' 
-                      : 'border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 hover:border-gray-300 dark:hover:border-gray-500 text-gray-700 dark:text-gray-300'
-                  }`}
-                >
-                  {option.label}
-                </button>
-              ))}
-            </div>
-          </div>
 
-          {/* 重置按钮 */}
-          <div className="pt-4 border-t border-gray-200 dark:border-gray-600">
-            <button
-              onClick={() => {
-                resetToDefault();
-                setShowThemeSheet(false);
-              }}
-              className="w-full py-3 px-4 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 transition-colors duration-200 touch-target"
-            >
-              重置为默认设置
-            </button>
+            {/* 重置按钮 */}
+            <div className="pt-4 border-t border-gray-200 dark:border-gray-600">
+              <button
+                onClick={() => {
+                  resetToDefault();
+                  setShowThemeSheet(false);
+                }}
+                className={`w-full py-3 px-4 rounded-lg text-sm font-medium transition-colors duration-200 touch-target ${bgTheme} dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300`}
+              >
+                重置为默认设置
+              </button>
+            </div>
           </div>
         </div>
-      </ActionSheet>
+      )}
     </div>
   );
 }

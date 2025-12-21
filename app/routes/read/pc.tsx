@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router";
 import { useChapterContent, useChapters, handleChapterJump } from "./index";
 import type { ChapterRead, ChapterInfo } from "../../types/ChapterRead";
 import Navbar from "@/components/Navbar";
-import { useMemo, useEffect, useState } from "react";
+import { useMemo, useEffect, useState, useRef } from "react";
 import { useChapterStore } from "../../store/useChapterStore";
 import { useReadThemeStore, getBgThemeClasses,getFontSizeClasses,getLineHeightClasses } from "../../store/useReadThemeStore";
 
@@ -15,6 +15,23 @@ export default function PC() {
   const { data: chapter, isLoading: chapterLoading, error: chapterError } = useChapterContent();
   const { data: chapters, isLoading: chaptersLoading, error: chaptersError } = useChapters();
   const [showThemePanel, setShowThemePanel] = useState(false);
+  const panelRef = useRef<HTMLDivElement>(null);
+
+  // 点击外部关闭主题面板
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (panelRef.current && !panelRef.current.contains(event.target as Node)) {
+        setShowThemePanel(false);
+      }
+    }
+
+    if (showThemePanel) {
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => {
+        document.removeEventListener('mousedown', handleClickOutside);
+      };
+    }
+  }, [showThemePanel]);
 
   // 章节变化时更新 store 状态
   useEffect(() => {
@@ -157,7 +174,7 @@ export default function PC() {
 
         {/* 主题设置面板 */}
         {showThemePanel && (
-          <div className="fixed top-32 right-6 z-20 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg shadow-xl p-4 w-64">
+          <div ref={panelRef} className="fixed top-32 right-6 z-20 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg shadow-xl p-4 w-64">
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">阅读设置</h3>
             
             {/* 背景主题选择 */}
