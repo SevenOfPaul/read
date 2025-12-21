@@ -83,15 +83,17 @@ export default function PC() {
                     每晚22:00准时更新 · 千万书友共同选择
                   </p>
                   <div className="mt-4 flex flex-wrap items-center gap-4 lg:gap-6 text-sm text-gray-400 dark:text-gray-400">
-                    <span>📊 总藏书: <span className="text-gray-900 dark:text-white font-bold">{totalBooks}</span> 本</span>
+                    <span>📊 总藏书: <span className="text-gray-900 dark:text-white font-bold">{'500+'}</span> 本</span>
                     <span>📂 分类: <span className="text-gray-900 dark:text-white font-bold">{categoriesWithBooks.length}</span> 个</span>
                     <span>⏰ 在线: <span className="text-gray-900 dark:text-white font-bold">24H</span></span>
                   </div>
                 </div>
                 <div className="text-right hidden lg:block">
-                  <div className="bg-blue-500 text-white px-6 py-3 rounded-lg font-bold text-lg hover:bg-blue-600 cursor-pointer transition-colors">
-                    🔥 立即探索
-                  </div>
+                  <Link to="/rank">
+                    <div className="bg-blue-500 text-white px-6 py-3 rounded-lg font-bold text-lg hover:bg-blue-600 cursor-pointer transition-colors">
+                      🔥 立即探索
+                    </div>
+                  </Link>
                 </div>
               </div>
             </div>

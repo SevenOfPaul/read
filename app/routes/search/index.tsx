@@ -99,13 +99,8 @@ async function fetchHotSearches(): Promise<string[]> {
     // 这里可以返回一个模拟的热门搜索列表，实际项目中可以从API获取
     return [
       "斗破苍穹",
-      "完美世界", 
-      "全职高手",
-      "三生三世",
-      "凡人修仙传",
-      "雪中悍刀行",
-      "择天记",
-      "武动乾坤"
+      "我在天牢，长生不死", 
+      "末世第一狠人"
     ];
   } catch (error) {
     console.error("获取热门搜索失败:", error);

@@ -132,7 +132,6 @@ export default function MobileUpload() {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
       <MobileNavbar 
-        title="夜读小说网 - 上传" 
         subtitle="分享你的精彩作品"
         showBack={true}
         showSearch={false}
