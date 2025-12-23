@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router";
 import type { AuthorBookInfo } from "../../types/authorPage";
 import Navbar from "../../components/Navbar";
 import { formatHeat, formatDate } from "./index";
+import { AlertCircle, User, BookOpen, Flame, Trophy, Home, Library, BarChart3, Bookmark, Zap, RefreshCw } from "lucide-react";
 
 interface AuthorPageProps {
   authorDetail?: {
@@ -97,9 +98,7 @@ export default function PC({
                 {book.category && (
                   <Link to={`/category/${book.categoryId}`}>
                   <div className="flex items-center text-sm text-gray-500 dark:text-gray-400">
-                    <svg className="h-4 w-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a1.994 1.994 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
-                    </svg>
+                    <Library className="h-4 w-4 mr-1" />
                     <span className="truncate">{book.category}</span>
                   </div>
                   </Link>
@@ -130,14 +129,15 @@ export default function PC({
         <Navbar />
         <div className="max-w-7xl mx-auto pt-6 py-6">
           <div className="bg-white dark:bg-gray-800 rounded-lg p-8 text-center border border-gray-200 dark:border-gray-700 transition-colors duration-300">
-            <div className="text-6xl mb-4">😵</div>
+            <AlertCircle className="h-16 w-16 mx-auto mb-4 text-red-500" />
             <h3 className="text-gray-900 dark:text-white text-xl font-bold mb-4">加载失败</h3>
             <p className="text-gray-400 dark:text-gray-400 mb-6">{error.message}</p>
             <Button 
               onClick={() => window.location.reload()}
               className="bg-blue-500 hover:bg-blue-600 border-0"
             >
-              🔄 重新加载
+              <RefreshCw className="h-4 w-4 mr-2" />
+              重新加载
             </Button>
           </div>
         </div>
@@ -156,10 +156,11 @@ export default function PC({
             {/* 作者信息卡片 */}
             <div className="bg-white dark:bg-gray-800 rounded-lg p-4 border border-gray-200 dark:border-gray-700 transition-colors duration-300">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-gray-900 dark:text-white font-bold text-lg">👨‍💼 作者信息</h3>
-                <svg className="h-4 w-4 text-gray-400 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                </svg>
+                <h3 className="text-gray-900 dark:text-white font-bold text-lg flex items-center">
+                  <User className="h-5 w-5 mr-2 text-blue-500" />
+                  作者信息
+                </h3>
+                <User className="h-4 w-4 text-gray-400 dark:text-gray-400" />
               </div>
               
               {authorDetail?.author && (
@@ -184,10 +185,8 @@ export default function PC({
             {/* 作品统计 */}
             <div className="bg-white dark:bg-gray-800 rounded-lg p-4 border border-gray-200 dark:border-gray-700 transition-colors duration-300">
               <h3 className="text-gray-900 dark:text-white font-bold text-lg mb-4 flex items-center">
-                <svg className="h-5 w-5 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                </svg>
-                📊 作品统计
+                <BarChart3 className="h-5 w-5 mr-2 text-blue-500" />
+                作品统计
               </h3>
               <div className="space-y-3">
                 <div className="flex justify-between items-center p-2 bg-gray-50 dark:bg-gray-700 rounded">
@@ -211,20 +210,27 @@ export default function PC({
 
             {/* 快捷操作 */}
             <div className="bg-white dark:bg-gray-800 rounded-lg p-4 border border-gray-200 dark:border-gray-700 transition-colors duration-300">
-              <h3 className="text-gray-900 dark:text-white font-bold text-lg mb-4">⚡ 快捷操作</h3>
+              <h3 className="text-gray-900 dark:text-white font-bold text-lg mb-4 flex items-center">
+                <Zap className="h-5 w-5 mr-2 text-yellow-500" />
+                快捷操作
+              </h3>
               <div className="space-y-2">
                 <Button block className="bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 border-0 text-gray-700 dark:text-white">
-                  📚 我的书架
+                  <Bookmark className="h-4 w-4 mr-2" />
+                  我的书架
                 </Button>
                 <Button block className="bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 border-0 text-gray-700 dark:text-white">
-                  🔖 收藏夹
+                  <Library className="h-4 w-4 mr-2" />
+                  收藏夹
                 </Button>
                 <Button block className="bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 border-0 text-gray-700 dark:text-white">
-                  📊 阅读统计
+                  <BarChart3 className="h-4 w-4 mr-2" />
+                  阅读统计
                 </Button>
                 <Link to="/">
                   <Button block className="bg-blue-500 hover:bg-blue-600 border-0 text-white">
-                    🏠 返回首页
+                    <Home className="h-4 w-4 mr-2" />
+                    返回首页
                   </Button>
                 </Link>
               </div>
@@ -236,8 +242,9 @@ export default function PC({
             {/* 作品列表 */}
             <div className="bg-white dark:bg-gray-800 rounded-lg p-6 border border-gray-200 dark:border-gray-700 transition-colors duration-300">
               <div className="flex items-center justify-between mb-6">
-                <h3 className="text-gray-900 dark:text-white font-bold text-xl">
-                  📚 {authorDetail?.author.name || '作者'} 的作品
+                <h3 className="text-gray-900 dark:text-white font-bold text-xl flex items-center">
+                  <BookOpen className="h-5 w-5 mr-2 text-blue-500" />
+                  {authorDetail?.author.name || '作者'} 的作品
                 </h3>
                 <span className="text-sm text-gray-400 dark:text-gray-400">
                   共 {totalBooks} 部作品
@@ -266,9 +273,7 @@ export default function PC({
                 <div className="w-full">
                   <div className="text-center py-12">
                     <div className="w-16 h-16 bg-gray-200 dark:bg-gray-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <svg className="h-8 w-8 text-gray-400 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                      </svg>
+                      <BookOpen className="h-8 w-8 text-gray-400 dark:text-gray-400" />
                     </div>
                     <h4 className="text-gray-400 dark:text-gray-400 font-medium mb-2">暂无作品</h4>
                     <p className="text-gray-500 dark:text-gray-500 text-sm">

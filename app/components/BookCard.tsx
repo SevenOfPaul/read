@@ -1,6 +1,6 @@
 import { Card, Button } from "react-vant";
 import { Link } from "react-router";
-import { User, Star } from "lucide-react";
+import { User, Star, BookOpen, Flame, Crown, Medal, Award } from "lucide-react";
 import type { BookInfo } from "@/types/categorySearch";
 
 interface BookCardProps {
@@ -51,7 +51,8 @@ export default function BookCard({
               {showRank && rank < 3 && (
                 <div className="absolute -top-1 -left-1">
                   <div className={`${rank === 0 ? 'bg-blue-500' : rank === 1 ? 'bg-indigo-500' : 'bg-purple-500'} text-white px-2 py-1 rounded text-xs font-bold flex items-center`}>
-                    {rank === 0 ? '👑' : rank === 1 ? '🥈' : '🥉'} TOP{rank + 1}
+                    {rank === 0 ? <Crown className="h-3 w-3 mr-1" /> : rank === 1 ? <Medal className="h-3 w-3 mr-1" /> : <Award className="h-3 w-3 mr-1" />}
+                    TOP{rank + 1}
                   </div>
                 </div>
               )}
@@ -85,14 +86,18 @@ export default function BookCard({
                   {/* 最新章节 */}
                   {book.lastChapter && (
                     <div className="mb-3 p-2 bg-gray-100 dark:bg-gray-600 rounded text-sm">
-                      <div className="text-gray-600 dark:text-gray-300">📖 最新: {book.lastChapter}</div>
+                      <div className="text-gray-600 dark:text-gray-300 flex items-center">
+                        <BookOpen className="h-3 w-3 mr-1" />
+                        最新: {book.lastChapter}
+                      </div>
                     </div>
                   )}
 
                   {/* 热度标签 */}
                   {book.fired && (
                     <div className="mb-3">
-                      <span className="bg-red-500 text-white px-2 py-1 rounded text-xs font-bold">
+                      <span className="bg-red-500 text-white px-2 py-1 rounded text-xs font-bold flex items-center w-fit">
+                        <Flame className="h-3 w-3 mr-1" />
                         {book.fired > 10000 ? `${Math.floor(book.fired / 10000)}w` : `${book.fired}`}
                       </span>
                     </div>
@@ -102,14 +107,16 @@ export default function BookCard({
                 {/* 右侧操作区域 */}
                 <div className="flex-shrink-0 ml-3 flex flex-col items-end space-y-2">
                   <div className="flex items-center space-x-1">
-                    <span className="text-sm text-gray-400 dark:text-gray-400">🔥 热门</span>
+                    <Flame className="h-4 w-4 text-red-500" />
+                    <span className="text-sm text-gray-400 dark:text-gray-400">热门</span>
                   </div>
                   <Link to={`/book/${book.id}`}>
                     <Button 
                       size="small"
                       className="bg-blue-500 hover:bg-blue-600 border-0 text-sm px-3 py-1 font-bold"
                     >
-                      📖 阅读
+                      <BookOpen className="h-4 w-4 mr-1" />
+                      阅读
                     </Button>
                   </Link>
                 </div>
@@ -153,9 +160,7 @@ export default function BookCard({
                 </div>
                 {/* 作者信息 */}
                 <div className="flex items-center text-sm text-gray-500 dark:text-gray-400">
-                  <svg className="h-4 w-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                  </svg>
+                  <User className="h-4 w-4 mr-1" />
                   <Link to={`/author/${book.authorId}`}><span className="truncate">{book.author}</span></Link>
                 </div>
 
@@ -166,7 +171,8 @@ export default function BookCard({
 
                 {/* 字数和章节信息 */}
                 <div className="space-y-1">
-                  <div className="text-xs text-gray-500 dark:text-gray-400">
+                  <div className="text-xs text-gray-500 dark:text-gray-400 flex items-center">
+                    <BookOpen className="h-3 w-3 mr-1" />
                     最新章节: {book.lastChapter || '暂无更新'}
                   </div>
                 </div>

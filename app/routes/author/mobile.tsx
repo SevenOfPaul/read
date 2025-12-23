@@ -1,7 +1,9 @@
 import { Button, Card, Badge } from "react-vant";
 import { 
   BookOpen, User, TrendingUp, Award, Heart, Eye, Star, 
-  Crown, ChevronLeft, ChevronRight, ArrowLeft
+  Crown, ChevronLeft, ChevronRight, ArrowLeft,
+  AlertCircle, RefreshCw, Library, Flame, Zap, Home, Sparkles,
+  Medal, Target
 } from "lucide-react";
 import { Link, useParams } from "react-router";
 import type { AuthorBookInfo } from "../../types/authorPage";
@@ -58,7 +60,7 @@ export default function Mobile({
         <div className="px-4 py-4">
           <Card className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 transition-colors duration-300">
             <div className="p-8 text-center">
-              <div className="text-4xl mb-4">😵</div>
+              <AlertCircle className="h-12 w-12 mx-auto mb-4 text-red-500" />
               <h4 className="text-gray-900 dark:text-white font-medium mb-2">加载失败</h4>
               <p className="text-gray-500 dark:text-gray-500 text-sm mb-4">{error.message}</p>
               <Button 
@@ -67,7 +69,8 @@ export default function Mobile({
                 className="bg-blue-500 hover:bg-blue-600 border-0 touch-target"
                 onClick={() => window.location.reload()}
               >
-                🔄 重新加载
+                <RefreshCw className="h-4 w-4 mr-2" />
+                重新加载
               </Button>
             </div>
           </Card>
@@ -99,15 +102,22 @@ export default function Mobile({
                   </span>
                 </div>
                 <div className="flex-1 min-w-0">
-                  <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-1">
-                    📝 {authorDetail?.author.name || '作者'}
+                  <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-1 flex items-center">
+                    <Sparkles className="h-5 w-5 mr-2 text-yellow-500" />
+                    {authorDetail?.author.name || '作者'}
                   </h2>
                   <p className="text-gray-600 dark:text-gray-300 text-sm mb-2">
                     入驻时间: {authorDetail?.author.createTime ? formatDate(authorDetail.author.createTime) : '-'}
                   </p>
                   <div className="flex items-center space-x-4 text-xs text-gray-400 dark:text-gray-400">
-                    <span>📚 作品: <span className="text-gray-900 dark:text-white font-bold">{totalBooks}</span></span>
-                    <span>🔥 热度: <span className="text-red-500 font-bold">{formatHeat(totalFired)}</span></span>
+                    <span className="flex items-center">
+                      <Library className="h-3 w-3 mr-1" />
+                      作品: <span className="text-gray-900 dark:text-white font-bold ml-1">{totalBooks}</span>
+                    </span>
+                    <span className="flex items-center">
+                      <Flame className="h-3 w-3 mr-1 text-red-500" />
+                      热度: <span className="text-red-500 font-bold ml-1">{formatHeat(totalFired)}</span>
+                    </span>
                   </div>
                 </div>
               </div>
@@ -118,20 +128,25 @@ export default function Mobile({
         {/* 快捷功能区 */}
         <Card className="mb-6 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 transition-colors duration-300">
           <div className="p-4">
-            <h3 className="text-gray-900 dark:text-white font-bold text-lg mb-4">⚡ 快捷操作</h3>
+            <h3 className="text-gray-900 dark:text-white font-bold text-lg mb-4 flex items-center">
+              <Zap className="h-5 w-5 mr-2 text-yellow-500" />
+              快捷操作
+            </h3>
             <div className="space-y-2">
               <Button 
                 block 
                 className="bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 border-0 text-gray-700 dark:text-white h-12 text-sm touch-target"
               >
-                📚 我的书架
+                <Library className="h-4 w-4 mr-2" />
+                我的书架
               </Button>
               <Link to="/" className="block">
                 <Button 
                   block 
                   className="bg-blue-500 hover:bg-blue-600 border-0 text-white h-12 text-sm touch-target"
                 >
-                  🏠 返回首页
+                  <Home className="h-4 w-4 mr-2" />
+                  返回首页
                 </Button>
               </Link>
             </div>
@@ -141,8 +156,9 @@ export default function Mobile({
         {/* 作品列表标题 */}
         <div className="bg-white dark:bg-gray-800 rounded-lg p-4 mb-4 border border-gray-200 dark:border-gray-700 transition-colors duration-300">
           <div className="flex items-center justify-between">
-            <h3 className="text-gray-900 dark:text-white font-bold text-lg">
-              ✨ {authorDetail?.author.name || '作者'} 的作品
+            <h3 className="text-gray-900 dark:text-white font-bold text-lg flex items-center">
+              <Sparkles className="h-5 w-5 mr-2 text-yellow-500" />
+              {authorDetail?.author.name || '作者'} 的作品
             </h3>
             <span className="text-sm text-gray-400 dark:text-gray-400">
               {totalBooks} 部
@@ -174,7 +190,8 @@ export default function Mobile({
                     {index < 3 && (
                       <div className="absolute -top-1 -left-1">
                         <div className={`${index === 0 ? 'bg-blue-500' : index === 1 ? 'bg-indigo-500' : 'bg-purple-500'} text-white px-2 py-1 rounded text-xs font-bold flex items-center`}>
-                          {index === 0 ? '👑' : index === 1 ? '🥈' : '🥉'} TOP{index + 1}
+                          {index === 0 ? <Crown className="h-3 w-3 mr-1" /> : index === 1 ? <Medal className="h-3 w-3 mr-1" /> : <Award className="h-3 w-3 mr-1" />}
+                          TOP{index + 1}
                         </div>
                       </div>
                     )}
@@ -198,9 +215,7 @@ export default function Mobile({
                         {/* 分类信息 */}
                         {book.category && (
                           <div className="flex items-center text-sm text-gray-400 dark:text-gray-400 mb-2">
-                            <svg className="h-4 w-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a1.994 1.994 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
-                            </svg>
+                            <Library className="h-4 w-4 mr-1" />
                             <Link to={`/category/${book.categoryId}`} className="truncate hover:text-blue-500 cursor-pointer transition-colors">
                               {book.category}
                             </Link>
@@ -215,14 +230,18 @@ export default function Mobile({
                         {/* 最新章节 */}
                         {book.lastChapter && (
                           <div className="mb-3 p-2 bg-gray-100 dark:bg-gray-600 rounded text-sm">
-                            <div className="text-gray-600 dark:text-gray-300">📖 最新: {book.lastChapter}</div>
+                            <div className="text-gray-600 dark:text-gray-300 flex items-center">
+                              <BookOpen className="h-3 w-3 mr-1" />
+                              最新: {book.lastChapter}
+                            </div>
                           </div>
                         )}
 
                         {/* 热度标签 */}
                         {book.fired && (
                           <div className="mb-3">
-                            <span className="bg-red-500 text-white px-2 py-1 rounded text-xs font-bold">
+                            <span className="bg-red-500 text-white px-2 py-1 rounded text-xs font-bold flex items-center w-fit">
+                              <Flame className="h-3 w-3 mr-1" />
                               {formatHeat(book.fired)}
                             </span>
                           </div>
@@ -232,14 +251,16 @@ export default function Mobile({
                       {/* 右侧操作区域 */}
                       <div className="flex-shrink-0 ml-3 flex flex-col items-end space-y-2">
                         <div className="flex items-center space-x-1">
-                          <span className="text-sm text-gray-400 dark:text-gray-400">🔥 热门</span>
+                          <Flame className="h-4 w-4 text-red-500" />
+                          <span className="text-sm text-gray-400 dark:text-gray-400">热门</span>
                         </div>
                         <Link to={`/book/${book.id}`}>
                           <Button 
                             size="small"
                             className="bg-blue-500 hover:bg-blue-600 border-0 text-sm px-3 py-1 font-bold touch-target"
                           >
-                            📖 阅读
+                            <BookOpen className="h-4 w-4 mr-1" />
+                            阅读
                           </Button>
                         </Link>
                       </div>
@@ -269,14 +290,17 @@ export default function Mobile({
         {/* 快捷功能区 */}
         <Card className="mt-6 mb-6 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 transition-colors duration-300">
           <div className="p-4">
-            <h4 className="text-gray-900 dark:text-white font-bold text-lg mb-4">📚 相关推荐</h4>
+            <h4 className="text-gray-900 dark:text-white font-bold text-lg mb-4 flex items-center">
+              <BookOpen className="h-5 w-5 mr-2 text-blue-500" />
+              相关推荐
+            </h4>
             <div className="grid grid-cols-2 gap-3">
               <div className="text-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer transition-colors touch-target">
-                <BookOpen className="h-6 w-6 mx-auto mb-2 text-blue-500" />
+                <Target className="h-6 w-6 mx-auto mb-2 text-blue-500" />
                 <span className="text-xs text-gray-600 dark:text-gray-300">同类作者</span>
               </div>
               <Link to="/" className="text-center p-3 bg-blue-50 dark:bg-blue-900 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-800 cursor-pointer transition-colors touch-target">
-                <Crown className="h-6 w-6 mx-auto mb-2 text-blue-500" />
+                <Home className="h-6 w-6 mx-auto mb-2 text-blue-500" />
                 <span className="text-xs text-gray-600 dark:text-gray-300">返回首页</span>
               </Link>
             </div>
@@ -302,7 +326,10 @@ export default function Mobile({
       {/* 移动端底部信息 */}
       <footer className="bg-gray-800 dark:bg-gray-800 border-t border-gray-700 dark:border-gray-700 py-6 mt-8 transition-colors duration-300">
         <div className="px-4 text-center">
-          <h4 className="font-bold text-white mb-3 text-lg">📝 作者作品</h4>
+          <h4 className="font-bold text-white mb-3 text-lg flex items-center justify-center">
+            <Sparkles className="h-5 w-5 mr-2 text-yellow-500" />
+            作者作品
+          </h4>
           <p className="text-sm text-gray-400 dark:text-gray-400 mb-4">探索作者精彩世界 · 发现优质内容</p>
           <div className="flex justify-center space-x-4 text-sm text-gray-500 dark:text-gray-500 mb-4">
             <span className="flex items-center">

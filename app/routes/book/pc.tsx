@@ -1,5 +1,5 @@
 import { Button, Card } from "react-vant";
-import { BookOpen, User, Clock, Heart, Share, Award } from "lucide-react";
+import { BookOpen, User, Clock, Heart, Share, Award, AlertCircle, RefreshCw, Home, Bookmark, Sparkles } from "lucide-react";
 import { Link } from "react-router";
 import { useBookDetail, useChapters, useRelatedBooks, handleBookmark, handleShare } from "./index";
 import type { BookDetail as BookDetailType, ChapterInfo, RelatedBook } from "@/types/BookDetail";
@@ -33,17 +33,19 @@ export default function PC() {
       <div className="book-detail-container">
         <div className="flex items-center justify-center min-h-screen">
           <Card className="p-8 text-center max-w-md">
-            <div className="text-6xl mb-4">😵</div>
+            <AlertCircle className="h-16 w-16 mx-auto mb-4 text-red-500" />
             <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">加载失败</h3>
             <p className="text-gray-400 dark:text-gray-400 mb-6">
               {bookError instanceof Error ? bookError.message : "无法获取书籍信息"}
             </p>
             <Button onClick={() => window.location.reload()} className="bg-blue-500 hover:bg-blue-600">
-              🔄 重新加载
+              <RefreshCw className="h-4 w-4 mr-2" />
+              重新加载
             </Button>
              <Link to="/">
-               <Button className="bg-blue-500 hover:bg-blue-600">
-              🔄 回到首页
+               <Button className="bg-blue-500 hover:bg-blue-600 ml-2">
+              <Home className="h-4 w-4 mr-2" />
+                回到首页
                 </Button>
             </Link>
           
@@ -58,11 +60,12 @@ export default function PC() {
       <div className="book-detail-container">
         <div className="flex items-center justify-center min-h-screen">
           <Card className="p-8 text-center max-w-md">
-            <div className="text-6xl mb-4">📚</div>
+            <BookOpen className="h-16 w-16 mx-auto mb-4 text-gray-400" />
             <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">书籍不存在</h3>
             <Link to="/home">
               <Button className="bg-blue-500 hover:bg-blue-600">
-                🏠 返回首页
+                <Home className="h-4 w-4 mr-2" />
+                返回首页
               </Button>
             </Link>
           </Card>
@@ -133,7 +136,8 @@ export default function PC() {
                       size="large"
                       disabled={!chapters || chapters.length === 0}
                     >
-                      📖 开始阅读
+                      <BookOpen className="h-4 w-4 mr-2" />
+                      开始阅读
                     </Button>
                     </Link>
                   </div>
@@ -145,15 +149,17 @@ export default function PC() {
             <Card className="chapters-container">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 p-4 bg-gray-50 dark:bg-gray-700 rounded-lg space-y-2 sm:space-y-0">
                 <h2 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white flex items-center">
-                  📚 全部章节 
+                  <BookOpen className="h-5 w-5 mr-2 text-blue-500" />
+                  全部章节 
                   <span className="text-blue-600 dark:text-blue-400 text-sm sm:text-base font-medium bg-blue-50 dark:bg-blue-900/30 px-2 sm:px-3 py-1 rounded-full ml-2">
                     ({chapters?.length || 0}章)
                   </span>
                 </h2>
                 <div className="flex items-center space-x-2">
                   {book.lastChapter && (
-                    <span className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
-                      📖 最新: {book.lastChapter}
+                    <span className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 flex items-center">
+                      <BookOpen className="h-3 w-3 mr-1" />
+                      最新: {book.lastChapter}
                     </span>
                   )}
                 </div>
@@ -193,7 +199,10 @@ export default function PC() {
           <aside className="w-full lg:w-64 xl:w-80 flex-shrink-0 space-y-6">
             {/* 书籍统计 */}
             <Card className="p-4">
-              <h4 className="font-bold text-gray-900 dark:text-white mb-4 text-lg">📊 书籍信息</h4>
+              <h4 className="font-bold text-gray-900 dark:text-white mb-4 text-lg flex items-center">
+                <Sparkles className="h-5 w-5 mr-2 text-blue-500" />
+                书籍信息
+              </h4>
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
                   <span className="text-gray-600 dark:text-gray-300 text-sm">状态</span>
@@ -223,7 +232,10 @@ export default function PC() {
 
             {/* 快捷操作 */}
             <Card className="p-4">
-              <h4 className="font-bold text-gray-900 dark:text-white mb-4 text-lg">⚡ 快捷操作</h4>
+              <h4 className="font-bold text-gray-900 dark:text-white mb-4 text-lg flex items-center">
+                <Sparkles className="h-5 w-5 mr-2 text-yellow-500" />
+                快捷操作
+              </h4>
               <div className="space-y-2">
                 <Link 
                   className="block"
@@ -234,7 +246,8 @@ export default function PC() {
                     className="bg-blue-500! hover:bg-blue-600 text-white my-1"
                     disabled={!chapters || chapters.length === 0}
                   >
-                    📖 立即阅读
+                    <BookOpen className="h-4 w-4 mr-2" />
+                    立即阅读
                   </Button>
                 </Link>
                 <Button 
@@ -242,7 +255,8 @@ export default function PC() {
                   className="my-1 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-white"
                   onClick={() => handleBookmark(book.id)}
                 >
-                  🔖 收藏本书
+                  <Bookmark className="h-4 w-4 mr-2" />
+                  收藏本书
                 </Button>
               </div>
             </Card>
@@ -250,8 +264,9 @@ export default function PC() {
             {/* 相关推荐 */}
             {relatedBooks && relatedBooks.length > 0 && (
               <Card className="p-4">
-                <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-6 flex items-center bg-gradient-to-r from-yellow-500 to-orange-500 bg-clip-text text-transparent">
-                  📖 相关推荐
+                <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-6 flex items-center">
+                  <BookOpen className="h-5 w-5 mr-2 text-blue-500" />
+                  相关推荐
                 </h3>
                 <div className="space-y-3">
                   {relatedBooks.map((relatedBook: RelatedBook) => (

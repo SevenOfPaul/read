@@ -743,3 +743,14 @@ button.touch-target:active,
     @apply bg-background text-foreground;
   }
 }
+/* Vant 按钮块级布局 */
+.rv-button {
+  @apply flex! justify-center! flex-row! items-stretch! w-full!;
+}
+.rv-button .rv-button__content {
+  @apply flex! justify-center! items-center! flex-1! w-full!;
+}
+.rv-button .rv-button__icon,
+.rv-button .rv-button__text {
+  @apply flex! items-center! justify-center!;
+}

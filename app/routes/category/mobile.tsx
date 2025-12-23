@@ -234,7 +234,7 @@ export default function Mobile({
                 className="bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg font-bold text-sm transition-colors cursor-pointer touch-target"
                 onClick={() => setShowCategorySelector(!showCategorySelector)}
               >
-                🔥 切换
+                 切换
               </div>
             </div>
           </div>
@@ -324,7 +324,7 @@ export default function Mobile({
           {/* 排序说明 */}
           <div className="mt-3 p-2 bg-gray-50 dark:bg-gray-700 rounded text-xs text-gray-600 dark:text-gray-400">
             {sortType === 'latest' && '📅 按发布时间排序，显示最新更新的小说'}
-            {sortType === 'popular' && '🔥 按热度排序，优先显示热门小说'}
+            {sortType === 'popular' && ' 按热度排序，优先显示热门小说'}
             {sortType === 'favorite' && '❤️ 按收藏量排序，显示最受喜爱的小说'}
           </div>
         </div>

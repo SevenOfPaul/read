@@ -156,11 +156,11 @@ export function useCategoryBooks(categoryId: string | null, page: number, pageSi
 // 格式化热度显示（复用首页逻辑）
 export function formatHeat(fired: number): string {
   if (fired >= 10000) {
-    return `🔥 ${(fired / 10000).toFixed(1)}万`;
+    return ` ${(fired / 10000).toFixed(1)}万`;
   } else if (fired >= 1000) {
-    return `🔥 ${(fired / 1000).toFixed(1)}千`;
+    return ` ${(fired / 1000).toFixed(1)}千`;
   } else {
-    return `🔥 ${fired}`;
+    return ` ${fired}`;
   }
 }
 

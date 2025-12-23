@@ -1,5 +1,5 @@
 import { Button, Card } from "react-vant";
-import { BookOpen, User, Clock, Heart, Share, Star, Eye, Award, MoreVertical } from "lucide-react";
+import { BookOpen, User, Clock, Heart, Share, Star, Eye, Award, MoreVertical, AlertCircle, RefreshCw, Home, Bookmark, Sparkles, Flame } from "lucide-react";
 import { Link } from "react-router";
 import { useBookDetail, useChapters, useRelatedBooks, handleBookmark, handleShare } from "./index";
 import type { BookDetail as BookDetailType, ChapterInfo, RelatedBook } from "../../types/BookDetail";
@@ -33,7 +33,7 @@ export default function Mobile() {
       <div className="book-detail-container">
         <div className="flex items-center justify-center min-h-screen p-4">
           <Card className="p-6 text-center max-w-sm w-full">
-            <div className="text-4xl mb-4">😵</div>
+            <AlertCircle className="h-12 w-12 mx-auto mb-4 text-red-500" />
             <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">加载失败</h3>
             <p className="text-gray-400 dark:text-gray-400 mb-6 text-sm">
               {bookError instanceof Error ? bookError.message : "无法获取书籍信息"}
@@ -42,7 +42,8 @@ export default function Mobile() {
               onClick={() => window.location.reload()} 
               className="bg-blue-500 hover:bg-blue-600 w-full touch-target"
             >
-              🔄 重新加载
+              <RefreshCw className="h-4 w-4 mr-2" />
+              重新加载
             </Button>
           </Card>
         </div>
@@ -55,14 +56,15 @@ export default function Mobile() {
       <div className="book-detail-container">
         <div className="flex items-center justify-center min-h-screen p-4">
           <Card className="p-6 text-center max-w-sm w-full">
-            <div className="text-4xl mb-4">📚</div>
+            <BookOpen className="h-12 w-12 mx-auto mb-4 text-gray-400" />
             <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">书籍不存在</h3>
             <p className="text-gray-400 dark:text-gray-400 mb-6 text-sm">
               请检查链接是否正确
             </p>
             <Link to="/">
               <Button className="bg-blue-500 hover:bg-blue-600 w-full touch-target">
-                🏠 返回首页
+                <Home className="h-4 w-4 mr-2" />
+                返回首页
               </Button>
             </Link>
           </Card>
@@ -146,7 +148,8 @@ export default function Mobile() {
                   className="bg-blue-500 hover:bg-blue-600 text-white font-bold w-full h-12 touch-target"
                   disabled={!chapters || chapters.length === 0}
                 >
-                  📖 开始阅读
+                  <BookOpen className="h-4 w-4 mr-2" />
+                  开始阅读
                 </Button>
               </Link>
               <Button 
@@ -162,7 +165,10 @@ export default function Mobile() {
 
         {/* 书籍统计信息 */}
         <Card className="p-4">
-          <h3 className="font-bold text-gray-900 dark:text-white mb-4 text-lg">📊 书籍信息</h3>
+          <h3 className="font-bold text-gray-900 dark:text-white mb-4 text-lg flex items-center">
+            <Sparkles className="h-5 w-5 mr-2 text-blue-500" />
+            书籍信息
+          </h3>
           <div className="grid grid-cols-2 gap-4">
             <div className="text-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
               <div className="text-lg font-bold text-blue-500">{chapters?.length || 0}</div>
@@ -192,15 +198,16 @@ export default function Mobile() {
           </div>
           {book.lastChapter && (
             <div className="mt-4 p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
-              <div className="text-sm text-gray-600 dark:text-gray-300">
-                <span className="font-medium">📖 最新章节：</span>
+              <div className="text-sm text-gray-600 dark:text-gray-300 flex items-center">
+                <BookOpen className="h-4 w-4 mr-2" />
+                <span className="font-medium">最新章节：</span>
                 <span className="ml-1">{book.lastChapter}</span>
               </div>
             </div>
           )}
           {book.updateTime && (
             <div className="mt-3 p-2 bg-gray-50 dark:bg-gray-700 rounded-lg">
-              <div className="text-xs text-gray-500 dark:text-gray-400">
+              <div className="text-xs text-gray-500 dark:text-gray-400 flex items-center">
                 <Clock className="h-3 w-3 inline mr-1" />
                 更新时间：{new Date(book.updateTime).toLocaleDateString()}
               </div>
@@ -210,7 +217,10 @@ export default function Mobile() {
 
         {/* 快捷操作 */}
         <Card className="p-4">
-          <h4 className="font-bold text-gray-900 dark:text-white mb-4 text-lg">⚡ 快捷操作</h4>
+          <h4 className="font-bold text-gray-900 dark:text-white mb-4 text-lg flex items-center">
+            <Sparkles className="h-5 w-5 mr-2 text-yellow-500" />
+            快捷操作
+          </h4>
           <div className="grid grid-cols-2 gap-3">
             <Link 
               className="block"
@@ -221,7 +231,8 @@ export default function Mobile() {
                 className="bg-blue-500 hover:bg-blue-600 text-white h-10 touch-target"
                 disabled={!chapters || chapters.length === 0}
               >
-                📖 立即阅读
+                <BookOpen className="h-4 w-4 mr-2" />
+                立即阅读
               </Button>
             </Link>
             <Button 
@@ -229,7 +240,8 @@ export default function Mobile() {
               className="bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-white h-10 touch-target"
               onClick={() => handleBookmark(book.id)}
             >
-              🔖 收藏本书
+              <Bookmark className="h-4 w-4 mr-2" />
+              收藏本书
             </Button>
           </div>
         </Card>
@@ -237,8 +249,9 @@ export default function Mobile() {
         {/* 章节目录 */}
         <Card className="chapters-container">
           <div className="chapters-header mb-4">
-            <h2 className="text-lg font-bold text-gray-900 dark:text-white">
-              📚 全部章节 
+            <h2 className="text-lg font-bold text-gray-900 dark:text-white flex items-center">
+              <BookOpen className="h-5 w-5 mr-2 text-blue-500" />
+              全部章节 
               <span className="text-sm text-gray-500 ml-2">({chapters?.length || 0}章)</span>
             </h2>
           </div>
@@ -283,7 +296,10 @@ export default function Mobile() {
         {/* 相关推荐 */}
         {relatedBooks && relatedBooks.length > 0 && (
           <Card className="related-books">
-            <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">📖 相关推荐</h3>
+            <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center">
+              <BookOpen className="h-5 w-5 mr-2 text-blue-500" />
+              相关推荐
+            </h3>
             <div className="space-y-3">
               {relatedBooks.map((relatedBook: RelatedBook) => (
                 <Link 
@@ -300,13 +316,20 @@ export default function Mobile() {
                     <h4 className="text-sm font-medium text-gray-900 dark:text-white line-clamp-2">
                       {relatedBook.name}
                     </h4>
-                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">👤 {relatedBook.authorName}</p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 flex items-center">
+                      <User className="h-3 w-3 mr-1" />
+                      {relatedBook.authorName}
+                    </p>
                     {relatedBook.lastChapter && (
-                      <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 truncate">📖 {relatedBook.lastChapter}</p>
+                      <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 truncate flex items-center">
+                        <BookOpen className="h-3 w-3 mr-1" />
+                        {relatedBook.lastChapter}
+                      </p>
                     )}
                   </div>
                   <div className="flex flex-col items-center">
-                    <span className="text-xs text-gray-400">🔥 热门</span>
+                    <Flame className="h-4 w-4 text-red-500" />
+                    <span className="text-xs text-gray-400">热门</span>
                   </div>
                 </Link>
               ))}
@@ -326,15 +349,16 @@ export default function Mobile() {
               className="bg-blue-500 hover:bg-blue-600 text-white font-bold w-full h-12 touch-target"
               disabled={!chapters || chapters.length === 0}
             >
-              📖 立即阅读
+              <BookOpen className="h-4 w-4 mr-2" />
+              立即阅读
             </Button>
           </Link>
           <Button 
             className="bg-gray-100 dark:bg-gray-700 flex flex-col hover:bg-gray-200 text-gray-700 dark:text-white w-full h-12 touch-target"
             onClick={() => handleBookmark(book.id)}
           >
-            <Heart className="h-4 w-4 mr-2" />
-            收藏本书
+            <Heart className="h-4 w-4" />
+            <span className="text-xs ml-1">收藏</span>
           </Button>
         </div>
       </div>

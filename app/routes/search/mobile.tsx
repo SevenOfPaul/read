@@ -219,7 +219,7 @@ export default function MobileSearch() {
                       onClick={() => handleHistoryClick(keyword)}
                       className="px-3 py-2 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-gray-700 dark:to-gray-600 text-gray-700 dark:text-gray-300 rounded-lg text-sm hover:from-blue-100 hover:to-indigo-100 dark:hover:from-gray-600 dark:hover:to-gray-500 cursor-pointer transition-all duration-200 text-left"
                     >
-                      <span className="text-blue-500 mr-2">🔥</span>
+                      <span className="text-blue-500 mr-2"></span>
                       {keyword}
                     </button>
                   ))}
@@ -346,7 +346,7 @@ export default function MobileSearch() {
                             {/* 右侧操作区域 */}
                             <div className="flex-shrink-0 ml-3 flex flex-col items-end space-y-2">
                               <div className="flex items-center space-x-1">
-                                <span className="text-xs text-gray-400 dark:text-gray-400">🔥 热门</span>
+                                <span className="text-xs text-gray-400 dark:text-gray-400"> 热门</span>
                               </div>
                               <Link to={`/book/${book.id}`}>
                                 <Button 

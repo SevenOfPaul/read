@@ -23,7 +23,7 @@ const RANKING_CONFIGS: Record<RankingType, RankingConfig> = {
     type: 'heat',
     title: '热度榜',
     description: '人气最热 · 最受喜爱',
-    icon: '🔥',
+    icon: '',
     bgColor: 'bg-gradient-to-r from-red-500 to-pink-600',
     textColor: 'text-red-600'
   },
@@ -229,11 +229,11 @@ export function useRankingData(type: RankingType) {
 // 格式化热度显示
 export function formatHeat(fired: number): string {
   if (fired >= 10000) {
-    return `🔥 ${(fired / 10000).toFixed(1)}万`;
+    return ` ${(fired / 10000).toFixed(1)}万`;
   } else if (fired >= 1000) {
-    return `🔥 ${(fired / 1000).toFixed(1)}千`;
+    return ` ${(fired / 1000).toFixed(1)}千`;
   } else {
-    return `🔥 ${fired}`;
+    return ` ${fired}`;
   }
 }
 

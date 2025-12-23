@@ -32,8 +32,9 @@ export default function NotFound() {
 
             {/* 标题和描述 */}
             <div className="mb-12">
-              <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
-                页面丢失了 📚
+            <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4 flex items-center justify-center">
+                <BookOpen className="h-8 w-8 mr-3 text-blue-500" />
+                页面丢失了
               </h2>
               <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto leading-relaxed">
                 看起来您要找的书籍页面不在书架上了。不要担心，让我们帮您找到正确的方向。
@@ -131,8 +132,9 @@ export default function NotFound() {
 
             {/* 标题和描述 - 移动端 */}
             <div className="mb-8">
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-3">
-                页面丢失了 📚
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-3 flex items-center justify-center">
+                <BookOpen className="h-6 w-6 mr-2 text-blue-500" />
+                页面丢失了
               </h2>
               <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
                 看起来您要找的内容不在这里

@@ -24,7 +24,7 @@ export default function Mobile({
   // 标签页配置
   const tabs = [
     { key: 'update' as RankingType, label: '更新榜', icon: '🔄' },
-    { key: 'heat' as RankingType, label: '热度榜', icon: '🔥' },
+    { key: 'heat' as RankingType, label: '热度榜', icon: '' },
     { key: 'words' as RankingType, label: '字数榜', icon: '📚' }
   ];
 
@@ -337,7 +337,7 @@ export default function Mobile({
               更新
             </span>
             <span className="flex items-center">
-              <span className="mr-1">🔥</span>
+              <span className="mr-1"></span>
               热度
             </span>
             <span className="flex items-center">
