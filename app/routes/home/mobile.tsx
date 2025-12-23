@@ -1,5 +1,5 @@
 import { Button, Card } from "react-vant";
-import { BookOpen, User, TrendingUp, Award, Heart, Star, Crown } from "lucide-react";
+import { BookOpen, User, TrendingUp, Award, Heart, Star, Crown, Grid } from "lucide-react";
 import { Link, useNavigate } from "react-router";
 import type { CategoryWithBooks } from "../../types/categorySearch";
 import { useCategories, useHotBooks, formatHeat } from "./index";
@@ -180,19 +180,36 @@ export default function Mobile() {
         <Card className="mb-6 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 transition-colors duration-300">
           <div className="p-4">
             <h4 className="text-gray-900 dark:text-white font-bold text-lg mb-4">⚡ 快捷功能</h4>
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-3 gap-3">
+              <Link to="/category/''" className="block">
+                <Button 
+                  block 
+                  className="bg-gradient-to-br from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 border-0 text-white h-14 text-sm touch-target"
+                >
+                  <div className="flex flex-col items-center">
+                    <Grid className="h-5 w-5 mb-1" />
+                    <span>全部分类</span>
+                  </div>
+                </Button>
+              </Link>
               <Button 
                 block 
-                className="bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 border-0 text-gray-700 dark:text-white h-12 text-sm touch-target"
+                className="bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 border-0 text-gray-700 dark:text-white h-14 text-sm touch-target"
               >
-                📚 我的书架
+                <div className="flex flex-col items-center">
+                  <BookOpen className="h-5 w-5 mb-1" />
+                  <span>我的书架</span>
+                </div>
               </Button>
               <Link to="/rank" className="block">
                 <Button 
                   block 
-                  className="bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 border-0 text-gray-700 dark:text-white h-12 text-sm touch-target"
+                  className="bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 border-0 text-gray-700 dark:text-white h-14 text-sm touch-target"
                 >
-                  🏆 排行榜
+                  <div className="flex flex-col items-center">
+                    <Award className="h-5 w-5 mb-1" />
+                    <span>排行榜</span>
+                  </div>
                 </Button>
               </Link>
             </div>
